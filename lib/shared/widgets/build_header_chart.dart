@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/shared/dialogs/export_file_dialog.dart';
 
 import 'build_legend_dot.dart';
 
@@ -45,7 +46,21 @@ class BuildHeaderChart extends StatelessWidget {
           ),
         ),
 
-        if (icon != null) IconButton(onPressed: icon != null ? onIconPressed : null, icon: icon!),
+        // if (icon != null) IconButton(onPressed: icon != null ? onIconPressed : null, icon: icon!),
+        if (icon != null)
+          IconButton(
+            onPressed: icon != null
+                ? () async {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => const ExportFileDialog(),
+                    );
+                  }
+                : null,
+            icon: icon!,
+          ),
       ],
     );
   }
