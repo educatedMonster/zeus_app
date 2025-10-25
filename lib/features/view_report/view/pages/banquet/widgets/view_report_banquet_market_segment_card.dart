@@ -2,6 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+
 class ViewReportMarketSegmentCard extends StatelessWidget {
   const ViewReportMarketSegmentCard({super.key});
 
@@ -107,25 +110,12 @@ class ViewReportMarketSegmentCard extends StatelessWidget {
             spacing: 16.0.r,
             children: [
               /// Title and download icon
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Production by Market Segment',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.download_rounded, size: 22.sp),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Production by Market Segment',
+                icon: Icon(Icons.download_rounded, size: 22.sp),
+                onIconPressed: () {
+                  debugPrint('Download icon pressed');
+                },
               ),
 
               /// Chart and Legend
@@ -138,12 +128,15 @@ class ViewReportMarketSegmentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8.0.r,
                     children: [
-                      _buildLegendDot(Colors.red, 'Promotion'),
-                      _buildLegendDot(Colors.blue, 'Direct'),
-                      _buildLegendDot(Colors.orange, 'Corporate'),
-                      _buildLegendDot(Colors.green, 'Government'),
-                      _buildLegendDot(Colors.indigo, 'Travel Agents'),
-                      _buildLegendDot(Colors.brown, 'Others'),
+                      BuildLegendDot(color: Colors.red, label: 'Promotion'),
+                      BuildLegendDot(color: Colors.blue, label: 'Direct'),
+                      BuildLegendDot(color: Colors.orange, label: 'Corporate'),
+                      BuildLegendDot(color: Colors.green, label: 'Government'),
+                      BuildLegendDot(
+                        color: Colors.indigo,
+                        label: 'Travel Agents',
+                      ),
+                      BuildLegendDot(color: Colors.brown, label: 'Others'),
                     ],
                   ),
 
@@ -170,24 +163,6 @@ class ViewReportMarketSegmentCard extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 }

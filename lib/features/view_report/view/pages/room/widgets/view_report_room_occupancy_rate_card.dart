@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+
 class ViewReportRoomOccupancyRateCard extends StatelessWidget {
   const ViewReportRoomOccupancyRateCard({super.key});
 
@@ -35,21 +38,8 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
             spacing: 16.0.r,
             children: [
               /// Title and download icon
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Occupancy Rate',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Occupancy Rate',
               ),
 
               Expanded(
@@ -58,7 +48,8 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
                   lineWidth: lineWidth,
                   percent: .80,
                   animation: true,
-                  animationDuration: 1200, // Duration in milliseconds
+                  animationDuration: 1200,
+                  // Duration in milliseconds
                   startAngle: 180,
                   circularStrokeCap: CircularStrokeCap.round,
                   backgroundColor: const Color(0xFFE9ECF2),
@@ -88,42 +79,14 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 16.0.r,
                 children: [
-                  _buildLegendDot(
-                    color: const Color(0xFF3B4BFF),
-                    label: 'Actual 20/26',
-                  ),
-                  _buildLegendDot(
-                    color: const Color(0xFFD5D9E2),
-                    label: 'Projected 24/26',
-                  ),
+                  BuildLegendDot(color: Colors.blue, label: 'Actual 20/26'),
+                  BuildLegendDot(color: Colors.white, label: 'Income'),
                 ],
               ),
             ],
           );
         },
       ),
-    );
-  }
-
-  Widget _buildLegendDot({required Color color, required String label}) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12.sp,
-            color: Colors.grey[700],
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
     );
   }
 }

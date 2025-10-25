@@ -35,7 +35,7 @@ class DashboardBody extends StatelessWidget {
             Column(
               children: List.generate(
                 1,
-                (i) => DashboardOccupancyRateCard(parentKeyAnimation: '$i'),
+                (i) => DashboardOccupancyRateCard(parentKeyAnimation: '0', childKeyAnimation: '$i'),
               ),
             ),
 

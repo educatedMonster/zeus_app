@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../shared/widgets/animated_bar_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+import '../../../../data/sources/remote/model/finance_bar_data_model.dart';
 
 class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
-  const ViewReportAccountingIncomeExpenseChart({super.key});
+  final String parentKeyAnimation;
+  final String childKeyAnimation;
+  final List<FinanceBarDataModel> financeBarDataModelList;
+
+  const ViewReportAccountingIncomeExpenseChart({
+    super.key,
+    required this.parentKeyAnimation,
+    required this.childKeyAnimation,
+    required this.financeBarDataModelList,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<BarChartGroupData> barGroups = [
-      _makeGroupData(0, 200000, 100000),
-      _makeGroupData(1, 180000, 120000),
-      _makeGroupData(2, 300000, 250000),
-      _makeGroupData(3, 180000, 80000),
-    ];
-
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
@@ -38,7 +42,7 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 24.0.r,
+            spacing: 16.0.r,
             children: [
               /// Title and download icon
               Row(
@@ -62,129 +66,143 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
                 ],
               ),
 
-              /// Legend
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  spacing: 16.0.r,
-                  children: [
-                    _buildLegendDot(Colors.blue, 'Income'),
-                    _buildLegendDot(Colors.orange, 'Expense'),
-                    // Add more if needed
-                  ],
-                ),
-              ),
-
               /// Chart
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 8.0.r,
-                    vertical: 16.0.r,
-                  ),
-                  height: chartSize,
-                  width: MediaQuery.of(context).size.width,
-                  child: AnimatedBarChart(),
-                  // child: BarChart(
-                  //   duration: const Duration(milliseconds: 500),
-                  //   curve: Curves.easeInOut,
-                  //   BarChartData(
-                  //     gridData: FlGridData(
-                  //       show: true,
-                  //       drawVerticalLine: false,
-                  //       getDrawingHorizontalLine: (value) => FlLine(
-                  //         color: Colors.grey.withValues(alpha: 0.2),
-                  //         strokeWidth: 1,
-                  //       ),
-                  //     ),
-                  //     borderData: FlBorderData(show: false),
-                  //     titlesData: FlTitlesData(
-                  //       leftTitles: AxisTitles(
-                  //         sideTitles: SideTitles(
-                  //           showTitles: true,
-                  //           reservedSize: 40.0.r,
-                  //           interval: 200000,
-                  //           getTitlesWidget: (value, meta) {
-                  //             if (value == 0)
-                  //               return Text('0', style: axisTextStyle());
-                  //             if (value == 200000)
-                  //               return Text('200K', style: axisTextStyle());
-                  //             if (value == 400000)
-                  //               return Text('400K', style: axisTextStyle());
-                  //             return const SizedBox.shrink();
-                  //           },
-                  //         ),
-                  //       ),
-                  //       rightTitles: const AxisTitles(
-                  //         sideTitles: SideTitles(showTitles: false),
-                  //       ),
-                  //       topTitles: const AxisTitles(
-                  //         sideTitles: SideTitles(showTitles: false),
-                  //       ),
-                  //       bottomTitles: AxisTitles(
-                  //         sideTitles: SideTitles(
-                  //           showTitles: true,
-                  //           interval: 1,
-                  //           getTitlesWidget: (value, meta) {
-                  //             final labels = ['14', '15', '16', '17'];
-                  //             if (value.toInt() < labels.length) {
-                  //               return Text(
-                  //                 labels[value.toInt()],
-                  //                 style: axisTextStyle(),
-                  //               );
-                  //             }
-                  //             return const SizedBox.shrink();
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     barGroups: barGroups,
-                  //     barTouchData: BarTouchData(
-                  //       enabled: true,
-                  //       touchTooltipData: BarTouchTooltipData(
-                  //         tooltipMargin: 8.0.r,
-                  //         getTooltipColor: (group) => Colors.white,
-                  //         tooltipBorderRadius: BorderRadius.circular(8.r),
-                  //         tooltipPadding: EdgeInsets.all(8.0.r),
-                  //         getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                  //           return BarTooltipItem(
-                  //             '${rod.toY.toStringAsFixed(0)}.00',
-                  //             TextStyle(
-                  //               color: Colors.black87,
-                  //               fontWeight: FontWeight.w600,
-                  //               fontSize: 13.sp,
-                  //             ),
-                  //           );
-                  //         },
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ),
-              ),
+              financeBarDataModelList.isEmpty
+                  ? SizedBox(
+                      height: chartSize,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8.0.r,
+                        children: [
+                          Icon(Icons.bar_chart, color: Colors.grey, size: 48),
+                          const Text(
+                            'No data available',
+                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// Legend
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            spacing: 16.0.r,
+                            children: [
+                              BuildLegendDot(
+                                color: Colors.blue,
+                                label: 'Income',
+                              ),
+                              BuildLegendDot(
+                                color: Colors.orange,
+                                label: 'Expense',
+                              ),
+                              // Add more if needed
+                            ],
+                          ),
+                        ),
+
+                        /// Chart
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 8.0.r,
+                              vertical: 16.0.r,
+                            ),
+                            height: chartSize,
+                            width: MediaQuery.of(context).size.width,
+                            child: AnimatedBarChart(
+                              keyAnimation:
+                                  '$parentKeyAnimation-$childKeyAnimation--view_report_accounting_income_expense_chart',
+                              financeBarDataModelList: financeBarDataModelList,
+                            ),
+                            // child: BarChart(
+                            //   duration: const Duration(milliseconds: 500),
+                            //   curve: Curves.easeInOut,
+                            //   BarChartData(
+                            //     gridData: FlGridData(
+                            //       show: true,
+                            //       drawVerticalLine: false,
+                            //       getDrawingHorizontalLine: (value) => FlLine(
+                            //         color: Colors.grey.withValues(alpha: 0.2),
+                            //         strokeWidth: 1,
+                            //       ),
+                            //     ),
+                            //     borderData: FlBorderData(show: false),
+                            //     titlesData: FlTitlesData(
+                            //       leftTitles: AxisTitles(
+                            //         sideTitles: SideTitles(
+                            //           showTitles: true,
+                            //           reservedSize: 40.0.r,
+                            //           interval: 200000,
+                            //           getTitlesWidget: (value, meta) {
+                            //             if (value == 0)
+                            //               return Text('0', style: axisTextStyle());
+                            //             if (value == 200000)
+                            //               return Text('200K', style: axisTextStyle());
+                            //             if (value == 400000)
+                            //               return Text('400K', style: axisTextStyle());
+                            //             return const SizedBox.shrink();
+                            //           },
+                            //         ),
+                            //       ),
+                            //       rightTitles: const AxisTitles(
+                            //         sideTitles: SideTitles(showTitles: false),
+                            //       ),
+                            //       topTitles: const AxisTitles(
+                            //         sideTitles: SideTitles(showTitles: false),
+                            //       ),
+                            //       bottomTitles: AxisTitles(
+                            //         sideTitles: SideTitles(
+                            //           showTitles: true,
+                            //           interval: 1,
+                            //           getTitlesWidget: (value, meta) {
+                            //             final labels = ['14', '15', '16', '17'];
+                            //             if (value.toInt() < labels.length) {
+                            //               return Text(
+                            //                 labels[value.toInt()],
+                            //                 style: axisTextStyle(),
+                            //               );
+                            //             }
+                            //             return const SizedBox.shrink();
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     barGroups: barGroups,
+                            //     barTouchData: BarTouchData(
+                            //       enabled: true,
+                            //       touchTooltipData: BarTouchTooltipData(
+                            //         tooltipMargin: 8.0.r,
+                            //         getTooltipColor: (group) => Colors.white,
+                            //         tooltipBorderRadius: BorderRadius.circular(8.r),
+                            //         tooltipPadding: EdgeInsets.all(8.0.r),
+                            //         getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                            //           return BarTooltipItem(
+                            //             '${rod.toY.toStringAsFixed(0)}.00',
+                            //             TextStyle(
+                            //               color: Colors.black87,
+                            //               fontWeight: FontWeight.w600,
+                            //               fontSize: 13.sp,
+                            //             ),
+                            //           );
+                            //         },
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                          ),
+                        ),
+                      ],
+                    ),
             ],
           );
         },
       ),
-    );
-  }
-
-  /// Helper for legend dot
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 

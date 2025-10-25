@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../shared/dialogs/pruchase_order_dialog.dart';
+import '../../../../shared/widgets/build_header_chart.dart';
 
 class ApprovalPurchaseOrderDataTableCard extends StatelessWidget {
   const ApprovalPurchaseOrderDataTableCard({super.key});
@@ -68,27 +69,12 @@ class ApprovalPurchaseOrderDataTableCard extends StatelessWidget {
         spacing: 16.0.r,
         children: [
           /// Title and download icon
-          Row(
-            children: [
-              Transform.rotate(
-                angle: 240 * 3 / 180, // convert degrees to radians
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.arrow_downward_outlined, size: 22),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  'Purchase Orders',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
+          BuildHeaderChart(
+            label: 'Purchase Orders',
+            icon: Icon(Icons.download_rounded, size: 22.sp),
+            onIconPressed: () {
+              debugPrint('Download icon pressed');
+            },
           ),
 
           /// Table

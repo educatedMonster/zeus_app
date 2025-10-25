@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+
 class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
   const ViewReportAccountingExpenseTypeCard({super.key});
 
@@ -92,7 +94,6 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
                 ],
               ),
 
-
               /// Chart and Legend
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,9 +104,12 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8.0.r,
                     children: [
-                      _buildLegendDot(Colors.indigo, 'Staff'),
-                      _buildLegendDot(Colors.blue, 'Utility'),
-                      _buildLegendDot(Colors.lightBlueAccent, 'Maintenance'),
+                      BuildLegendDot(color: Colors.indigo, label: 'Staff'),
+                      BuildLegendDot(color: Colors.blue, label: 'Utility'),
+                      BuildLegendDot(
+                        color: Colors.lightBlueAccent,
+                        label: 'Maintenance',
+                      ),
                     ],
                   ),
 
@@ -132,24 +136,6 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 }

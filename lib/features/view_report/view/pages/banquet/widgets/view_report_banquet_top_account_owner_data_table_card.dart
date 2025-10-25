@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+
 class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
   const ViewReportBanquetTopAccountOwnerDataTableCard({super.key});
 
@@ -64,25 +66,12 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
         spacing: 16.0.r,
         children: [
           /// Title and download icon
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  'Top 5 Account Owner',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.download_rounded, size: 22.sp),
-              ),
-            ],
+          BuildHeaderChart(
+            label: 'Top 5 Account Owner',
+            icon: Icon(Icons.download_rounded, size: 22.sp),
+            onIconPressed: () {
+              debugPrint('Download icon pressed');
+            },
           ),
 
           /// Table

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+
 class ViewReportTimekeepingLateCard extends StatelessWidget {
   const ViewReportTimekeepingLateCard({super.key});
 
@@ -35,29 +38,17 @@ class ViewReportTimekeepingLateCard extends StatelessWidget {
           final chartSize = constraints.maxWidth; // card width
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 8.0.r,
+            spacing: 16.0.r,
             children: [
               /// Title and download icon
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: _buildLegendDot(Colors.orange, 'Lates')),
-
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.download_rounded, size: 22.sp),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '15 were located late on this period.',
-                    style: TextStyle(fontSize: 10.0.sp, color: Colors.black54),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Lates',
+                color: Colors.orange,
+                caption: '15 were located late on this period',
+                icon: Icon(Icons.download_rounded, size: 22.sp),
+                onIconPressed: () {
+                  debugPrint('Download icon pressed');
+                },
               ),
 
               /// Data Table
@@ -122,7 +113,9 @@ class ViewReportTimekeepingLateCard extends StatelessWidget {
                       ),
                     ],
                     rows: data.map((i) {
-                      int index = data.indexWhere((d) => d['name'] == i['name']);
+                      int index = data.indexWhere(
+                        (d) => d['name'] == i['name'],
+                      );
                       final item = data[index];
                       final isEven = index.isEven;
 
@@ -138,8 +131,12 @@ class ViewReportTimekeepingLateCard extends StatelessWidget {
                         }),
                         cells: [
                           DataCell(Text(item['name'].toString())),
-                          DataCell(Center(child: Text(item['days'].toString()))),
-                          DataCell(Center(child: Text(item['mins'].toString()))),
+                          DataCell(
+                            Center(child: Text(item['days'].toString())),
+                          ),
+                          DataCell(
+                            Center(child: Text(item['mins'].toString())),
+                          ),
                         ],
                       );
                     }).toList(),
@@ -150,30 +147,6 @@ class ViewReportTimekeepingLateCard extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Expanded(
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.bold,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
     );
   }
 }

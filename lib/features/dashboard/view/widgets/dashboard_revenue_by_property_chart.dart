@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../shared/widgets/build_header_chart.dart';
+import '../../../../shared/widgets/build_legend_dot.dart';
 
 class DashboardRevenueByPropertyChart extends StatelessWidget {
   const DashboardRevenueByPropertyChart({super.key});
@@ -29,21 +31,12 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
         spacing: 24.0.r,
         children: [
           /// Title and download icon
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  'Revenue by Property',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
+          BuildHeaderChart(
+            label: 'Revenue by Property',
+            icon: Icon(Icons.download_rounded, size: 22.sp),
+            onIconPressed: () {
+              debugPrint('Download icon pressed');
+            },
           ),
 
           /// Legend
@@ -52,9 +45,9 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
             child: Row(
               spacing: 16.0.r,
               children: [
-                _buildLegendDot(Colors.blue, 'Property A'),
-                _buildLegendDot(Colors.orange, 'Property B'),
-                _buildLegendDot(Colors.teal, 'Property C'),
+                BuildLegendDot(color: Colors.blue, label: 'Property A'),
+                BuildLegendDot(color: Colors.orange, label: 'Property B'),
+                BuildLegendDot(color: Colors.teal, label: 'Property C'),
                 // Add more if needed
               ],
             ),
@@ -84,9 +77,12 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
                         reservedSize: 40.0.r,
                         interval: 200000,
                         getTitlesWidget: (value, meta) {
-                          if (value == 0) return Text('0', style: axisTextStyle());
-                          if (value == 200000) return Text('200K', style: axisTextStyle());
-                          if (value == 400000) return Text('400K', style: axisTextStyle());
+                          if (value == 0)
+                            return Text('0', style: axisTextStyle());
+                          if (value == 200000)
+                            return Text('200K', style: axisTextStyle());
+                          if (value == 400000)
+                            return Text('400K', style: axisTextStyle());
                           return const SizedBox.shrink();
                         },
                       ),
@@ -145,24 +141,6 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  /// Helper for legend dot
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 

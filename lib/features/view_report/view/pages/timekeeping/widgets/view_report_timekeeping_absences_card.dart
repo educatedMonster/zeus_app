@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+
 class ViewReportTimekeepingAbsencesCard extends StatelessWidget {
   const ViewReportTimekeepingAbsencesCard({super.key});
 
@@ -38,26 +41,14 @@ class ViewReportTimekeepingAbsencesCard extends StatelessWidget {
             spacing: 8.0.r,
             children: [
               /// Title and download icon
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: _buildLegendDot(Colors.red, 'Absences')),
-
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.download_rounded, size: 22.sp),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '20 were located absent on this period.',
-                    style: TextStyle(fontSize: 10.0.sp, color: Colors.black54),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Absences',
+                color: Colors.red,
+                caption: '20 were located absent on this period',
+                icon: Icon(Icons.download_rounded, size: 22.sp),
+                onIconPressed: () {
+                  debugPrint('Download icon pressed');
+                },
               ),
 
               /// Data Table
@@ -156,28 +147,6 @@ class ViewReportTimekeepingAbsencesCard extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  /// Helper for legend dot
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Expanded(
-          child: Text(
-            label,
-            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
     );
   }
 }

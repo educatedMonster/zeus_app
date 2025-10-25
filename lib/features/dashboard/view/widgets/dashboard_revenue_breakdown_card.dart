@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../shared/widgets/build_legend_dot.dart';
 import '../../../../shared/widgets/pie_chart_badge.dart';
 import '../../data/sources/remote/model/pie_chart_section_model.dart';
 
@@ -20,9 +21,24 @@ class _DashboardRevenueBreakdownCardState
   @override
   Widget build(BuildContext context) {
     final List<PieChartSectionModel> sections = [
-      PieChartSectionModel(title: 'Rooms', badge: '65%', value: 65, color: Color(0xFF3B4BFF)),
-      PieChartSectionModel(title: 'Banquet', badge: '20%', value: 20, color: Color(0xFFFFA53B)),
-      PieChartSectionModel(title: 'Coffee Shop', badge: '15%', value: 15, color: Color(0xFF2DB7A3)),
+      PieChartSectionModel(
+        title: 'Rooms',
+        badge: '65%',
+        value: 65,
+        color: Color(0xFF3B4BFF),
+      ),
+      PieChartSectionModel(
+        title: 'Banquet',
+        badge: '20%',
+        value: 20,
+        color: Color(0xFFFFA53B),
+      ),
+      PieChartSectionModel(
+        title: 'Coffee Shop',
+        badge: '15%',
+        value: 15,
+        color: Color(0xFF2DB7A3),
+      ),
     ];
 
     List<PieChartSectionData> showingSections() {
@@ -103,9 +119,9 @@ class _DashboardRevenueBreakdownCardState
                         child: InkWell(
                           onTapDown: (_) => setState(() => touchedIndex = index),
                           onTapUp: (_) => setState(() => touchedIndex = -1),
-                          child: _buildLegendDot(
-                            section.color,
-                            section.title,
+                          child: BuildLegendDot(
+                            color: section.color,
+                            label: section.title,
                           ),
                         ),
                       );
@@ -152,24 +168,6 @@ class _DashboardRevenueBreakdownCardState
           );
         },
       ),
-    );
-  }
-
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 }

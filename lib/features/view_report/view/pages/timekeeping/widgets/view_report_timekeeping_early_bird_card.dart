@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+
 class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
   const ViewReportTimekeepingEarlyBirdCard({super.key});
 
@@ -35,32 +38,17 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
           final chartSize = constraints.maxWidth; // card width
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 8.0.r,
+            spacing: 16.0.r,
             children: [
               /// Title and download icon
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: _buildLegendDot(Colors.green, 'Early Birds'),
-                      ),
-
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.download_rounded, size: 22.sp),
-                      ),
-                    ],
-                  ),
-
-                  Text(
-                    'Ranking of early time in for this period.',
-                    style: TextStyle(fontSize: 10.0.sp, color: Colors.black54),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Early Birds',
+                color: Colors.green,
+                caption: 'Ranking of early time in for this period',
+                icon: Icon(Icons.download_rounded, size: 22.sp),
+                onIconPressed: () {
+                  debugPrint('Download icon pressed');
+                },
               ),
 
               /// Data Table
@@ -159,27 +147,6 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Expanded(
-          child: Text(
-            label,
-            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
     );
   }
 }

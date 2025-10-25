@@ -2,6 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
+
 class ViewReportBanquetBusinessSourceCard extends StatelessWidget {
   const ViewReportBanquetBusinessSourceCard({super.key});
 
@@ -107,25 +110,12 @@ class ViewReportBanquetBusinessSourceCard extends StatelessWidget {
             spacing: 16.0.r,
             children: [
               /// Title and download icon
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Production by Business Source',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.download_rounded, size: 22.sp),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Production by Business Source',
+                icon: Icon(Icons.download_rounded, size: 22.sp),
+                onIconPressed: () {
+                  debugPrint('Download icon pressed');
+                },
               ),
 
               /// Chart and Legend
@@ -138,12 +128,12 @@ class ViewReportBanquetBusinessSourceCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8.0.r,
                     children: [
-                      _buildLegendDot(Colors.red, 'Email'),
-                      _buildLegendDot(Colors.blue, 'Website'),
-                      _buildLegendDot(Colors.orange, 'Phone Call'),
-                      _buildLegendDot(Colors.green, 'Expo'),
-                      _buildLegendDot(Colors.indigo, 'Social'),
-                      _buildLegendDot(Colors.brown, 'Others'),
+                      BuildLegendDot(color: Colors.red, label: 'Email'),
+                      BuildLegendDot(color: Colors.blue, label: 'Website'),
+                      BuildLegendDot(color: Colors.orange, label: 'Phone Call'),
+                      BuildLegendDot(color: Colors.green, label: 'Expo'),
+                      BuildLegendDot(color: Colors.indigo, label: 'Social'),
+                      BuildLegendDot(color: Colors.brown, label: 'Others'),
                     ],
                   ),
 
@@ -170,24 +160,6 @@ class ViewReportBanquetBusinessSourceCard extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 }

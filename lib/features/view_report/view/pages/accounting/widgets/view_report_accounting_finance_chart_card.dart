@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../shared/widgets/animated_finance_line_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
 import '../../../../data/sources/remote/model/finance_line_data_model.dart';
 import '../../../../data/sources/remote/model/legend_item_model.dart';
 
@@ -136,13 +137,13 @@ class _ViewReportAccountingFinanceChartCardState
                       padding: EdgeInsets.only(right: 16.0.r),
                       child: InkWell(
                         onTap: () => _onLegendTap(item.index),
-                        child: _buildLegendDot(
-                          _selectedIndex == -1
+                        child: BuildLegendDot(
+                          color: _selectedIndex == -1
                               ? item.color
                               : _selectedIndex == item.index
                               ? item.color
                               : Colors.grey,
-                          item.label,
+                          label: item.label,
                         ),
                       ),
                     );
@@ -163,24 +164,6 @@ class _ViewReportAccountingFinanceChartCardState
           );
         },
       ),
-    );
-  }
-
-  /// Build colored dot + label for legend
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        SizedBox(width: 8.0.r),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 

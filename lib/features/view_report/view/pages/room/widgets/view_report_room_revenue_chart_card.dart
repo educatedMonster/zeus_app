@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../shared/widgets/animated_revenue_line_chart.dart';
+import '../../../../../../shared/widgets/build_header_chart.dart';
 
 class ViewReportRoomRevenueChartCard extends StatelessWidget {
   const ViewReportRoomRevenueChartCard({super.key});
@@ -58,25 +59,12 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
             spacing: 16.0.r,
             children: [
               /// Title and download icon
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Revenue Chart',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.download_rounded, size: 22.sp),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Revenue Chart',
+                icon: Icon(Icons.download_rounded, size: 22.sp),
+                onIconPressed: () {
+                  debugPrint('Download icon pressed');
+                },
               ),
 
               Row(

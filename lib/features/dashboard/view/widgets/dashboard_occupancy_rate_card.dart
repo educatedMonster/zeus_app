@@ -6,10 +6,12 @@ import '../../../view_report/data/sources/remote/model/progress_ chart_model.dar
 
 class DashboardOccupancyRateCard extends StatelessWidget {
   final String parentKeyAnimation;
+  final String childKeyAnimation;
 
   const DashboardOccupancyRateCard({
     super.key,
     required this.parentKeyAnimation,
+    required this.childKeyAnimation,
   });
 
   @override
@@ -88,7 +90,7 @@ class DashboardOccupancyRateCard extends StatelessWidget {
                   SizedBox(height: 16.0.r),
 
                   _buildProgressCard(
-                    keyAnimation: '$parentKeyAnimation-dashboard_occupancy_rate_card-$index',
+                    keyAnimation: '$parentKeyAnimation-$childKeyAnimation-dashboard_occupancy_rate_card-$index',
                     title: item.title,
                     progressColor: item.progressColor,
                     backgroundColor: item.progressBGColor,

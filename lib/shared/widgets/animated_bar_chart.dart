@@ -1,23 +1,33 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../core/constants/app_text_styles.dart';
 import '../../features/view_report/data/sources/remote/model/finance_bar_data_model.dart';
+import '../components/get_animated_bar_char_group.dart';
 
 class AnimatedBarChart extends StatefulWidget {
-  const AnimatedBarChart({super.key});
+  final String keyAnimation;
+  final List<FinanceBarDataModel> financeBarDataModelList;
+
+  const AnimatedBarChart({
+    super.key,
+    required this.financeBarDataModelList,
+    required this.keyAnimation,
+  });
 
   @override
   State<AnimatedBarChart> createState() => _AnimatedBarChartState();
 }
 
 class _AnimatedBarChartState extends State<AnimatedBarChart>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   List<FinanceBarDataModel> _list = [];
   late List<BarChartGroupData> _rawBarGroups;
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late AnimationController _barController;
+  late Animation<double> _barAnimation;
+  bool _hasAnimated = false; // Prevents repeating animation
   final double width = 16.0.r;
   int touchedGroupIndex = -1;
   double _maxValue = 0.0;
@@ -28,15 +38,7 @@ class _AnimatedBarChartState extends State<AnimatedBarChart>
   void initState() {
     super.initState();
 
-    _list = [
-      FinanceBarDataModel(label: '1', order: 0, a: 5, b: 2),
-      FinanceBarDataModel(label: '2', order: 1, a: 16, b: 12),
-      FinanceBarDataModel(label: '3', order: 2, a: 18, b: 5),
-      FinanceBarDataModel(label: '4', order: 4, a: 17, b: 6),
-      FinanceBarDataModel(label: '5', order: 5, a: 19, b: 1.5),
-      FinanceBarDataModel(label: '6', order: 6, a: 10, b: 1.5),
-      FinanceBarDataModel(label: '7', order: 7, a: 30, b: 1.5),
-    ];
+    _list = widget.financeBarDataModelList;
 
     _rawBarGroups = _list
         .map((e) => _makeGroupData(e.order, e.a, e.b))
@@ -55,156 +57,163 @@ class _AnimatedBarChartState extends State<AnimatedBarChart>
     _averages = [0, _step, 2 * _step, _maxValue];
 
     // Setup animation controller for 1 second
-    _controller = AnimationController(
+    _barController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     );
 
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+    _barAnimation = CurvedAnimation(
+      parent: _barController,
+      curve: Curves.easeOut,
+    );
+  }
 
+  void _startAnimation() {
+    if (_hasAnimated) return;
+    _hasAnimated = true;
     // Start the animation
-    _controller.forward();
+    _barController.forward();
 
     // Listen to animation updates and rebuild
-    _controller.addListener(() {
+    _barController.addListener(() {
       setState(() {});
     });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _barController.dispose();
     super.dispose();
-  }
-
-  List<BarChartGroupData> get animatedBarGroups {
-    // Multiply each bar height by animation progress (0.0 to 1.0)
-    return _rawBarGroups.map((group) {
-      return group.copyWith(
-        barRods: group.barRods.map((rod) {
-          return rod.copyWith(toY: rod.toY * _animation.value);
-        }).toList(),
-      );
-    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BarChart(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-      BarChartData(
-        groupsSpace: 30, // space between each BarChartGroupData
-        gridData: FlGridData(
-          show: true,
-          drawVerticalLine: false,
-          getDrawingHorizontalLine: (value) =>
-              FlLine(color: Colors.grey.withValues(alpha: 0.2), strokeWidth: 1),
-        ),
-        borderData: FlBorderData(show: false),
-        titlesData: FlTitlesData(
-          show: true,
-          leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 40.0.r,
-              interval: 10,
-              getTitlesWidget: (value, meta) {
-                final labels = _averages.map((e) => e).toList();
-                if (value < labels.length) {
-                  return Text(
-                    '${labels[value.toInt()]}',
-                    style: axisTextStyle(),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
+    return VisibilityDetector(
+      key: Key(widget.keyAnimation),
+      onVisibilityChanged: (info) {
+        if (info.visibleFraction > 0.1) {
+          _startAnimation();
+        }
+      },
+      child: BarChart(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+        BarChartData(
+          groupsSpace: 30,
+          // space between each BarChartGroupData
+          gridData: FlGridData(
+            show: true,
+            drawVerticalLine: false,
+            getDrawingHorizontalLine: (value) => FlLine(
+              color: Colors.grey.withValues(alpha: 0.2),
+              strokeWidth: 1,
             ),
           ),
-          rightTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          topTitles: AxisTitles(
-            sideTitles: SideTitles(reservedSize: 40.0.r, showTitles: false),
-          ),
-          bottomTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              interval: 10,
-              getTitlesWidget: (value, meta) {
-                final labels = _list.map((e) => e.label).toList();
-                if (value.toInt() < labels.length) {
-                  return Text(labels[value.toInt()], style: axisTextStyle());
-                }
-                return const SizedBox.shrink();
-              },
+          borderData: FlBorderData(show: false),
+          titlesData: FlTitlesData(
+            show: true,
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 40.0.r,
+                interval: 10,
+                getTitlesWidget: (value, meta) {
+                  final labels = _averages.map((e) => e).toList();
+                  if (value < labels.length) {
+                    return Text(
+                      '${labels[value.toInt()]}',
+                      style: axisTextStyle(),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            topTitles: AxisTitles(
+              sideTitles: SideTitles(reservedSize: 40.0.r, showTitles: false),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: 10,
+                getTitlesWidget: (value, meta) {
+                  final labels = _list.map((e) => e.label).toList();
+                  if (value.toInt() < labels.length) {
+                    return Text(labels[value.toInt()], style: axisTextStyle());
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
             ),
           ),
-        ),
-        barGroups: animatedBarGroups,
-        barTouchData: BarTouchData(
-          enabled: true,
-          touchTooltipData: BarTouchTooltipData(
-            tooltipMargin: 8.0.r,
-            getTooltipColor: (group) => Colors.white,
-            tooltipBorderRadius: BorderRadius.circular(8.r),
-            tooltipPadding: EdgeInsets.all(8.0.r),
-            getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              return BarTooltipItem(
-                '${rod.toY.toStringAsFixed(0)}.00',
-                TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13.sp,
-                ),
-              );
+          barGroups: getAnimatedBarGroups(_rawBarGroups, _barAnimation),
+          barTouchData: BarTouchData(
+            enabled: true,
+            touchTooltipData: BarTouchTooltipData(
+              tooltipMargin: 8.0.r,
+              getTooltipColor: (group) => Colors.white,
+              tooltipBorderRadius: BorderRadius.circular(8.r),
+              tooltipPadding: EdgeInsets.all(8.0.r),
+              getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                return BarTooltipItem(
+                  '${rod.toY.toStringAsFixed(0)}.00',
+                  TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13.sp,
+                  ),
+                );
+              },
+            ),
+            touchCallback: (FlTouchEvent event, response) {
+              // if (response == null || response.spot == null) {
+              //   setState(() {
+              //     touchedGroupIndex = -1;
+              //   });
+              //   return;
+              // }
+              // touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+              //
+              // setState(() {
+              //   if (!event.isInterestedForInteractions) {
+              //     touchedGroupIndex = -1;
+              //     return;
+              //   }
+              //   if (touchedGroupIndex != -1) {
+              //     var sum = 0.0;
+              //     for (final rod
+              //         in rawBarGroups[touchedGroupIndex].barRods) {
+              //       sum += rod.toY;
+              //     }
+              //     final avg =
+              //         sum /
+              //         rawBarGroups[touchedGroupIndex].barRods.length;
+              //
+              //     rawBarGroups[touchedGroupIndex] =
+              //         rawBarGroups[touchedGroupIndex].copyWith(
+              //           barRods: rawBarGroups[touchedGroupIndex].barRods
+              //               .map((rod) {
+              //                 return rod.copyWith(
+              //                   toY: avg,
+              //                   color: Colors.grey,
+              //                 );
+              //               })
+              //               .toList(),
+              //         );
+              //
+              //     // Restart animation to animate the change
+              //     _controller.reset();
+              //     _controller.forward();
+              //   }
+              // });
             },
           ),
-          touchCallback: (FlTouchEvent event, response) {
-            // if (response == null || response.spot == null) {
-            //   setState(() {
-            //     touchedGroupIndex = -1;
-            //   });
-            //   return;
-            // }
-            // touchedGroupIndex = response.spot!.touchedBarGroupIndex;
-            //
-            // setState(() {
-            //   if (!event.isInterestedForInteractions) {
-            //     touchedGroupIndex = -1;
-            //     return;
-            //   }
-            //   if (touchedGroupIndex != -1) {
-            //     var sum = 0.0;
-            //     for (final rod
-            //         in rawBarGroups[touchedGroupIndex].barRods) {
-            //       sum += rod.toY;
-            //     }
-            //     final avg =
-            //         sum /
-            //         rawBarGroups[touchedGroupIndex].barRods.length;
-            //
-            //     rawBarGroups[touchedGroupIndex] =
-            //         rawBarGroups[touchedGroupIndex].copyWith(
-            //           barRods: rawBarGroups[touchedGroupIndex].barRods
-            //               .map((rod) {
-            //                 return rod.copyWith(
-            //                   toY: avg,
-            //                   color: Colors.grey,
-            //                 );
-            //               })
-            //               .toList(),
-            //         );
-            //
-            //     // Restart animation to animate the change
-            //     _controller.reset();
-            //     _controller.forward();
-            //   }
-            // });
-          },
+          maxY:
+              _maxValue, // IMPORTANT . This will help the animation makes smoother
         ),
-        maxY:
-            _maxValue, // IMPORTANT . This will help the animation makes smoother
       ),
     );
   }
@@ -218,7 +227,7 @@ class _AnimatedBarChartState extends State<AnimatedBarChart>
         BarChartRodData(
           toY: a,
           color: Colors.indigo,
-          width: 15,  // width of each rod
+          width: 15, // width of each rod
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(4.r),
             topRight: Radius.circular(4.r),
@@ -227,7 +236,7 @@ class _AnimatedBarChartState extends State<AnimatedBarChart>
         BarChartRodData(
           toY: b,
           color: Colors.orange,
-          width: 15,  // width of each rod
+          width: 15, // width of each rod
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(4.r),
             topRight: Radius.circular(4.r),

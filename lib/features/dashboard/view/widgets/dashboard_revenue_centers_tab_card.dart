@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../shared/widgets/build_header_chart.dart';
+
 class DashboardRevenueCentersTabCard extends StatefulWidget {
   const DashboardRevenueCentersTabCard({super.key});
 
@@ -52,21 +54,8 @@ class _DashboardRevenueCentersTabCardState
         spacing: 16.0.r,
         children: [
           /// Title and download icon
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  'Revenue Centers',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
+          BuildHeaderChart(
+            label: 'Revenue Centers',
           ),
 
           /// Dropdown

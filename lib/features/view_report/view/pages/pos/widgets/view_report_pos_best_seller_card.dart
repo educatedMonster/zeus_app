@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/build_header_chart.dart';
+
 class ViewReportPosBestSellerCard extends StatelessWidget {
   const ViewReportPosBestSellerCard({super.key});
 
@@ -33,25 +35,12 @@ class ViewReportPosBestSellerCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// Title and download icon
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  'Best Sellers',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.download_rounded, size: 22.sp),
-              ),
-            ],
+          BuildHeaderChart(
+            label: 'Best Sellers',
+            icon: Icon(Icons.download_rounded, size: 22.sp),
+            onIconPressed: () {
+              debugPrint('Download icon pressed');
+            },
           ),
 
           SizedBox(height: 16),

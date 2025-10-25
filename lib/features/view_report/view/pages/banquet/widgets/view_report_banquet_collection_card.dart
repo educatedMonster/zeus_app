@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../core/constants/app_text_styles.dart';
+import '../../../../../../shared/widgets/build_header_chart.dart';
+import '../../../../../../shared/widgets/build_legend_dot.dart';
 
 class ViewReportBanquetCollectionCard extends StatelessWidget {
   const ViewReportBanquetCollectionCard({super.key});
@@ -45,25 +47,12 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
         spacing: 24.0.r,
         children: [
           /// Title and download icon
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  'Total Collection per Date',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.download_rounded, size: 22.sp),
-              ),
-            ],
+          BuildHeaderChart(
+            label: 'Total Collection per Date',
+            icon: Icon(Icons.download_rounded, size: 22.sp),
+            onIconPressed: () {
+              debugPrint('Download icon pressed');
+            },
           ),
 
           /// Legend
@@ -72,10 +61,10 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
             child: Row(
               spacing: 16.0.r,
               children: [
-                _buildLegendDot(Colors.red, 'Cash'),
-                _buildLegendDot(Colors.orange, 'Card'),
-                _buildLegendDot(Colors.teal, 'Others'),
-                _buildLegendDot(Colors.indigo, 'Total'),
+                BuildLegendDot(color: Colors.red, label: 'Cash'),
+                BuildLegendDot(color: Colors.orange, label: 'Card'),
+                BuildLegendDot(color: Colors.teal, label: 'Others'),
+                BuildLegendDot(color: Colors.indigo, label: 'Total'),
               ],
             ),
           ),
@@ -175,24 +164,6 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  /// Helper for legend dot
-  Widget _buildLegendDot(Color color, String label) {
-    return Row(
-      spacing: 8.0.r,
-      children: [
-        Container(
-          width: 10.0.r,
-          height: 10.0.r,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        Text(
-          label,
-          style: TextStyle(fontSize: 13.sp, color: Colors.black87),
-        ),
-      ],
     );
   }
 
