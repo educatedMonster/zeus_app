@@ -6,6 +6,7 @@ import 'package:zeus_app/features/report/viewmodel/report_view_model.dart';
 import 'package:zeus_app/features/view_report/viewmodel/view_report_view_model.dart';
 
 import '../features/dashboard/viewmodel/dashboard_view_model.dart';
+import '../shared/viewmodels/date_picker_view_model.dart';
 import 'app.dart';
 
 void main() {
@@ -14,6 +15,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ApprovalViewModel()),
     ChangeNotifierProvider(create: (_) => ReportViewModel()),
     ChangeNotifierProvider(create: (_) => ViewReportViewModel()),
+    ChangeNotifierProvider(create: (_) => DatePickerViewModel()),
   ]; //
 
   runApp(MultiProvider(providers: registerProviders, child: MyApp()));

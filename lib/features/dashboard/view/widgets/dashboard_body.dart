@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'dashboard_date_picker.dart';
+import '../../../../shared/widgets/date_picker.dart';
 import 'dashboard_occupancy_rate_card.dart';
 import 'dashboard_revenue_breakdown_card.dart';
 import 'dashboard_revenue_by_property_chart.dart';
@@ -23,7 +23,7 @@ class DashboardBody extends StatelessWidget {
           spacing: 8.0.r,
           children: [
             /// DATE
-            DashboardDatePicker(),
+            DatePicker(),
 
             /// REVENUE SUMMARY CARD
             DashboardRevenueCard(),

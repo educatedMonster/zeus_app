@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../dashboard/view/widgets/dashboard_date_picker.dart';
+import '../../../../../../shared/widgets/breadcrumbs_property.dart';
+import '../../../../../../shared/widgets/date_picker.dart';
 import 'view_report_pos_best_seller_card.dart';
 import 'view_report_pos_sales_card.dart';
 import 'view_report_pos_summary_grid_card.dart';
@@ -19,36 +20,10 @@ class ViewReportPosBody extends StatelessWidget {
         spacing: 8.0.r,
         children: [
           /// DATE
-          DashboardDatePicker(),
+          DatePicker(),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              spacing: 8.0.r,
-              children: [
-                Transform.rotate(
-                  angle: 120 * 3 / 180, // convert degrees to radians
-                  child: Icon(Icons.link_off, size: 16.0.r),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Property',
-                      style: TextStyle(color: Colors.black87, fontSize: 14.0.sp),
-                    ),
-                    Text(
-                      ' / ',
-                      style: TextStyle(color: Colors.black87, fontSize: 14.0.sp),
-                    ),
-                    Text(
-                      'POS',
-                      style: TextStyle(color: Colors.black87, fontSize: 14.0.sp),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          /// BREADCRUMBS
+          BreadcrumbsProperty(property: '{Property #}', moduleName: 'POS'),
 
           /// REPORT SALES CARD
           ViewReportPosSalesCard(),

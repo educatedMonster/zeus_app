@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeus_app/core/constants/app_strings.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
+import '../../../../../shared/viewmodels/date_picker_view_model.dart';
 import '../../../viewmodel/view_report_view_model.dart';
 import 'widgets/view_report_room_app_bar.dart';
 import 'widgets/view_report_room_body.dart';
@@ -23,6 +25,14 @@ class _ViewReportRoomPageState extends State<ViewReportRoomPage> {
 
   void _incrementCounter() {
     _viewReportViewModel.incrementCounter();
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<DatePickerViewModel>().resetDate();
+    });
+    super.initState();
   }
 
   @override
