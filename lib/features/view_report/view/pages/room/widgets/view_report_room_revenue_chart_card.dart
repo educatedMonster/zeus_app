@@ -21,10 +21,10 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
     final List<LineChartBarData> revenueLineBarsData = [
       LineChartBarData(
         isCurved: true,
-        dashArray: [1, 2, 4],
-        curveSmoothness: 0.35,
+        // dashArray: [1, 2, 4],
+        curveSmoothness: 0.50,
         preventCurveOverShooting: true,
-        color: Colors.blue,
+        color: Colors.indigo,
         barWidth: 2,
         gradientArea: LineChartGradientArea.rectAroundTheLine,
         dotData: FlDotData(show: true),

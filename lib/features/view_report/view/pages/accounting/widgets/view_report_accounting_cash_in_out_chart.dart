@@ -1,19 +1,24 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
 
 import '../../../../../../core/constants/app_text_styles.dart';
+import '../../../../../../shared/widgets/animated_cash_in_out_bar_chart.dart';
+import '../../../../../../shared/widgets/animated_income_expense_bar_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
 
 class ViewReportAccountingCashInOutChart extends StatelessWidget {
   final String parentKeyAnimation;
   final String childKeyAnimation;
+  final List<CashInOutBarDataModel> cashInOutBarDataModelList;
 
   const ViewReportAccountingCashInOutChart({
     super.key,
     required this.parentKeyAnimation,
     required this.childKeyAnimation,
+    required this.cashInOutBarDataModelList,
   });
 
   @override
@@ -36,7 +41,7 @@ class ViewReportAccountingCashInOutChart extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           // Dynamically size the chart based on card width
-          final chartSize = constraints.maxWidth * 0.40; // 45% of card width
+          final chartSize = constraints.maxWidth * 0.60; // 45% of card width
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,146 +57,158 @@ class ViewReportAccountingCashInOutChart extends StatelessWidget {
               ),
 
               /// Chart
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 24.0.r,
-                children: [
-                  /// Legend
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      spacing: 16.0.r,
-                      children: [
-                        BuildLegendDot(color: Colors.blue, label: 'Cash in'),
-                        BuildLegendDot(color: Colors.orange, label: 'Cash out'),
-                        // Add more if needed
-                      ],
-                    ),
-                  ),
-                  /// Chart
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 8.0.r,
-                        vertical: 16.0.r,
-                      ),
+              cashInOutBarDataModelList.isEmpty
+                  ? SizedBox(
                       height: chartSize,
-                      width: constraints.maxWidth,
-                      child: BarChart(
-                        BarChartData(
-                          gridData: FlGridData(
-                            show: true,
-                            drawVerticalLine: false,
-                            getDrawingHorizontalLine: (value) => FlLine(
-                              color: Colors.grey.withValues(alpha: 0.2),
-                              strokeWidth: 1,
-                            ),
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8.0.r,
+                        children: [
+                          Icon(Icons.bar_chart, color: Colors.grey, size: 48),
+                          const Text(
+                            'No data available',
+                            style: TextStyle(color: Colors.grey, fontSize: 16),
                           ),
-                          borderData: FlBorderData(show: false),
-                          titlesData: FlTitlesData(
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 40.0.r,
-                                interval: 200000,
-                                getTitlesWidget: (value, meta) {
-                                  if (value == 0)
-                                    return Text('0', style: axisTextStyle());
-                                  if (value == 200000)
-                                    return Text('200K', style: axisTextStyle());
-                                  if (value == 400000)
-                                    return Text('400K', style: axisTextStyle());
-                                  return const SizedBox.shrink();
-                                },
+                        ],
+                      ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 24.0.r,
+                      children: [
+                        /// Legend
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            spacing: 16.0.r,
+                            children: [
+                              BuildLegendDot(
+                                color: Colors.blue,
+                                label: 'Cash in',
                               ),
-                            ),
-                            rightTitles: const AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                            topTitles: const AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                interval: 1,
-                                getTitlesWidget: (value, meta) {
-                                  final labels = ['14', '15', '16', '17'];
-                                  if (value.toInt() < labels.length) {
-                                    return Text(
-                                      labels[value.toInt()],
-                                      style: axisTextStyle(),
-                                    );
-                                  }
-                                  return const SizedBox.shrink();
-                                },
+                              BuildLegendDot(
+                                color: Colors.orange,
+                                label: 'Cash out',
                               ),
-                            ),
-                          ),
-                          barGroups: [
-                            _makeGroupData(0, 200000, 100000),
-                            _makeGroupData(1, 180000, 120000),
-                            _makeGroupData(2, 300000, 250000),
-                            _makeGroupData(3, 180000, 80000),
-                          ],
-                          barTouchData: BarTouchData(
-                            enabled: true,
-                            touchTooltipData: BarTouchTooltipData(
-                              tooltipMargin: 8.0.r,
-                              getTooltipColor: (group) => Colors.white,
-                              tooltipBorderRadius: BorderRadius.circular(8.r),
-                              tooltipPadding: EdgeInsets.all(8.0.r),
-                              getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                                return BarTooltipItem(
-                                  '${rod.toY.toStringAsFixed(0)}.00',
-                                  TextStyle(
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13.sp,
-                                  ),
-                                );
-                              },
-                            ),
+                              // Add more if needed
+                            ],
                           ),
                         ),
-                      ),
+
+                        /// Chart
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 8.0.r,
+                              vertical: 16.0.r,
+                            ),
+                            height: chartSize,
+                            width: constraints.maxWidth,
+                            child: AnimatedCashInOutBarChart(
+                              keyAnimation:
+                              '$parentKeyAnimation-$childKeyAnimation-view_report_accounting_cash_in_out_chart',
+                              list: cashInOutBarDataModelList,
+                            ),
+                            // child: BarChart(
+                            //   BarChartData(
+                            //     gridData: FlGridData(
+                            //       show: true,
+                            //       drawVerticalLine: false,
+                            //       getDrawingHorizontalLine: (value) => FlLine(
+                            //         color: Colors.grey.withValues(alpha: 0.2),
+                            //         strokeWidth: 1,
+                            //       ),
+                            //     ),
+                            //     borderData: FlBorderData(show: false),
+                            //     titlesData: FlTitlesData(
+                            //       leftTitles: AxisTitles(
+                            //         sideTitles: SideTitles(
+                            //           showTitles: true,
+                            //           reservedSize: 40.0.r,
+                            //           interval: 200000,
+                            //           getTitlesWidget: (value, meta) {
+                            //             if (value == 0)
+                            //               return Text(
+                            //                 '0',
+                            //                 style: axisTextStyle(),
+                            //               );
+                            //             if (value == 200000)
+                            //               return Text(
+                            //                 '200K',
+                            //                 style: axisTextStyle(),
+                            //               );
+                            //             if (value == 400000)
+                            //               return Text(
+                            //                 '400K',
+                            //                 style: axisTextStyle(),
+                            //               );
+                            //             return const SizedBox.shrink();
+                            //           },
+                            //         ),
+                            //       ),
+                            //       rightTitles: const AxisTitles(
+                            //         sideTitles: SideTitles(showTitles: false),
+                            //       ),
+                            //       topTitles: const AxisTitles(
+                            //         sideTitles: SideTitles(showTitles: false),
+                            //       ),
+                            //       bottomTitles: AxisTitles(
+                            //         sideTitles: SideTitles(
+                            //           showTitles: true,
+                            //           interval: 1,
+                            //           getTitlesWidget: (value, meta) {
+                            //             final labels = ['14', '15', '16', '17'];
+                            //             if (value.toInt() < labels.length) {
+                            //               return Text(
+                            //                 labels[value.toInt()],
+                            //                 style: axisTextStyle(),
+                            //               );
+                            //             }
+                            //             return const SizedBox.shrink();
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     barGroups: [
+                            //       _makeGroupData(0, 200000, 100000),
+                            //       _makeGroupData(1, 180000, 120000),
+                            //       _makeGroupData(2, 300000, 250000),
+                            //       _makeGroupData(3, 180000, 80000),
+                            //     ],
+                            //     barTouchData: BarTouchData(
+                            //       enabled: true,
+                            //       touchTooltipData: BarTouchTooltipData(
+                            //         tooltipMargin: 8.0.r,
+                            //         getTooltipColor: (group) => Colors.white,
+                            //         tooltipBorderRadius: BorderRadius.circular(
+                            //           8.r,
+                            //         ),
+                            //         tooltipPadding: EdgeInsets.all(8.0.r),
+                            //         getTooltipItem:
+                            //             (group, groupIndex, rod, rodIndex) {
+                            //               return BarTooltipItem(
+                            //                 '${rod.toY.toStringAsFixed(0)}.00',
+                            //                 TextStyle(
+                            //                   color: Colors.black87,
+                            //                   fontWeight: FontWeight.w600,
+                            //                   fontSize: 13.sp,
+                            //                 ),
+                            //               );
+                            //             },
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ],
           );
         },
       ),
-    );
-  }
-
-  /// Helper for group bars
-  BarChartGroupData _makeGroupData(int x, double a, double b) {
-    return BarChartGroupData(
-      x: x,
-      barsSpace: 1.0.r,
-      barRods: [
-        BarChartRodData(
-          toY: a,
-          color: Colors.indigo,
-          width: 25.0.r,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(4.r),
-            topRight: Radius.circular(4.r),
-          ),
-        ),
-        BarChartRodData(
-          toY: b,
-          color: Colors.orange,
-          width: 25.0.r,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(4.r),
-            topRight: Radius.circular(4.r),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -52,8 +52,8 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
                   // Duration in milliseconds
                   startAngle: 180,
                   circularStrokeCap: CircularStrokeCap.round,
-                  backgroundColor: const Color(0xFFE9ECF2),
-                  progressColor: const Color(0xFF3B4BFF),
+                  backgroundColor: Colors.indigo.shade50,
+                  progressColor: Colors.indigo,
                   center: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -79,8 +79,8 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 16.0.r,
                 children: [
-                  BuildLegendDot(color: Colors.blue, label: 'Actual 20/26'),
-                  BuildLegendDot(color: Colors.white, label: 'Income'),
+                  BuildLegendDot(color: Colors.indigo, label: 'Actual 20/26'),
+                  BuildLegendDot(color: Colors.white, label: 'Projected 24/26'),
                 ],
               ),
             ],

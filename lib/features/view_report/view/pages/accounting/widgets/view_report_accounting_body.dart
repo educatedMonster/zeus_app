@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
 
-import '../../../../../../shared/widgets/animated_bar_chart.dart';
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
 import '../../../../../../shared/widgets/date_picker.dart';
 import '../../../../data/sources/remote/model/finance_bar_data_model.dart';
@@ -30,6 +30,14 @@ class ViewReportAccountingBody extends StatelessWidget {
       FinanceBarDataModel(label: '7', order: 7, a: 30, b: 1.5),
     ];
 
+    /// DUMMY
+    List<CashInOutBarDataModel> list2 = [
+      CashInOutBarDataModel(label: '14', order: 0, a: 200000, b: 100000),
+      CashInOutBarDataModel(label: '15', order: 1, a: 180000, b: 120000),
+      CashInOutBarDataModel(label: '16', order: 2, a: 300000, b: 250000),
+      CashInOutBarDataModel(label: '17', order: 3, a: 180000, b: 80000),
+    ];
+
     return RefreshIndicator(
       onRefresh: () async {},
       child: SingleChildScrollView(
@@ -41,7 +49,10 @@ class ViewReportAccountingBody extends StatelessWidget {
             DatePicker(),
 
             /// BREADCRUMBS
-            BreadcrumbsProperty(property: '{Property #}', moduleName: 'Accounting'),
+            BreadcrumbsProperty(
+              property: '{Property #}',
+              moduleName: 'Accounting',
+            ),
 
             /// REPORT SALES CARD
             ViewReportAccountingSalesCard(),
@@ -67,7 +78,11 @@ class ViewReportAccountingBody extends StatelessWidget {
             Column(
               children: List.generate(
                 1,
-                    (i) => ViewReportAccountingIncomeExpenseChart(parentKeyAnimation: '1', childKeyAnimation: '$i', financeBarDataModelList: list1),
+                (i) => ViewReportAccountingIncomeExpenseChart(
+                  parentKeyAnimation: '0',
+                  childKeyAnimation: '$i',
+                  financeBarDataModelList: list1,
+                ),
               ),
             ),
 
@@ -75,7 +90,11 @@ class ViewReportAccountingBody extends StatelessWidget {
             Column(
               children: List.generate(
                 1,
-                    (i) => ViewReportAccountingCashInOutChart(parentKeyAnimation: '1', childKeyAnimation: '$i'),
+                (i) => ViewReportAccountingCashInOutChart(
+                  parentKeyAnimation: '1',
+                  childKeyAnimation: '$i',
+                  cashInOutBarDataModelList: list2,
+                ),
               ),
             ),
 

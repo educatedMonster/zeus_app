@@ -2,7 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../shared/widgets/animated_bar_chart.dart';
+import '../../../../../../shared/widgets/animated_income_expense_bar_chart.dart';
+import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
 import '../../../../data/sources/remote/model/finance_bar_data_model.dart';
 
@@ -45,25 +46,12 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
             spacing: 16.0.r,
             children: [
               /// Title and download icon
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Income and Expense',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.download_rounded, size: 22.sp),
-                  ),
-                ],
+              BuildHeaderChart(
+                label: 'Income and Expense',
+                icon: Icon(Icons.download_rounded, size: 22.sp),
+                onIconPressed: () {
+                  debugPrint('Download icon pressed');
+                },
               ),
 
               /// Chart
@@ -115,10 +103,10 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
                             ),
                             height: chartSize,
                             width: MediaQuery.of(context).size.width,
-                            child: AnimatedBarChart(
+                            child: AnimatedIncomeExpenseBarChart(
                               keyAnimation:
-                                  '$parentKeyAnimation-$childKeyAnimation--view_report_accounting_income_expense_chart',
-                              financeBarDataModelList: financeBarDataModelList,
+                                  '$parentKeyAnimation-$childKeyAnimation-view_report_accounting_income_expense_chart',
+                              list: financeBarDataModelList,
                             ),
                             // child: BarChart(
                             //   duration: const Duration(milliseconds: 500),
@@ -203,34 +191,6 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  /// Helper for group bars
-  BarChartGroupData _makeGroupData(int x, double a, double b) {
-    return BarChartGroupData(
-      x: x,
-      barsSpace: 1.0.r,
-      barRods: [
-        BarChartRodData(
-          toY: a,
-          color: Colors.indigo,
-          width: 25.0.r,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(4.r),
-            topRight: Radius.circular(4.r),
-          ),
-        ),
-        BarChartRodData(
-          toY: b,
-          color: Colors.orange,
-          width: 25.0.r,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(4.r),
-            topRight: Radius.circular(4.r),
-          ),
-        ),
-      ],
     );
   }
 }

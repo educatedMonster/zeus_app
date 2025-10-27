@@ -1,64 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/shared/widgets/build_legend_dot.dart';
 
 import '../../../../data/sources/remote/model/progress_ chart_model.dart';
 
 class ViewReportPosSummaryGridCard extends StatelessWidget {
-  const ViewReportPosSummaryGridCard({super.key});
+  final List<ProgressChartModel> list;
+
+  const ViewReportPosSummaryGridCard({super.key, required this.list});
 
   @override
   Widget build(BuildContext context) {
-    final list = [
-      ProgressChartModel(
-        isProgress: true,
-        title: 'Arrivals',
-        value: 0.3,
-        current: "3",
-        total: "10",
-        progressColor: const Color(0xFF3B4BFF),
-        progressBGColor: const Color(0xFF3B4BFF).withValues(alpha: 0.1),
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
-      ),
-      ProgressChartModel(
-        isProgress: true,
-        title: 'Departures',
-        value: 0.5,
-        current: "5",
-        total: "10",
-        progressColor: const Color(0xFF3B4BFF),
-        progressBGColor: const Color(0xFF3B4BFF).withValues(alpha: 0.1),
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
-      ),
-      ProgressChartModel(
-        isProgress: false,
-        title: 'Stay-Over',
-        value: 59,
-        current: '59',
-        total: "59",
-        progressColor: Colors.black87,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
-      ),
-      ProgressChartModel(
-        isProgress: false,
-        title: 'Total Revenue',
-        value: 435000,
-        current: '43.5k',
-        total: "43.5k",
-        progressColor: Colors.white,
-        progressBGColor: const Color(0xFF3B4BFF),
-        backgroundColor: const Color(0xFF3B4BFF),
-        textColor: Colors.white,
-      ),
-    ];
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(horizontal: 8.0.r),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       decoration: BoxDecoration(
-        // color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
@@ -69,156 +25,43 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
         ],
       ),
       child: GridView.count(
+        padding: EdgeInsets.zero,
         crossAxisCount: 2,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         crossAxisSpacing: 8.0.r,
         mainAxisSpacing: 8.0.r,
-        childAspectRatio: 1.7,
+        childAspectRatio: 1.75,
         children: List.generate(list.length, (index) {
           final item = list[index];
-          return item.isProgress
-              ? _buildProgressCard(
-                  title: item.title,
-                  progressColor: item.progressColor,
-                  backgroundColor: item.progressBGColor,
-                  value: item.value,
-                  current: item.current,
-                  total: item.total,
-                )
-              : _buildValueCard(
-                  title: item.title,
-                  value: item.total,
-                  bgColor: item.backgroundColor,
-                  textColor: item.textColor,
-                );
-        }),
-      ),
-    );
-  }
-
-  /// Progress Card (Arrivals, Departures)
-  Widget _buildProgressCard({
-    required String title,
-    required Color progressColor,
-    required Color backgroundColor,
-    required double value,
-    required String current,
-    required String total,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12.0).r,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 8.0.r,
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 12.sp, color: Colors.black87),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${(value * 100).toInt()}%',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                '$current/$total',
-                style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
-              ),
-            ],
-          ),
-
-          /// Progress bar
-          Stack(
-            alignment: Alignment.centerLeft,
-            children: [
-              Container(
-                height: 8.0.r,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: backgroundColor,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-              ),
-              TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0, end: value),
-                duration: Duration(seconds: 1), // smooth 1 second animation
-                curve: Curves.easeInOut,
-                builder: (context, animatedValue, child) {
-                  return FractionallySizedBox(
-                    widthFactor: animatedValue,
-                    child: Container(
-                      height: 8.r,
-                      decoration: BoxDecoration(
-                        color: progressColor,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
+          return Container(
+            padding: const EdgeInsets.all(12.0).r,
+            decoration: BoxDecoration(
+              color: item.backgroundColor,
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              spacing: 8.0.r,
+              children: [
+                Expanded(child: BuildLegendDot(color: item.progressColor, label: item.title)),
+                Expanded(
+                  child: Text(
+                    item.current,
+                    style: TextStyle(
+                      fontSize: 16.0.sp,
+                      fontWeight: FontWeight.normal,
+                      color: item.textColor,
                     ),
-                  );
-                },
-              ),
-              Positioned(
-                right: 0,
-                child: Container(
-                  width: 8.0.r,
-                  height: 5.0.r,
-                  decoration: BoxDecoration(
-                    color: progressColor,
-                    shape: BoxShape.circle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Value Card (Stay-Over, Total Revenue)
-  Widget _buildValueCard({
-    required String title,
-    required String value,
-    required Color bgColor,
-    required Color textColor,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12.0).r,
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 8.0.r,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: textColor.withValues(alpha: 0.8),
+              ],
             ),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w700,
-              color: textColor,
-            ),
-          ),
-        ],
+          );
+        }),
       ),
     );
   }

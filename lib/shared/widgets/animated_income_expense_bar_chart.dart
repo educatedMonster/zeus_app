@@ -7,21 +7,23 @@ import '../../core/constants/app_text_styles.dart';
 import '../../features/view_report/data/sources/remote/model/finance_bar_data_model.dart';
 import '../components/get_animated_bar_char_group.dart';
 
-class AnimatedBarChart extends StatefulWidget {
+class AnimatedIncomeExpenseBarChart extends StatefulWidget {
   final String keyAnimation;
-  final List<FinanceBarDataModel> financeBarDataModelList;
+  final List<FinanceBarDataModel> list;
 
-  const AnimatedBarChart({
+  const AnimatedIncomeExpenseBarChart({
     super.key,
-    required this.financeBarDataModelList,
+    required this.list,
     required this.keyAnimation,
   });
 
   @override
-  State<AnimatedBarChart> createState() => _AnimatedBarChartState();
+  State<AnimatedIncomeExpenseBarChart> createState() =>
+      _AnimatedIncomeExpenseBarChartState();
 }
 
-class _AnimatedBarChartState extends State<AnimatedBarChart>
+class _AnimatedIncomeExpenseBarChartState
+    extends State<AnimatedIncomeExpenseBarChart>
     with TickerProviderStateMixin {
   List<FinanceBarDataModel> _list = [];
   late List<BarChartGroupData> _rawBarGroups;
@@ -38,7 +40,7 @@ class _AnimatedBarChartState extends State<AnimatedBarChart>
   void initState() {
     super.initState();
 
-    _list = widget.financeBarDataModelList;
+    _list = widget.list;
 
     _rawBarGroups = _list
         .map((e) => _makeGroupData(e.order, e.a, e.b))
@@ -116,19 +118,40 @@ class _AnimatedBarChartState extends State<AnimatedBarChart>
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 40.0.r,
-                interval: 10,
+                interval: 5,
                 getTitlesWidget: (value, meta) {
-                  final labels = _averages.map((e) => e).toList();
-                  if (value < labels.length) {
-                    return Text(
-                      '${labels[value.toInt()]}',
-                      style: axisTextStyle(),
-                    );
+                  // if (value == 0) return Text('0', style: axisTextStyle());
+                  // if (value == 200000) {
+                  //   return Text('200K', style: axisTextStyle());
+                  // }
+                  // if (value == 400000) {
+                  //   return Text('400K', style: axisTextStyle());
+                  // }
+                  if (value == 0) return Text('0', style: axisTextStyle());
+                  if (value > 0) {
+                    return Text('$value', style: axisTextStyle());
                   }
                   return const SizedBox.shrink();
                 },
               ),
             ),
+            // leftTitles: AxisTitles(
+            //   sideTitles: SideTitles(
+            //     showTitles: true,
+            //     reservedSize: 40.0.r,
+            //     interval: 10,
+            //     getTitlesWidget: (value, meta) {
+            //       final labels = _averages.map((e) => e).toList();
+            //       if (value < labels.length) {
+            //         return Text(
+            //           '${labels[value.toInt()]}',
+            //           style: axisTextStyle(),
+            //         );
+            //       }
+            //       return const SizedBox.shrink();
+            //     },
+            //   ),
+            // ),
             rightTitles: const AxisTitles(
               sideTitles: SideTitles(showTitles: false),
             ),

@@ -36,10 +36,11 @@ class ExportFileDialog extends StatelessWidget {
     String selectedReport = '';
     String selectedFormat = '';
 
-    ReportTypeDropdownViewModel reportTypeDropdownViewModel = context
-        .read<ReportTypeDropdownViewModel>();
-    FileFormatDropdownViewModel fileFormatDropdownViewModel = context
-        .read<FileFormatDropdownViewModel>();
+    late ReportTypeDropdownViewModel reportTypeDropdownViewModel;
+    late FileFormatDropdownViewModel fileFormatDropdownViewModel;
+
+    reportTypeDropdownViewModel = context.read<ReportTypeDropdownViewModel>();
+    fileFormatDropdownViewModel = context.read<FileFormatDropdownViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       reportTypeDropdownViewModel.setSelectedReport(reportTypes[0]);
@@ -55,17 +56,23 @@ class ExportFileDialog extends StatelessWidget {
       maxChildSize: 0.95,
       expand: false,
       builder: (bc, scrollController) {
-        final (:report) = bc
-            .select<ReportTypeDropdownViewModel, ({String report})>(
-              (cm) => (report: cm.selectedReport),
-            );
-        selectedReport = report;
+        reportTypeDropdownViewModel = context.watch<ReportTypeDropdownViewModel>();
+        fileFormatDropdownViewModel = context.watch<FileFormatDropdownViewModel>();
 
-        final (:format) = bc
-            .select<FileFormatDropdownViewModel, ({String format})>(
-              (cm) => (format: cm.selectedFormat),
-            );
-        selectedFormat = format;
+        selectedReport = reportTypeDropdownViewModel.selectedReport;
+        selectedFormat = fileFormatDropdownViewModel.selectedFormat;
+
+        // final (:report) = bc
+        //     .select<ReportTypeDropdownViewModel, ({String report})>(
+        //       (cm) => (report: cm.selectedReport),
+        //     );
+        // selectedReport = report;
+        //
+        // final (:format) = bc
+        //     .select<FileFormatDropdownViewModel, ({String format})>(
+        //       (cm) => (format: cm.selectedFormat),
+        //     );
+        // selectedFormat = format;
 
         return Container(
           decoration: const BoxDecoration(
