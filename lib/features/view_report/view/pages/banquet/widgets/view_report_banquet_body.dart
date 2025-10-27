@@ -20,6 +20,9 @@ class ViewReportBanquetBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8.0.r,
         children: [
+          /// REPORT COLLECTION CARD
+          ViewReportBanquetCollectionCard(),
+
           /// DATE
           DatePicker(),
 

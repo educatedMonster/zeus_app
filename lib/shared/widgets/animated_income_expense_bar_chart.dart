@@ -176,10 +176,14 @@ class _AnimatedIncomeExpenseBarChartState
           barTouchData: BarTouchData(
             enabled: true,
             touchTooltipData: BarTouchTooltipData(
-              tooltipMargin: 8.0.r,
-              getTooltipColor: (group) => Colors.white,
+              tooltipMargin: 1.0.r,
+              getTooltipColor: (group) => Colors.black12,
               tooltipBorderRadius: BorderRadius.circular(8.r),
               tooltipPadding: EdgeInsets.all(8.0.r),
+              fitInsideHorizontally: true,
+              fitInsideVertically: true,
+              direction: TooltipDirection.auto,
+              tooltipHorizontalAlignment: FLHorizontalAlignment.center,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
                 return BarTooltipItem(
                   '${rod.toY.toStringAsFixed(0)}.00',
