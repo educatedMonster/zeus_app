@@ -33,8 +33,8 @@ class ExportFileDialog extends StatelessWidget {
     ];
     List<String> fileFormats = ["PDF", "EXCEL", "CSV"];
 
-    String selectedReport = '';
-    String selectedFormat = '';
+    String selectedReport = reportTypes[0];
+    String selectedFormat = fileFormats[0];
 
     late ReportTypeDropdownViewModel reportTypeDropdownViewModel;
     late FileFormatDropdownViewModel fileFormatDropdownViewModel;
@@ -43,8 +43,8 @@ class ExportFileDialog extends StatelessWidget {
     fileFormatDropdownViewModel = context.read<FileFormatDropdownViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      reportTypeDropdownViewModel.setSelectedReport(reportTypes[0]);
-      fileFormatDropdownViewModel.setSelectedFormat(fileFormats[0]);
+      reportTypeDropdownViewModel.setSelectedReport(selectedReport);
+      fileFormatDropdownViewModel.setSelectedFormat(selectedFormat);
     });
 
     selectedReport = reportTypeDropdownViewModel.selectedReport;
@@ -56,23 +56,23 @@ class ExportFileDialog extends StatelessWidget {
       maxChildSize: 0.95,
       expand: false,
       builder: (bc, scrollController) {
-        reportTypeDropdownViewModel = context.watch<ReportTypeDropdownViewModel>();
-        fileFormatDropdownViewModel = context.watch<FileFormatDropdownViewModel>();
-
-        selectedReport = reportTypeDropdownViewModel.selectedReport;
-        selectedFormat = fileFormatDropdownViewModel.selectedFormat;
-
-        // final (:report) = bc
-        //     .select<ReportTypeDropdownViewModel, ({String report})>(
-        //       (cm) => (report: cm.selectedReport),
-        //     );
-        // selectedReport = report;
+        // reportTypeDropdownViewModel = bc.watch<ReportTypeDropdownViewModel>();
+        // fileFormatDropdownViewModel = bc.watch<FileFormatDropdownViewModel>();
         //
-        // final (:format) = bc
-        //     .select<FileFormatDropdownViewModel, ({String format})>(
-        //       (cm) => (format: cm.selectedFormat),
-        //     );
-        // selectedFormat = format;
+        // selectedReport = reportTypeDropdownViewModel.selectedReport;
+        // selectedFormat = fileFormatDropdownViewModel.selectedFormat;
+
+        final (:report) = bc
+            .select<ReportTypeDropdownViewModel, ({String report})>(
+              (cm) => (report: cm.selectedReport),
+            );
+        selectedReport = report;
+
+        final (:format) = bc
+            .select<FileFormatDropdownViewModel, ({String format})>(
+              (cm) => (format: cm.selectedFormat),
+            );
+        selectedFormat = format;
 
         return Container(
           decoration: const BoxDecoration(
@@ -119,7 +119,7 @@ class ExportFileDialog extends StatelessWidget {
                           ),
 
                           DropdownButtonFormField<String>(
-                            initialValue: selectedReport,
+                            initialValue: selectedReport.isNotEmpty ? selectedReport : reportTypes[0],
                             decoration: const InputDecoration(
                               labelText: "Report",
                               filled: true,
@@ -146,7 +146,7 @@ class ExportFileDialog extends StatelessWidget {
                           ),
 
                           DropdownButtonFormField<String>(
-                            initialValue: selectedFormat,
+                            initialValue: selectedFormat.isNotEmpty ? selectedFormat : fileFormats[0],
                             decoration: const InputDecoration(
                               labelText: "Format",
                               filled: true,

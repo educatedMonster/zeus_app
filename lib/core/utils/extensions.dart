@@ -4,6 +4,7 @@ import 'package:zeus_app/features/approval/viewmodel/approval_view_model.dart';
 
 import '../../features/dashboard/viewmodel/dashboard_view_model.dart';
 import '../../features/report/viewmodel/report_view_model.dart';
+import '../../features/sample/viewmodel/sample_view_model.dart';
 import '../../features/view_report/viewmodel/view_report_view_model.dart';
 
 extension ContextExtensions on BuildContext {
@@ -40,4 +41,8 @@ extension ContextExtensions on BuildContext {
   ApprovalViewModel readApprovalVM() => read<ApprovalViewModel>();
 
   ApprovalViewModel watchApprovalVM() => watch<ApprovalViewModel>();
+
+  SampleViewModel readSampleVM() => read<SampleViewModel>();
+
+  SampleViewModel watchSampleVM() => watch<SampleViewModel>();
 }

@@ -5,7 +5,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../core/constants/app_text_styles.dart';
 import '../../features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
-import '../components/get_animated_bar_char_group.dart';
+import '../components/get_animated_bar_group.dart';
 import '../components/make_2_group_data.dart';
 
 class AnimatedCashInOutBarChart extends StatefulWidget {

@@ -2,89 +2,25 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/animated_revenue_pie_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
+import '../../../../../dashboard/data/sources/remote/model/pie_chart_section_model.dart';
 
 class ViewReportBanquetBusinessSourceCard extends StatelessWidget {
-  const ViewReportBanquetBusinessSourceCard({super.key});
+  final String parentKeyAnimation;
+  final String childKeyAnimation;
+  final List<PieChartSectionModel> pieChartSectionModelList;
+
+  const ViewReportBanquetBusinessSourceCard({
+    super.key,
+    required this.parentKeyAnimation,
+    required this.childKeyAnimation,
+    required this.pieChartSectionModelList,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final sections = [
-      PieChartSectionData(
-        color: Colors.red,
-        // Rooms
-        value: 23,
-        title: '23%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      PieChartSectionData(
-        color: Colors.blue,
-        // Banquet
-        value: 10,
-        title: '10%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      PieChartSectionData(
-        color: Colors.orange,
-        // Coffee Shop
-        value: 27,
-        title: '27%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      PieChartSectionData(
-        color: Colors.green,
-        // Rooms
-        value: 5,
-        title: '5%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      PieChartSectionData(
-        color: Colors.indigo,
-        // Banquet
-        value: 10,
-        title: '10%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      PieChartSectionData(
-        color: Colors.brown,
-        // Coffee Shop
-        value: 25,
-        title: '25%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-    ];
-
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
@@ -145,13 +81,11 @@ class ViewReportBanquetBusinessSourceCard extends StatelessWidget {
                     ),
                     height: chartSize,
                     width: chartSize,
-                    child: PieChart(
-                      PieChartData(
-                        sections: sections,
-                        centerSpaceRadius: chartSize * 0.25,
-                        borderData: FlBorderData(show: false),
-                        sectionsSpace: 1.0.r,
-                      ),
+                    child: AnimatedRevenuePieChart(
+                      keyAnimation:
+                      '$parentKeyAnimation-$childKeyAnimation-view_report_banquet_business_source_card',
+                      sections: pieChartSectionModelList,
+                      chartSize: chartSize,
                     ),
                   ),
                 ],

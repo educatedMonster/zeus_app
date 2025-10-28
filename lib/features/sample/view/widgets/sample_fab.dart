@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ViewReportFab extends StatelessWidget {
+class SampleFab extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const ViewReportFab({super.key, required this.onPressed});
+  const SampleFab({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

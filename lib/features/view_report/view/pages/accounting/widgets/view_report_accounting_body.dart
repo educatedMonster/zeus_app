@@ -4,6 +4,7 @@ import 'package:zeus_app/features/view_report/data/sources/remote/model/cash_in_
 
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
 import '../../../../../../shared/widgets/date_picker.dart';
+import '../../../../../dashboard/data/sources/remote/model/pie_chart_section_model.dart';
 import '../../../../data/sources/remote/model/finance_bar_data_model.dart';
 import 'view_report_accounting_card.dart';
 import 'view_report_accounting_cash_in_out_chart.dart';
@@ -36,6 +37,28 @@ class ViewReportAccountingBody extends StatelessWidget {
       CashInOutBarDataModel(label: '15', order: 1, a: 180000, b: 120000),
       CashInOutBarDataModel(label: '16', order: 2, a: 300000, b: 250000),
       CashInOutBarDataModel(label: '17', order: 3, a: 180000, b: 80000),
+    ];
+
+    /// DUMMY
+    final List<PieChartSectionModel> pieChartSections1 = [
+      PieChartSectionModel(
+        title: 'Staff',
+        badge: '65%',
+        value: 65,
+        color: Colors.indigo,
+      ),
+      PieChartSectionModel(
+          title: 'Utility',
+          badge: '15%',
+          value: 15,
+          color: Colors.blue
+      ),
+      PieChartSectionModel(
+        title: 'Corporate',
+        badge: '20%',
+        value: 20,
+        color: Colors.lightBlueAccent,
+      ),
     ];
 
     return RefreshIndicator(
@@ -72,7 +95,17 @@ class ViewReportAccountingBody extends StatelessWidget {
 
             ViewReportAccountingFinanceChartCard(),
 
-            ViewReportAccountingExpenseTypeCard(),
+            /// EXPENSE TYPE / ACCOUNT CHART
+            Column(
+              children: List.generate(
+                1,
+                    (i) => ViewReportAccountingExpenseTypeCard(
+                  parentKeyAnimation: '0',
+                  childKeyAnimation: '$i',
+                  pieChartSectionModelList: pieChartSections1,
+                ),
+              ),
+            ),
 
             /// INCOME AND EXPENSE CHART
             Column(

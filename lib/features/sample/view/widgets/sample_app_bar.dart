@@ -2,13 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ViewReportAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SampleAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  const ViewReportAppBar({
-    super.key,
-    required this.title,
-  });
+  const SampleAppBar({super.key, required this.title});
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);

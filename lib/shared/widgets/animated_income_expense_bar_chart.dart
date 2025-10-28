@@ -5,7 +5,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../core/constants/app_text_styles.dart';
 import '../../features/view_report/data/sources/remote/model/finance_bar_data_model.dart';
-import '../components/get_animated_bar_char_group.dart';
+import '../components/get_animated_bar_group.dart';
 
 class AnimatedIncomeExpenseBarChart extends StatefulWidget {
   final String keyAnimation;

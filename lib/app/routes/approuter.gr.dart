@@ -21,18 +21,17 @@ import 'package:zeus_app/features/approval/view/pages/returned_approval_page.dar
     as _i7;
 import 'package:zeus_app/features/dashboard/view/dashboard_page.dart' as _i3;
 import 'package:zeus_app/features/report/view/report_page.dart' as _i6;
+import 'package:zeus_app/features/sample/view/sample_page.dart' as _i8;
 import 'package:zeus_app/features/view_report/view/pages/accounting/view_report_accounting_page.dart'
-    as _i8;
-import 'package:zeus_app/features/view_report/view/pages/banquet/view_report_banquet_page.dart'
     as _i9;
+import 'package:zeus_app/features/view_report/view/pages/banquet/view_report_banquet_page.dart'
+    as _i10;
 import 'package:zeus_app/features/view_report/view/pages/pos/view_report_pos_page.dart'
     as _i11;
 import 'package:zeus_app/features/view_report/view/pages/room/view_report_room_page.dart'
     as _i12;
 import 'package:zeus_app/features/view_report/view/pages/timekeeping/view_report_timekeeping_page.dart'
     as _i13;
-import 'package:zeus_app/features/view_report/view/view_report_page.dart'
-    as _i10;
 
 /// generated route for
 /// [_i1.ApprovalPage]
@@ -147,7 +146,23 @@ class ReturnedApprovalRoute extends _i14.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.ViewReportAccountingPage]
+/// [_i8.SamplePage]
+class SampleRoute extends _i14.PageRouteInfo<void> {
+  const SampleRoute({List<_i14.PageRouteInfo>? children})
+    : super(SampleRoute.name, initialChildren: children);
+
+  static const String name = 'SampleRoute';
+
+  static _i14.PageInfo page = _i14.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.SamplePage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i9.ViewReportAccountingPage]
 class ViewReportAccountingRoute extends _i14.PageRouteInfo<void> {
   const ViewReportAccountingRoute({List<_i14.PageRouteInfo>? children})
     : super(ViewReportAccountingRoute.name, initialChildren: children);
@@ -157,13 +172,13 @@ class ViewReportAccountingRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i8.ViewReportAccountingPage();
+      return const _i9.ViewReportAccountingPage();
     },
   );
 }
 
 /// generated route for
-/// [_i9.ViewReportBanquetPage]
+/// [_i10.ViewReportBanquetPage]
 class ViewReportBanquetRoute extends _i14.PageRouteInfo<void> {
   const ViewReportBanquetRoute({List<_i14.PageRouteInfo>? children})
     : super(ViewReportBanquetRoute.name, initialChildren: children);
@@ -173,23 +188,7 @@ class ViewReportBanquetRoute extends _i14.PageRouteInfo<void> {
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return const _i9.ViewReportBanquetPage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i10.ViewReportPage]
-class ViewReportRoute extends _i14.PageRouteInfo<void> {
-  const ViewReportRoute({List<_i14.PageRouteInfo>? children})
-    : super(ViewReportRoute.name, initialChildren: children);
-
-  static const String name = 'ViewReportRoute';
-
-  static _i14.PageInfo page = _i14.PageInfo(
-    name,
-    builder: (data) {
-      return const _i10.ViewReportPage();
+      return const _i10.ViewReportBanquetPage();
     },
   );
 }

@@ -2,52 +2,24 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../shared/widgets/animated_revenue_pie_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
+import '../../../../../dashboard/data/sources/remote/model/pie_chart_section_model.dart';
 
 class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
-  const ViewReportAccountingExpenseTypeCard({super.key});
+  final String parentKeyAnimation;
+  final String childKeyAnimation;
+  final List<PieChartSectionModel> pieChartSectionModelList;
+
+  const ViewReportAccountingExpenseTypeCard({
+    super.key,
+    required this.parentKeyAnimation,
+    required this.childKeyAnimation,
+    required this.pieChartSectionModelList,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final sections = [
-      PieChartSectionData(
-        color: Colors.indigo,
-        // Staff
-        value: 65,
-        title: '65%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      PieChartSectionData(
-        color: Colors.blue,
-        // Utility
-        value: 15,
-        title: '15%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      PieChartSectionData(
-        color: Colors.lightBlueAccent,
-        // Maintenance
-        value: 20,
-        title: '20%',
-        radius: 55.r,
-        titleStyle: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-    ];
-
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
@@ -103,14 +75,20 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8.0.r,
-                    children: [
-                      BuildLegendDot(color: Colors.indigo, label: 'Staff'),
-                      BuildLegendDot(color: Colors.blue, label: 'Utility'),
-                      BuildLegendDot(
-                        color: Colors.lightBlueAccent,
-                        label: 'Maintenance',
-                      ),
-                    ],
+                    children: List.generate(pieChartSectionModelList.length, (
+                        index,
+                        ) {
+                      PieChartSectionModel section = pieChartSectionModelList[index];
+
+                      return InkWell(
+                        // onTapDown: (_) => setState(() => touchedIndex = index), // TODO: You can use provider to store the index
+                        // onTapUp: (_) => setState(() => touchedIndex = -1), // TODO: You can use provider to store the index
+                        child: BuildLegendDot(
+                          color: section.color,
+                          label: section.title,
+                        ),
+                      );
+                    }),
                   ),
 
                   /// Pie Chart (dynamic size)
@@ -121,13 +99,11 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
                     ),
                     height: chartSize,
                     width: chartSize,
-                    child: PieChart(
-                      PieChartData(
-                        sections: sections,
-                        centerSpaceRadius: chartSize * 0.25,
-                        borderData: FlBorderData(show: false),
-                        sectionsSpace: 1.0.r,
-                      ),
+                    child: AnimatedRevenuePieChart(
+                      keyAnimation:
+                      '$parentKeyAnimation-$childKeyAnimation-view_report_accounting_expense_type_card',
+                      sections: pieChartSectionModelList,
+                      chartSize: chartSize,
                     ),
                   ),
                 ],

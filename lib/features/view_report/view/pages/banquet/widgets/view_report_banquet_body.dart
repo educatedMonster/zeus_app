@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
 import '../../../../../../shared/widgets/date_picker.dart';
+import '../../../../../dashboard/data/sources/remote/model/pie_chart_section_model.dart';
+import '../../../../data/sources/remote/model/collection_data_model.dart';
 import 'view_report_banquet_business_source_card.dart';
 import 'view_report_banquet_collection_card.dart';
 import 'view_report_banquet_market_segment_card.dart';
@@ -15,14 +17,91 @@ class ViewReportBanquetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// DUMMY
+    final List<PieChartSectionModel> pieChartSections1 = [
+      PieChartSectionModel(
+        title: 'Promotion',
+        badge: '23%',
+        value: 23,
+        color: Colors.red,
+      ),
+      PieChartSectionModel(
+        title: 'Direct',
+        badge: '10%',
+        value: 10,
+        color: Colors.blue,
+      ),
+      PieChartSectionModel(
+        title: 'Corporate',
+        badge: '27%',
+        value: 27,
+        color: Colors.orange,
+      ),
+      PieChartSectionModel(
+        title: 'Government',
+        badge: '5%',
+        value: 55,
+        color: Colors.green,
+      ),
+      PieChartSectionModel(
+        title: 'Travel Agents',
+        badge: '10%',
+        value: 10,
+        color: Colors.indigo,
+      ),
+      PieChartSectionModel(
+        title: 'Others',
+        badge: '25%',
+        value: 25,
+        color: Colors.brown,
+      ),
+    ];
+
+    /// DUMMY
+    List<CollectionBarDataModel> collectionList = [
+      CollectionBarDataModel(
+        title: 'Cash',
+        legendColor: Colors.red,
+        label: '14',
+        order: 0,
+        a: 200000,
+        b: 100000,
+        c: 150000,
+      ),
+      CollectionBarDataModel(
+        title: 'Card',
+        legendColor: Colors.orange,
+        label: '15',
+        order: 1,
+        a: 180000,
+        b: 120000,
+        c: 200000,
+      ),
+      CollectionBarDataModel(
+        title: 'Others',
+        legendColor: Colors.teal,
+        label: '16',
+        order: 2,
+        a: 300000,
+        b: 250000,
+        c: 220000,
+      ),
+      CollectionBarDataModel(
+        title: 'Total',
+        legendColor: Colors.indigo,
+        label: '17',
+        order: 3,
+        a: 180000,
+        b: 80000,
+        c: 190000,
+      ),
+    ];
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 8.0.r,
         children: [
-          /// REPORT COLLECTION CARD
-          ViewReportBanquetCollectionCard(),
-
           /// DATE
           DatePicker(),
 
@@ -30,13 +109,40 @@ class ViewReportBanquetBody extends StatelessWidget {
           BreadcrumbsProperty(property: '{Property #}', moduleName: 'Banquet'),
 
           /// REPORT MARKET SEGMENT CARD
-          ViewReportMarketSegmentCard(),
+          Column(
+            children: List.generate(
+              1,
+              (i) => ViewReportMarketSegmentCard(
+                parentKeyAnimation: '0',
+                childKeyAnimation: '$i',
+                pieChartSectionModelList: pieChartSections1,
+              ),
+            ),
+          ),
 
           /// REPORT BUSINESS SOURCE CARD
-          ViewReportBanquetBusinessSourceCard(),
+          Column(
+            children: List.generate(
+              1,
+              (i) => ViewReportBanquetBusinessSourceCard(
+                parentKeyAnimation: '1',
+                childKeyAnimation: '$i',
+                pieChartSectionModelList: pieChartSections1,
+              ),
+            ),
+          ),
 
           /// REPORT COLLECTION CARD
-          ViewReportBanquetCollectionCard(),
+          Column(
+            children: List.generate(
+              1,
+              (i) => ViewReportBanquetCollectionCard(
+                parentKeyAnimation: '0',
+                childKeyAnimation: '$i',
+                collectionBarDataModelList: collectionList,
+              ),
+            ),
+          ),
 
           /// TOP ACCOUNT OWNER DATA TABLE CARD
           ViewReportBanquetTopAccountOwnerDataTableCard(),

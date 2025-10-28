@@ -39,28 +39,7 @@ class DashboardBody extends StatelessWidget {
       ),
     ];
 
-    final List<PieChartSectionModel> pieChartSections2 = [
-      PieChartSectionModel(
-        title: 'Rooms',
-        badge: '65%',
-        value: 65,
-        color: Color(0xFF3B4BFF),
-      ),
-      PieChartSectionModel(
-        title: 'Banquet',
-        badge: '20%',
-        value: 20,
-        color: Color(0xFFFFA53B),
-      ),
-      PieChartSectionModel(
-        title: 'Coffee Shop',
-        badge: '15%',
-        value: 15,
-        color: Color(0xFF2DB7A3),
-      ),
-    ];
-
-    List<RevenueDataModel> list1 = [
+    List<RevenueDataModel> revenueList = [
       RevenueDataModel(label: '14', order: 0, a: 200000, b: 100000, c: 150000),
       RevenueDataModel(label: '15', order: 1, a: 180000, b: 120000, c: 200000),
       RevenueDataModel(label: '16', order: 2, a: 300000, b: 250000, c: 220000),
@@ -74,17 +53,6 @@ class DashboardBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8.0.r,
           children: [
-            Column(
-              children: List.generate(
-                1,
-                (i) => DashboardRevenueBreakdownCard(
-                  parentKeyAnimation: '0',
-                  childKeyAnimation: '$i',
-                  pieChartSectionModelList: pieChartSections1,
-                ),
-              ),
-            ),
-
             /// DATE
             DatePicker(),
 
@@ -98,7 +66,7 @@ class DashboardBody extends StatelessWidget {
                 (i) => DashboardRevenueByPropertyChart(
                   parentKeyAnimation: '0',
                   childKeyAnimation: '$i',
-                  revenueBarDataModelList: list1,
+                  revenueBarDataModelList: revenueList,
                 ),
               ),
             ),
@@ -119,9 +87,9 @@ class DashboardBody extends StatelessWidget {
               children: List.generate(
                 1,
                 (i) => DashboardRevenueBreakdownCard(
-                  parentKeyAnimation: '1',
+                  parentKeyAnimation: '0',
                   childKeyAnimation: '$i',
-                  pieChartSectionModelList: pieChartSections2,
+                  pieChartSectionModelList: pieChartSections1,
                 ),
               ),
             ),

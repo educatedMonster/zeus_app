@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class ViewReportViewModel extends ChangeNotifier {
+class SampleViewModel extends ChangeNotifier {
   int _counter = 0;
 
   int get counter => _counter;
