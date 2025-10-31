@@ -77,13 +77,13 @@ class ${pascalName}ViewModel extends ChangeNotifier {
         } else if (fileName.contains('_model.dart')) {
           content =
               '''
-import 'package:flutter/material.dart';
+import '../../local/entity/${feature}_entity.dart';
 
 class ${pascalName}Model {
-  final int id;
+  final String id;
   final String title;
-  final double description;
-  final Color color;
+  final String description;
+  final String color;
 
   ${pascalName}Model({
     required this.id,
@@ -91,6 +91,29 @@ class ${pascalName}Model {
     required this.description,
     required this.color,
   });
+
+  factory ${pascalName}Model.fromJson(Map<String, dynamic> json) => ${pascalName}Model(
+    id: json["id"],
+    title: json["title"],
+    description: json["description"],
+    color: json["color"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+  };
+}
+
+extension ${pascalName}ModelEntityMapper on ${pascalName}Model {
+  ${pascalName}Entity to${pascalName}Entity() {
+    return ${pascalName}Entity(
+      id: id,
+      title: title,
+      description: description,
+      color: color,
+    );
+  }
 }
 ''';
         } else if (fileName.contains('_app_bar.dart')) {
@@ -262,9 +285,81 @@ class _${pascalName}PageState extends State<${pascalName}Page> {
     _counter = _${feature}ViewModel.counter;
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
-      appBar: ${pascalName}AppBar(title: Constants.titleViewReport),
+      appBar: ${pascalName}AppBar(title: '${pascalName.toUpperCase()}'),
       body: ${pascalName}Body(counter: _counter),
       floatingActionButton: ${pascalName}Fab(onPressed: _incrementCounter),
+    );
+  }
+}
+''';
+        } else if (fileName == '${feature}_repo.dart') {
+          content =
+              '''
+/// use abstraction layer on services
+abstract class ${pascalName}Repository {
+
+}
+''';
+        } else if (fileName == 'imp_${feature}_repo.dart') {
+          content =
+              '''
+import '${feature}_repo.dart';
+
+class ${pascalName}RepositoryImplementation implements ${pascalName}Repository {
+
+  static const int successCode = 200;
+  static const int internalErrorCode = 500;
+  static const int genericCatchError = 100;
+
+}
+''';
+        } else if (fileName.contains('_entity.dart')) {
+          content =
+              '''
+import 'dart:ui';
+
+import '../../../../../$feature/data/sources/remote/model/${feature}_model.dart';
+
+class ${pascalName}Entity {
+  final String id;
+  final String title;
+  final String description;
+  final String color;
+
+  ${pascalName}Entity({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.color,
+  });
+
+  // Convert Entity → Map (for insert)
+  // Method to convert a '${pascalName}Model' to a map
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'color': color,
+  };
+
+  // Convert Map → Entity (for get)
+  // Convert a ${pascalName}Model into a Map. The keys must correspond to the names of the
+  // columns in the database.
+  factory ${pascalName}Entity.fromMap(Map<String, dynamic> map) => ${pascalName}Entity(
+    id: map['id'],
+    title: map['title'],
+    description: map['description'],
+    color: map['color'],
+  );
+}
+
+extension ${pascalName}ModelMapper on ${pascalName}Entity {
+  ${pascalName}Model to${pascalName}Entity() {
+    return ${pascalName}Model(
+      id: id,
+      title: title,
+      description: description,
+      color: color,
     );
   }
 }
