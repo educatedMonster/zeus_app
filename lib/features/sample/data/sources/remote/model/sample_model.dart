@@ -1,15 +1,15 @@
 import 'dart:ui';
 
-class PieChartSectionModel {
+class SampleModel {
+  final int id;
   final String title;
-  final String badge;
-  final double value;
+  final double description;
   final Color color;
 
-  PieChartSectionModel({
+  SampleModel({
+    required this.id,
     required this.title,
-    required this.badge,
-    required this.value,
+    required this.description,
     required this.color,
   });
 }

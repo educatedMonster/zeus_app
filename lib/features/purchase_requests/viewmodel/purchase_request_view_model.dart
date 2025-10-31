@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-class SampleViewModel extends ChangeNotifier {
+class PurchaseRequestViewModel extends ChangeNotifier {
   int _counter = 0;
 
   int get counter => _counter;

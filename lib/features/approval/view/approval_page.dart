@@ -60,14 +60,14 @@ class _ApprovalPageState extends State<ApprovalPage>
 
     _counter = _approvalViewModel.counter;
 
-    return AutoTabsRouter(
-      routes: const [
+    return AutoTabsRouter.tabBar(
+      routes: [
         PendingApprovalRoute(),
         ApprovedApprovalRoute(),
         ReturnedApprovalRoute(),
         RejectedApprovalRoute(),
       ],
-      builder: (context, child) {
+      builder: (context, child, tabsRouter) {
         final tabsRouter = AutoTabsRouter.of(context);
 
         // Only sync once (avoid multiple listeners)
