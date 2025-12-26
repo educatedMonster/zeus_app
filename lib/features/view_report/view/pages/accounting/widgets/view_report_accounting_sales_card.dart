@@ -13,17 +13,18 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
 
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -33,8 +34,8 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: .start,
+            mainAxisAlignment: .spaceAround,
             spacing: 8.0.r,
             children: [
               Text(
@@ -56,13 +57,13 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
             ],
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: .end,
+            mainAxisAlignment: .spaceAround,
             children: [
               Text(
                 'last week',
                 style: TextStyle(
-                  color: colorScheme.secondary,
+                  color: colorScheme.onSecondary,
                   fontSize: 10.0.sp,
                   fontWeight: FontWeight.normal,
                 ),

@@ -10,7 +10,7 @@ class PurchaseRequestsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 8.0.r,
         children: [SizedBox(height: MediaQuery.of(context).size.height * 0.25)],
       ),

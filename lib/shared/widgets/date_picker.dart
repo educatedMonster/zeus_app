@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/utils/date_formatter.dart';
+import '../../core/utils/extensions.dart';
 import '../viewmodels/date_picker_view_model.dart';
 
 class DatePicker extends StatelessWidget {
@@ -10,6 +11,8 @@ class DatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     DateItem date = DateItem(
       formatedDate: formattedDate(DateTime.now()),
       date: DateTime.now(),
@@ -58,7 +61,7 @@ class DatePicker extends StatelessWidget {
         selectDate(context);
       },
       child: Container(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         padding: const EdgeInsets.only(left: 16.0, right: 8.0).r,
         child: Row(
           children: [
@@ -67,12 +70,12 @@ class DatePicker extends StatelessWidget {
               children: [
                 Icon(
                   Icons.calendar_today_outlined,
-                  color: Colors.black54,
+                  color: colorScheme.onSurface,
                   size: 16.0.r,
                 ),
                 Text(
                   date.formatedDate,
-                  style: TextStyle(color: Colors.black87, fontSize: 14.0.sp),
+                  style: TextStyle(color: colorScheme.onSurface, fontSize: 14.0.sp),
                 ),
               ],
             ),
@@ -81,7 +84,7 @@ class DatePicker extends StatelessWidget {
               children: [
                 IconButton(
                   icon: Icon(Icons.arrow_back_ios_new, size: 16.0.r),
-                  color: Colors.black87,
+                  color: colorScheme.onSurface,
                   onPressed: () {
                     //  Subtract 1 day
                     final oneDayLater = date.date.subtract(
@@ -98,7 +101,7 @@ class DatePicker extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.arrow_forward_ios, size: 16.0.r),
-                  color: Colors.black87,
+                  color: colorScheme.onSurface,
                   onPressed: () {
                     //  Add 1 day
                     final oneDayAfter = date.date.subtract(

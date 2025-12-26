@@ -23,7 +23,6 @@ class _ApprovalPageState extends State<ApprovalPage>
   late ApprovalViewModel _approvalViewModel;
   late GlobalKey<ScaffoldState> _scaffoldKey;
   late ColorScheme _colorScheme;
-  late Size _size;
   int _counter = 0;
   late final TabController _tabController;
   bool _isSynced = false;
@@ -32,10 +31,10 @@ class _ApprovalPageState extends State<ApprovalPage>
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    _approvalViewModel = context.readApprovalVM();
+
     _initControllers();
     _initTabController();
-
-    _approvalViewModel = context.read<ApprovalViewModel>();
 
     _counter = _approvalViewModel.counter;
     super.initState();
@@ -50,13 +49,12 @@ class _ApprovalPageState extends State<ApprovalPage>
   @override
   void didChangeDependencies() {
     _colorScheme = context.contextColorScheme();
-    _size = context.contextSize();
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    _approvalViewModel = context.watch<ApprovalViewModel>();
+    _approvalViewModel = context.watchApprovalVM();
 
     _counter = _approvalViewModel.counter;
 
@@ -90,7 +88,7 @@ class _ApprovalPageState extends State<ApprovalPage>
         }
 
         return Scaffold(
-          backgroundColor: Colors.grey.shade50,
+          backgroundColor: _colorScheme.surface,
           key: _scaffoldKey,
           appBar: ApprovalAppBar(
             title: 'Approvals',

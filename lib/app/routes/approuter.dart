@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:zeus_app/features/web_socket_and_printer/view/web_socket_and_printer_page.dart';
 
 import 'approuter.gr.dart';
 
@@ -79,6 +80,12 @@ class AppRouter extends RootStackRouter {
     CustomRoute(
       path: "/view-report-timekeeping",
       page: ViewReportTimekeepingRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+    ),
+
+    CustomRoute(
+      path: "/web-socket-and-printer",
+      page: WebSocketAndPrinterRoute.page,
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
     ),
   ];

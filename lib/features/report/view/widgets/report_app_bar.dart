@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/extensions.dart';
+
 class ReportAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget leadingWidget;
@@ -17,8 +19,11 @@ class ReportAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surfaceContainer,
       elevation: 0,
       scrolledUnderElevation: 0,
       surfaceTintColor: Colors.transparent,
@@ -30,7 +35,7 @@ class ReportAppBar extends StatelessWidget implements PreferredSizeWidget {
           Text(
             title,
             style: TextStyle(
-              color: Colors.black87,
+              color: colorScheme.onSurface,
               fontWeight: FontWeight.bold,
               fontSize: 18.0.sp,
             ),
@@ -40,12 +45,12 @@ class ReportAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               IconButton(
                 icon: Icon(Icons.search, size: 16.0.r),
-                color: Colors.black87,
+                color: colorScheme.onSurface,
                 onPressed: () {},
               ),
               IconButton(
                 icon: Icon(Icons.notifications_none, size: 16.0.r),
-                color: Colors.black87,
+                color: colorScheme.onSurface,
                 onPressed: () {},
               ),
             ],
@@ -61,7 +66,7 @@ class ReportAppBar extends StatelessWidget implements PreferredSizeWidget {
             backgroundColor: const Color(0xFFB0B8C1),
             child: Text(
               'A',
-              style: TextStyle(color: Colors.white, fontSize: 14.sp),
+              style: TextStyle(color: colorScheme.onPrimary, fontSize: 14.sp),
             ),
           ),
         ),

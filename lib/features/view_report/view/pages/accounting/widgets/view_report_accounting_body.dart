@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/core/utils/extensions.dart';
 import 'package:zeus_app/features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
 
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
@@ -20,6 +21,8 @@ class ViewReportAccountingBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = context.contextHeight();
+
     /// DUMMY
     List<FinanceBarDataModel> list1 = [
       FinanceBarDataModel(label: '1', order: 0, a: 5, b: 2),
@@ -48,10 +51,10 @@ class ViewReportAccountingBody extends StatelessWidget {
         color: Colors.indigo,
       ),
       PieChartSectionModel(
-          title: 'Utility',
-          badge: '15%',
-          value: 15,
-          color: Colors.blue
+        title: 'Utility',
+        badge: '15%',
+        value: 15,
+        color: Colors.blue,
       ),
       PieChartSectionModel(
         title: 'Corporate',
@@ -65,7 +68,7 @@ class ViewReportAccountingBody extends StatelessWidget {
       onRefresh: () async {},
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           spacing: 8.0.r,
           children: [
             /// DATE
@@ -99,7 +102,7 @@ class ViewReportAccountingBody extends StatelessWidget {
             Column(
               children: List.generate(
                 1,
-                    (i) => ViewReportAccountingExpenseTypeCard(
+                (i) => ViewReportAccountingExpenseTypeCard(
                   parentKeyAnimation: '0',
                   childKeyAnimation: '$i',
                   pieChartSectionModelList: pieChartSections1,
@@ -131,7 +134,7 @@ class ViewReportAccountingBody extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+            SizedBox(height: height * 0.25),
           ],
         ),
       ),

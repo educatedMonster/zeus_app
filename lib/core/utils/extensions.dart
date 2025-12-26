@@ -7,6 +7,8 @@ import '../../features/purchase_requests/viewmodel/purchase_request_view_model.d
 import '../../features/report/viewmodel/report_view_model.dart';
 import '../../features/sample/viewmodel/sample_view_model.dart';
 import '../../features/view_report/viewmodel/view_report_view_model.dart';
+import '../../features/web_socket_and_printer/viewmodel/web_socket_and_printer_view_model.dart';
+import '../../shared/viewmodels/date_picker_view_model.dart';
 
 extension ContextExtensions on BuildContext {
   // Focus
@@ -45,6 +47,14 @@ extension ContextExtensions on BuildContext {
   // Purchase Request ViewModel
   PurchaseRequestViewModel readPurchaseRequestsVM() => read<PurchaseRequestViewModel>();
   PurchaseRequestViewModel watchPurchaseRequestsVM() => watch<PurchaseRequestViewModel>();
+
+  // Sample ViewModel
+  DatePickerViewModel readDatePickerVM() => read<DatePickerViewModel>();
+  DatePickerViewModel watchDatePickerVM() => watch<DatePickerViewModel>();
+
+  // Web Socket And Printer ViewModel
+  WebSocketAndPrinterViewModel readWebSocketAndPrinterVM() => read<WebSocketAndPrinterViewModel>();
+  WebSocketAndPrinterViewModel watchWebSocketAndPrinterVM() => watch<WebSocketAndPrinterViewModel>();
 
   // Sample ViewModel
   SampleViewModel readSampleVM() => read<SampleViewModel>();

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:zeus_app/core/utils/extensions.dart';
 
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
 import '../../../../../../shared/widgets/date_picker.dart';
 import '../../../../../dashboard/data/sources/remote/model/pie_chart_section_model.dart';
 import '../../../../data/sources/remote/model/collection_data_model.dart';
+import '../../../../viewmodel/view_report_view_model.dart';
 import 'view_report_banquet_business_source_card.dart';
 import 'view_report_banquet_collection_card.dart';
 import 'view_report_banquet_market_segment_card.dart';
@@ -17,6 +20,12 @@ class ViewReportBanquetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double height = context.contextHeight();
+    final parentController = context
+        .select<ViewReportViewModel, ScrollController>(
+          (vm) => vm.parentController,
+        );
+
     /// DUMMY
     final List<PieChartSectionModel> pieChartSections1 = [
       PieChartSectionModel(
@@ -98,8 +107,11 @@ class ViewReportBanquetBody extends StatelessWidget {
     ];
 
     return SingleChildScrollView(
+      controller: parentController,
+      physics: const ClampingScrollPhysics(),
+      scrollDirection: .vertical,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 8.0.r,
         children: [
           /// DATE
@@ -147,7 +159,7 @@ class ViewReportBanquetBody extends StatelessWidget {
           /// TOP ACCOUNT OWNER DATA TABLE CARD
           ViewReportBanquetTopAccountOwnerDataTableCard(),
 
-          SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+          SizedBox(height: height * 0.25),
         ],
       ),
     );

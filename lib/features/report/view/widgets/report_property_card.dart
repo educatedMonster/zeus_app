@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/app/routes/approuter.gr.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/utils/extensions.dart';
 
 class ReportPropertyCard extends StatelessWidget {
   final String title;
@@ -12,6 +13,9 @@ class ReportPropertyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     final List<Map<String, dynamic>> reports = [
       {'name': 'Rooms', 'value': '43.5k'},
       {'name': 'Banquet', 'value': '22.3k'},
@@ -21,22 +25,22 @@ class ReportPropertyCard extends StatelessWidget {
     ];
 
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).copyWith(top: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 8.0.r,
         children: [
           /// Header Row
@@ -46,12 +50,12 @@ class ReportPropertyCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8.0).r,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF2F5F8),
+                  color: colorScheme.onSurface.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Icon(
                   Icons.apartment_rounded,
-                  color: Colors.blueGrey[700],
+                  color: colorScheme.onSurface,
                   size: 20.0.r,
                 ),
               ),
@@ -60,7 +64,7 @@ class ReportPropertyCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -82,7 +86,7 @@ class ReportPropertyCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black87,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         if (report['value'] != null) ...[
@@ -106,8 +110,8 @@ class ReportPropertyCard extends StatelessWidget {
                   /// Right side (button)
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Color(0xFFE0E0E0)),
-                      backgroundColor: const Color(0xFFF8F9FB),
+                      side:  BorderSide(color: colorScheme.onSurface),
+                      backgroundColor: colorScheme.onSurface,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.r),
                       ),
@@ -136,7 +140,7 @@ class ReportPropertyCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: colorScheme.surface,
                       ),
                     ),
                   ),

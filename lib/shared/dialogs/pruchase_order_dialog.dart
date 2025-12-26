@@ -30,7 +30,7 @@ class PurchaseOrderDialog extends StatelessWidget {
                     vertical: 16.0,
                   ).r,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     spacing: 16.0.r,
                     children: [
                       // drag handle
@@ -51,14 +51,14 @@ class PurchaseOrderDialog extends StatelessWidget {
                         children: [
                           // Header
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: .center,
+                            mainAxisAlignment: .spaceBetween,
+                            mainAxisSize: .max,
                             children: [
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: .start,
+                                mainAxisAlignment: .center,
+                                mainAxisSize: .min,
                                 children: [
                                   Text(
                                     'Purchase Order',
@@ -259,16 +259,16 @@ class PurchaseOrderDialog extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0).r,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: .center,
+        mainAxisAlignment: .center,
         spacing: 8.0.r,
         children: [
           Icon(icon, color: Colors.black87, size: 22.0.r),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: .start,
+              mainAxisAlignment: .center,
+              mainAxisSize: .max,
               children: [
                 Text(
                   label,

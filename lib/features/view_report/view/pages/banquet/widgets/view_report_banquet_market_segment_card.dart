@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_revenue_pie_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
@@ -21,16 +22,19 @@ class ViewReportMarketSegmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -42,7 +46,7 @@ class ViewReportMarketSegmentCard extends StatelessWidget {
           final chartSize = constraints.maxWidth * 0.40; // 45% of card width
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: 16.0.r,
             children: [
               /// Title and download icon
@@ -56,12 +60,12 @@ class ViewReportMarketSegmentCard extends StatelessWidget {
 
               /// Chart and Legend
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: .spaceBetween,
+                crossAxisAlignment: .center,
                 children: [
                   /// Legend Section
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     spacing: 8.0.r,
                     children: [
                       BuildLegendDot(color: Colors.red, label: 'Promotion'),

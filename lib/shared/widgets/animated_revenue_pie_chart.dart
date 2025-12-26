@@ -76,7 +76,7 @@ class _AnimatedRevenuePieChartState extends State<AnimatedRevenuePieChart>
         builder: (context, child) {
           final progress = _pieController.value;
           // Detect when animation finishes
-          if (progress == 1.0) {
+          if (!_animationDone && progress == 1.0) {
             _animationDone = true;
             // This will run every frame where progress == 1.0
             debugPrint("Animation completed!");

@@ -67,7 +67,7 @@ class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
         }
       },
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+        scrollDirection: .horizontal,
         physics: ScrollPhysics(),
         child: SizedBox(
           height: widget.containerHeight,

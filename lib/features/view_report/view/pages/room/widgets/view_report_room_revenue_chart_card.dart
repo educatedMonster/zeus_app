@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_revenue_line_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 
@@ -10,6 +11,10 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+    double height = context.contextHeight();
+
     final List<FlSpot> revenueSpots = const [
       FlSpot(0, 1.7e6), // Apr
       FlSpot(1, 0.6e6), // May
@@ -34,16 +39,16 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
     ];
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.40,
-      width: MediaQuery.of(context).size.width,
+      height: height * 0.40,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -55,7 +60,7 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
           final containerWidth = constraints.maxWidth;
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: 16.0.r,
             children: [
               /// Title and download icon
@@ -68,20 +73,34 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
-                  _buildRevenueInfo(title: 'This Week', value: '430.5k'),
-                  _buildRevenueInfo(title: 'This Month', value: '1.2M'),
-                  _buildRevenueInfo(title: 'This Year', value: '32.5M'),
+                  _buildRevenueInfo(
+                    colorScheme,
+                    title: 'This Week',
+                    value: '430.5k',
+                  ),
+                  _buildRevenueInfo(
+                    colorScheme,
+                    title: 'This Month',
+                    value: '1.2M',
+                  ),
+                  _buildRevenueInfo(
+                    colorScheme,
+                    title: 'This Year',
+                    value: '32.5M',
+                  ),
                 ],
               ),
 
-              AnimatedRevenueLineChart(
-                keyAnimation: 'view-report-room-revenue-chard-card-1',
-                progressColor: Colors.blue,
-                containerHeight: containerHeight * 0.50,
-                containerWidth: containerWidth,
-                lineBarsData: revenueLineBarsData,
+              Expanded(
+                child: AnimatedRevenueLineChart(
+                  keyAnimation: 'view-report-room-revenue-chard-card-1',
+                  progressColor: colorScheme.primary,
+                  containerHeight: containerHeight,
+                  containerWidth: containerWidth,
+                  lineBarsData: revenueLineBarsData,
+                ),
               ),
             ],
           );
@@ -90,15 +109,28 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRevenueInfo({required String title, required String value}) {
+  Widget _buildRevenueInfo(
+    ColorScheme colorScheme, {
+    required String title,
+    required String value,
+  }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(
           value,
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18.sp,
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        Text(title, style: TextStyle(color: Colors.grey[600])),
+        Text(
+          title,
+          style: TextStyle(
+            color: colorScheme.onSurface.withValues(alpha: 0.50),
+          ),
+        ),
       ],
     );
   }

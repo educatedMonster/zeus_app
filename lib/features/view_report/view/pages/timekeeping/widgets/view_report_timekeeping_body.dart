@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
 import '../../../../../../shared/widgets/date_picker.dart';
+import '../../../../viewmodel/view_report_view_model.dart';
 import 'view_report_timekeeping_2_card.dart';
 import 'view_report_timekeeping_absences_card.dart';
 import 'view_report_timekeeping_card.dart';
@@ -16,19 +19,36 @@ class ViewReportTimekeepingBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = context.contextHeight();
+    final parentController = context
+        .select<ViewReportViewModel, ScrollController>(
+          (vm) => vm.parentController,
+        );
+
     return SingleChildScrollView(
+      controller: parentController,
+      physics: const ClampingScrollPhysics(),
+      scrollDirection: .vertical,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 8.0.r,
         children: [
           /// DATE
           DatePicker(),
 
           /// BREADCRUMBS
-          BreadcrumbsProperty(property: '{Property #}', moduleName: 'Timekeeping'),
+          BreadcrumbsProperty(
+            property: '{Property #}',
+            moduleName: 'Timekeeping',
+          ),
 
           /// PRESENT CARD
-          Column(children: List.generate(1, (i) => ViewReportTimekeepingCard(parentKeyAnimation: '$i'))),
+          Column(
+            children: List.generate(
+              1,
+              (i) => ViewReportTimekeepingCard(parentKeyAnimation: '$i'),
+            ),
+          ),
 
           /// LATE AND ABSENCES
           Row(
@@ -57,7 +77,7 @@ class ViewReportTimekeepingBody extends StatelessWidget {
           /// ABSENCES DATA TABLE
           ViewReportTimekeepingAbsencesCard(),
 
-          SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+          SizedBox(height: height * 0.25),
         ],
       ),
     );

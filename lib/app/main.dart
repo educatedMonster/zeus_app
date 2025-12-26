@@ -4,6 +4,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:zeus_app/features/approval/viewmodel/approval_view_model.dart';
 import 'package:zeus_app/features/report/viewmodel/report_view_model.dart';
 import 'package:zeus_app/features/sample/viewmodel/sample_view_model.dart';
+import 'package:zeus_app/features/web_socket_and_printer/viewmodel/web_socket_and_printer_view_model.dart';
 
 import '../features/dashboard/viewmodel/dashboard_view_model.dart';
 import '../features/purchase_requests/viewmodel/purchase_request_view_model.dart';
@@ -24,6 +25,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ReportTypeDropdownViewModel()),
     ChangeNotifierProvider(create: (_) => FileFormatDropdownViewModel()),
     ChangeNotifierProvider(create: (_) => PurchaseRequestViewModel()),
+    ChangeNotifierProvider(create: (_) => WebSocketAndPrinterViewModel()),
   ]; //
 
   runApp(MultiProvider(providers: registerProviders, child: MyApp()));

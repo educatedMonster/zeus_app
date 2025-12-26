@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../core/constants/app_text_styles.dart';
+import '../../core/utils/extensions.dart';
 import '../../features/view_report/data/sources/remote/model/collection_data_model.dart';
 import '../components/get_animated_stack_bar_groups.dart';
 import '../components/make_stacked_group_data.dart';
@@ -26,6 +27,8 @@ class AnimatedCollectionStackBarChart extends StatefulWidget {
 class _AnimatedCollectionStackBarChartState
     extends State<AnimatedCollectionStackBarChart>
     with SingleTickerProviderStateMixin {
+  late ColorScheme _colorScheme;
+  late Size _size;
   late AnimationController _barController;
   late Animation<double> _barAnimation;
   bool _hasAnimated = false; // Prevents repeating animation
@@ -88,7 +91,7 @@ class _AnimatedCollectionStackBarChartState
         }
       },
       child: SizedBox(
-        width: MediaQuery.of(context).size.width,
+        width: _size.width,
         height: chartHeight,
         child: AnimatedBuilder(
           animation: _barController,
@@ -152,7 +155,7 @@ class _AnimatedCollectionStackBarChartState
                   enabled: true,
                   touchTooltipData: BarTouchTooltipData(
                     tooltipMargin: 1.0.r,
-                    getTooltipColor: (group) => Colors.black12,
+                    getTooltipColor: (group) => _colorScheme.onSurface,
                     tooltipBorderRadius: BorderRadius.circular(8.r),
                     tooltipPadding: EdgeInsets.all(8.0.r),
                     fitInsideHorizontally: true,
@@ -166,7 +169,7 @@ class _AnimatedCollectionStackBarChartState
                         '${rod.rodStackItems[2].label} - ${rod.rodStackItems[2].toY.toStringAsFixed(0)}.00\n'
                         '${rod.rodStackItems[3].label} - ${rod.rodStackItems[3].toY.toStringAsFixed(0)}.00',
                         TextStyle(
-                          color: Colors.black87,
+                          color: _colorScheme.surface,
                           fontWeight: FontWeight.w600,
                           fontSize: 10.0.sp,
                         ),
@@ -181,5 +184,12 @@ class _AnimatedCollectionStackBarChartState
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
+    super.didChangeDependencies();
   }
 }

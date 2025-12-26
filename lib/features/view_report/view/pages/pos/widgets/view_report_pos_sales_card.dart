@@ -15,28 +15,29 @@ class ViewReportPosSalesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
 
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: type == 'Sales' ? Colors.indigo : Colors.orange,
+        color: type == 'Sales' ? colorScheme.primary : Colors.orange,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: .start,
+            mainAxisAlignment: .center,
             spacing: 8.0.r,
             children: [
               Text(
@@ -58,8 +59,8 @@ class ViewReportPosSalesCard extends StatelessWidget {
             ],
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: .end,
+            mainAxisAlignment: .center,
             children: [
               Text(
                 'last week',

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/features/dashboard/view/widgets/dashboard_revenue_breakdown_card.dart';
 import 'package:zeus_app/features/view_report/data/sources/remote/model/revenue_data_model.dart';
 
+import '../../../../core/utils/extensions.dart';
 import '../../../../shared/widgets/date_picker.dart';
 import '../../data/sources/remote/model/pie_chart_section_model.dart';
 import 'dashboard_occupancy_rate_card.dart';
@@ -17,6 +18,8 @@ class DashboardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = context.contextHeight();
+
     /// DUMMY
     final List<PieChartSectionModel> pieChartSections1 = [
       PieChartSectionModel(
@@ -50,7 +53,7 @@ class DashboardBody extends StatelessWidget {
       onRefresh: () async {},
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           spacing: 8.0.r,
           children: [
             /// DATE
@@ -97,7 +100,7 @@ class DashboardBody extends StatelessWidget {
             /// REVENUE CENTERS TAB CARD
             DashboardRevenueCentersTabCard(),
 
-            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+            SizedBox(height: height * 0.25),
           ],
         ),
       ),

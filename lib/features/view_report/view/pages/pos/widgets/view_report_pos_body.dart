@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../shared/widgets/auto_route_breadcrumbs.dart';
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
 import '../../../../../../shared/widgets/date_picker.dart';
 import '../../../../data/sources/remote/model/progress_ chart_model.dart';
@@ -16,6 +16,9 @@ class ViewReportPosBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double height = context.contextHeight();
+
     List<ProgressChartModel> list1 = [
       ProgressChartModel(
         isProgress: false,
@@ -23,10 +26,10 @@ class ViewReportPosBody extends StatelessWidget {
         value: 0.0,
         current: "72,523.00",
         total: "72,523.00",
-        progressColor: Colors.indigo,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressColor: colorScheme.primary,
+        progressBGColor: colorScheme.primary,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
       ProgressChartModel(
         isProgress: false,
@@ -34,10 +37,10 @@ class ViewReportPosBody extends StatelessWidget {
         value: 0.0,
         current: "3,525.00",
         total: "3,525.00",
-        progressColor: Colors.indigo,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressColor: colorScheme.primary,
+        progressBGColor: colorScheme.primary,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
       ProgressChartModel(
         isProgress: false,
@@ -45,10 +48,10 @@ class ViewReportPosBody extends StatelessWidget {
         value: 0.0,
         current: "6,532.50",
         total: "6,532.50",
-        progressColor: Colors.indigo,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressColor: colorScheme.primary,
+        progressBGColor: colorScheme.primary,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
       ProgressChartModel(
         isProgress: false,
@@ -56,12 +59,13 @@ class ViewReportPosBody extends StatelessWidget {
         value: 0.0,
         current: "0.00",
         total: "0.00",
-        progressColor: Colors.indigo,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressColor: colorScheme.primary,
+        progressBGColor: colorScheme.primary,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
     ];
+
     List<ProgressChartModel> list2 = [
       ProgressChartModel(
         isProgress: false,
@@ -70,9 +74,9 @@ class ViewReportPosBody extends StatelessWidget {
         current: "2,549.80",
         total: "2,549.80",
         progressColor: Colors.orange,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressBGColor: Colors.orange,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
       ProgressChartModel(
         isProgress: false,
@@ -81,9 +85,9 @@ class ViewReportPosBody extends StatelessWidget {
         current: "15,236.10",
         total: "15,236.10",
         progressColor: Colors.orange,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressBGColor: Colors.orange,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
       ProgressChartModel(
         isProgress: false,
@@ -92,9 +96,9 @@ class ViewReportPosBody extends StatelessWidget {
         current: "2,156.00",
         total: "2,156.00",
         progressColor: Colors.orange,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressBGColor: Colors.orange,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
       ProgressChartModel(
         isProgress: false,
@@ -103,15 +107,15 @@ class ViewReportPosBody extends StatelessWidget {
         current: "0.00",
         total: "0.00",
         progressColor: Colors.orange,
-        progressBGColor: Colors.white,
-        backgroundColor: Colors.white,
-        textColor: Colors.black87,
+        progressBGColor: Colors.orange,
+        backgroundColor: colorScheme.surfaceContainer,
+        textColor: colorScheme.onSurface,
       ),
     ];
 
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 8.0.r,
         children: [
           /// DATE
@@ -135,7 +139,7 @@ class ViewReportPosBody extends StatelessWidget {
           /// REPORT SALES CARD
           ViewReportPosBestSellerCard(),
 
-          SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+          SizedBox(height: height * 0.25),
         ],
       ),
     );

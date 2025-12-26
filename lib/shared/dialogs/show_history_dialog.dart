@@ -162,7 +162,7 @@ void showHistoryDialog(BuildContext context) {
                       return SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: .horizontal,
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,

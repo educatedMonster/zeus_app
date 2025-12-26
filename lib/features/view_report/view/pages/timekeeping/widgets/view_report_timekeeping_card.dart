@@ -1,32 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_line_progress_bar.dart';
 
 class ViewReportTimekeepingCard extends StatelessWidget {
   final String parentKeyAnimation;
 
-  const ViewReportTimekeepingCard({super.key, required this.parentKeyAnimation});
+  const ViewReportTimekeepingCard({
+    super.key,
+    required this.parentKeyAnimation,
+  });
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 16.0.r,
         children: [
           /// Title
@@ -35,12 +42,13 @@ class ViewReportTimekeepingCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: colorScheme.onSurface,
             ),
           ),
 
           /// Property B
           _buildProgressRow(
+            colorScheme,
             keyAnimation: '$parentKeyAnimation-view_report_timekeeping_body-1',
             title: '80%',
             progressColor: Colors.orange,
@@ -52,7 +60,8 @@ class ViewReportTimekeepingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressRow({
+  Widget _buildProgressRow(
+    ColorScheme colorScheme, {
     required String keyAnimation,
     required String title,
     required Color progressColor,
@@ -60,18 +69,18 @@ class ViewReportTimekeepingCard extends StatelessWidget {
     required double value,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       spacing: 8.0.r,
       children: [
         /// Label row (name + percent)
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Text(
               title,
               style: TextStyle(
                 fontSize: 13.sp,
-                color: Colors.grey[700],
+                color: colorScheme.onSurface.withValues(alpha: 0.50),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -79,7 +88,7 @@ class ViewReportTimekeepingCard extends StatelessWidget {
               '${(value * 100).toInt()}/100',
               style: TextStyle(
                 fontSize: 13.sp,
-                color: Colors.grey[700],
+                color: colorScheme.onSurface.withValues(alpha: 0.50),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -87,7 +96,12 @@ class ViewReportTimekeepingCard extends StatelessWidget {
         ),
 
         /// Progress bar
-        AnimatedLineProgressBar(value: value, backgroundColor: backgroundColor, progressColor: progressColor, keyAnimation: keyAnimation),
+        AnimatedLineProgressBar(
+          value: value,
+          backgroundColor: backgroundColor,
+          progressColor: progressColor,
+          keyAnimation: keyAnimation,
+        ),
 
         // Stack(
         //   alignment: Alignment.centerLeft,

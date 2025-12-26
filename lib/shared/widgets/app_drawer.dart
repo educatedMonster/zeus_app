@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:zeus_app/app/routes/approuter.gr.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
@@ -18,6 +19,10 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> properties = ["All", "Property A", "Property B", "Property C"];
+
+    String selectedProperty = properties[0];
+
     DashboardViewModel dashboardViewModel = context.watchDashboardVM();
     ColorScheme colorScheme = context.contextColorScheme();
     Size size = context.contextSize();
@@ -119,6 +124,14 @@ class AppDrawer extends StatelessWidget {
       ),
     ];
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      dashboardViewModel.setSelectedProperty(selectedProperty);
+    });
+
+    selectedProperty = context.select<DashboardViewModel, String>(
+      (cm) => cm.selectedProperty,
+    );
+
     return SizedBox(
       width: size.width * 0.80,
       child: SafeArea(
@@ -168,7 +181,7 @@ class AppDrawer extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                overflow: .ellipsis,
               ),
               onTap: () async {},
             ),
@@ -186,26 +199,30 @@ class AppDrawer extends StatelessWidget {
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
-                  value: 'All',
+                  value: selectedProperty.isNotEmpty
+                      ? selectedProperty
+                      : properties[0],
                   icon: const Icon(Icons.keyboard_arrow_down_rounded),
                   isExpanded: true,
-                  items: ['All', 'Property A', 'Property B', 'Property C'].map((
-                    item,
-                  ) {
+                  items: properties.map((item) {
                     return DropdownMenuItem<String>(
                       value: item,
                       child: Text(
                         item,
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: Colors.black87,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     );
                   }).toList(),
                   onChanged: (value) {
                     if (value != null) {
-                      // setState(() => selectedCenter = value);
+                      dashboardViewModel.setSelectedProperty(value);
+
+                      if (scaffoldKey.currentState!.isDrawerOpen) {
+                        scaffoldKey.currentState!.closeDrawer();
+                      }
                     }
                   },
                 ),
@@ -231,7 +248,7 @@ class AppDrawer extends StatelessWidget {
                         fontWeight: FontWeight.w300,
                       ),
                       maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: .ellipsis,
                     ),
                   ),
                 ),

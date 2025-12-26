@@ -21,17 +21,26 @@ class ViewReportAccountingPage extends StatefulWidget {
 
 class _ViewReportAccountingPageState extends State<ViewReportAccountingPage> {
   late ViewReportViewModel _viewReportViewModel;
-
+  late DatePickerViewModel _datePickerViewModel;
+  late ColorScheme _colorScheme;
+  late Size _size;
   int _counter = 0;
 
   void _incrementCounter() {
     _viewReportViewModel.incrementCounter();
   }
 
+  void _resetDate() {
+    _datePickerViewModel.resetDate();
+  }
+
   @override
   void initState() {
+    _viewReportViewModel = context.readViewReportVM();
+    _datePickerViewModel = context.readDatePickerVM();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<DatePickerViewModel>().resetDate();
+      _resetDate();
     });
     super.initState();
   }
@@ -39,16 +48,24 @@ class _ViewReportAccountingPageState extends State<ViewReportAccountingPage> {
   @override
   Widget build(BuildContext context) {
     _viewReportViewModel = context.watchViewReportVM();
+    _datePickerViewModel = context.watchDatePickerVM();
 
     _counter = _viewReportViewModel.counter;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: _colorScheme.surface,
       appBar: ViewReportAccountingAppBar(title: Constants.titleViewReport),
       body: ViewReportAccountingBody(counter: _counter),
       floatingActionButton: ViewReportAccountingFab(
         onPressed: _incrementCounter,
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
+    super.didChangeDependencies();
   }
 }

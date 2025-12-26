@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
 
@@ -10,17 +11,21 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double height = context.contextHeight();
+    double width = context.contextWidth();
+
     return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
-      width: MediaQuery.of(context).size.width,
+      height: height * 0.35,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -33,14 +38,12 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
           final lineWidth = containerHeight * 0.05;
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: .center,
+            mainAxisAlignment: .center,
             spacing: 16.0.r,
             children: [
               /// Title and download icon
-              BuildHeaderChart(
-                label: 'Occupancy Rate',
-              ),
+              BuildHeaderChart(label: 'Occupancy Rate'),
 
               Expanded(
                 child: CircularPercentIndicator(
@@ -53,21 +56,21 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
                   startAngle: 180,
                   circularStrokeCap: CircularStrokeCap.round,
                   backgroundColor: Colors.indigo.shade50,
-                  progressColor: Colors.indigo,
+                  progressColor: colorScheme.primary,
                   center: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       Icon(
                         Icons.person_outline,
-                        color: Colors.grey[600],
+                        color: colorScheme.onSurface,
                         size: containerHeight * 0.08,
                       ),
                       Text(
                         '80%',
                         style: TextStyle(
-                          fontSize: containerHeight * 0.1,
+                          fontSize: containerHeight * 0.075,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ],
@@ -76,11 +79,17 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
               ),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 spacing: 16.0.r,
                 children: [
-                  BuildLegendDot(color: Colors.indigo, label: 'Actual 20/26'),
-                  BuildLegendDot(color: Colors.white, label: 'Projected 24/26'),
+                  BuildLegendDot(
+                    color: colorScheme.primary,
+                    label: 'Actual 20/26',
+                  ),
+                  BuildLegendDot(
+                    color: colorScheme.onSurface,
+                    label: 'Projected 24/26',
+                  ),
                 ],
               ),
             ],

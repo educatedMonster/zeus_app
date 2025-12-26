@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Needed to connect to the printer</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Allow to communicate with printers in your network</string>
 </dict>
 </plist>

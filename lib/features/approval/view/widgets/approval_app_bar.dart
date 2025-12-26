@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/extensions.dart';
+
 class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget leadingWidget;
@@ -21,12 +23,13 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     return AppBar(
-      toolbarHeight: kTextTabBarHeight + kTextTabBarHeight,
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       elevation: 0,
       scrolledUnderElevation: 0,
-      surfaceTintColor: Colors.transparent,
+      surfaceTintColor: colorScheme.onSurface,
       titleSpacing: 0,
       centerTitle: false,
       title: Padding(
@@ -35,9 +38,9 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Approvals',
+              title,
               style: TextStyle(
-                color: Colors.black87,
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0.sp,
               ),
@@ -46,8 +49,12 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
             Row(
               spacing: 12.0.r,
               children: [
-                Icon(Icons.search, size: 20.0.r),
-                Icon(Icons.notifications_none, size: 20.0.r),
+                Icon(Icons.search, size: 20.0.r, color: colorScheme.onSurface),
+                Icon(
+                  Icons.notifications_none,
+                  size: 20.0.r,
+                  color: colorScheme.onSurface,
+                ),
               ],
             ),
           ],
@@ -62,58 +69,40 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
             backgroundColor: const Color(0xFFB0B8C1),
             child: Text(
               'A',
-              style: TextStyle(color: Colors.white, fontSize: 14.sp),
+              style: TextStyle(
+                color: colorScheme.surfaceContainer,
+                fontSize: 14.sp,
+              ),
             ),
           ),
         ),
       ],
       bottom: TabBar(
         controller: tabController,
-        dividerColor: Colors.transparent,
-        indicatorColor: Colors.indigo,
-        indicatorWeight: 1,
-        tabAlignment: TabAlignment.fill,
+        labelColor: colorScheme.onSurface,
+        unselectedLabelColor: colorScheme.onSurface.withValues(alpha: 0.50),
         indicatorSize: TabBarIndicatorSize.label,
-        padding: EdgeInsets.zero,
+        // fill each tab
         indicatorPadding: EdgeInsets.zero,
+        indicatorColor: colorScheme.primary,
+        // no extra padding
+        // indicatorWeight: 1,
+        // prevent thin default line
+        dividerColor: Colors.transparent,
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        padding: EdgeInsets.zero,
         labelPadding: EdgeInsets.zero,
-        unselectedLabelColor: Colors.grey,
         tabs: tabs
             .map(
               (tab) => Tab(
-                height: kTextTabBarHeight,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(tab),
-
-                    if (tab == 'Pending')
-                      Flexible(
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                            bottom: 8.0,
-                            right: 2.0,
-                            left: 2.0,
-                          ).r,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 3.0,
-                          ).r,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            '1',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 8.0.sp,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ),
-                      ),
-                  ],
+                child: Badge(
+                  isLabelVisible: true,
+                  offset: Offset(16, -8),
+                  label: Text('1'),
+                  child: Text(
+                    tab,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             )

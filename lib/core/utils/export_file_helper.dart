@@ -147,20 +147,23 @@ Future<File> _exportToExcelWithStyles(
 
 /// ----- Export to PDF -----
 Future<File> _exportToPdf(
-  String selectedReport,
-  List<Map<String, dynamic>> data,
-) async {
+    String selectedReport,
+    List<Map<String, dynamic>> data,
+    ) async {
   if (data.isEmpty) {
     throw Exception("No data to export.");
   }
 
   final pdf = pw.Document();
+
   pdf.addPage(
     pw.Page(
       build: (pw.Context context) {
-        return pw.TableHelper.fromTextArray(
+        return pw.Table.fromTextArray(
           headers: data.first.keys.toList(),
-          data: data.map((row) => row.values.toList()).toList(),
+          data: data
+              .map((row) => row.values.map((v) => v?.toString() ?? '').toList())
+              .toList(),
         );
       },
     ),
@@ -171,6 +174,35 @@ Future<File> _exportToPdf(
   await file.writeAsBytes(await pdf.save());
   return file;
 }
+
+
+/// ----- Export to PDF -----
+/// 3.x and above,
+// Future<File> _exportToPdf2(
+//     String selectedReport,
+//     List<Map<String, dynamic>> data,
+//     ) async {
+//   if (data.isEmpty) {
+//     throw Exception("No data to export.");
+//   }
+//
+//   final pdf = pw.Document();
+//   pdf.addPage(
+//     pw.Page(
+//       build: (pw.Context context) {
+//         return pw.TableHelper.fromTextArray(
+//           headers: data.first.keys.toList(),
+//           data: data.map((row) => row.values.toList()).toList(),
+//         );
+//       },
+//     ),
+//   );
+//
+//   final dir = await getTemporaryDirectory();
+//   final file = File('${dir.path}/${_generateFilename(selectedReport)}.pdf');
+//   await file.writeAsBytes(await pdf.save());
+//   return file;
+// }
 
 /// ----- Export to CSV -----
 Future<File> _exportToCsv(

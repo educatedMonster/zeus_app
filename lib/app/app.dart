@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../core/utils/extensions.dart';
 import 'routes/approuter.dart';
 
 class MyApp extends StatelessWidget {
@@ -23,9 +24,10 @@ class MyApp extends StatelessWidget {
         routerConfig: _appRouter.config(),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        ),
+        theme: context.watchDashboardVM().themeData,
+        // theme: ThemeData(
+        //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // ),
         builder: (buildContext, child) {
           return MediaQuery(
             ///Setting font does not change with system font size

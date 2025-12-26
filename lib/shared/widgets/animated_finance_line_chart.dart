@@ -67,7 +67,7 @@ class _AnimatedFinanceLineChartState extends State<AnimatedFinanceLineChart>
         }
       },
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+        scrollDirection: .horizontal,
         physics: ScrollPhysics(),
         child: SizedBox(
           height: widget.containerHeight,

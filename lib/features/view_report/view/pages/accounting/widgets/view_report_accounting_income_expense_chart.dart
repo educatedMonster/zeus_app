@@ -1,7 +1,7 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_income_expense_bar_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
@@ -21,16 +21,19 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -39,10 +42,10 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           // Dynamically size the chart based on card width
-          final chartSize = constraints.maxWidth * 0.60; // 45% of card width
+          final chartSize = constraints.maxWidth * 0.50;
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: 16.0.r,
             children: [
               /// Title and download icon
@@ -57,26 +60,29 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
               /// Chart
               financeBarDataModelList.isEmpty
                   ? SizedBox(
-                      height: chartSize,
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 8.0.r,
-                        children: [
-                          Icon(Icons.bar_chart, color: Colors.grey, size: 48),
-                          const Text(
-                            'No data available',
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                    height: chartSize,
+                    width: width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 8.0.r,
+                      children: [
+                        Icon(Icons.bar_chart, color: colorScheme.onSurface, size: 32.0.r),
+                        Text(
+                          'No data available',
+                          style: TextStyle(
+                            color: colorScheme.onSurface,
+                            fontSize: 12.0.sp,
                           ),
-                        ],
-                      ),
-                    )
+                        ),
+                      ],
+                    ),
+                  )
                   : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         /// Legend
                         SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: .horizontal,
                           child: Row(
                             spacing: 16.0.r,
                             children: [
@@ -95,14 +101,14 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
 
                         /// Chart
                         SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: .horizontal,
                           child: Container(
                             margin: EdgeInsets.symmetric(
                               horizontal: 8.0.r,
                               vertical: 16.0.r,
                             ),
                             height: chartSize,
-                            width: MediaQuery.of(context).size.width,
+                            width: width,
                             child: AnimatedIncomeExpenseBarChart(
                               keyAnimation:
                                   '$parentKeyAnimation-$childKeyAnimation-view_report_accounting_income_expense_chart',

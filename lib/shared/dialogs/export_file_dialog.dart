@@ -62,17 +62,13 @@ class ExportFileDialog extends StatelessWidget {
         // selectedReport = reportTypeDropdownViewModel.selectedReport;
         // selectedFormat = fileFormatDropdownViewModel.selectedFormat;
 
-        final (:report) = bc
-            .select<ReportTypeDropdownViewModel, ({String report})>(
-              (cm) => (report: cm.selectedReport),
-            );
-        selectedReport = report;
+        selectedReport = bc.select<ReportTypeDropdownViewModel, String>(
+          (cm) => cm.selectedReport,
+        );
 
-        final (:format) = bc
-            .select<FileFormatDropdownViewModel, ({String format})>(
-              (cm) => (format: cm.selectedFormat),
-            );
-        selectedFormat = format;
+        selectedFormat = bc.select<FileFormatDropdownViewModel, String>(
+          (cm) => cm.selectedFormat,
+        );
 
         return Container(
           decoration: const BoxDecoration(
@@ -89,7 +85,7 @@ class ExportFileDialog extends StatelessWidget {
                     vertical: 16.0,
                   ).r,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     spacing: 16.0.r,
                     children: [
                       // drag handle
@@ -106,8 +102,8 @@ class ExportFileDialog extends StatelessWidget {
                       ),
 
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: .center,
+                        crossAxisAlignment: .start,
                         spacing: 16.0.r,
                         children: [
                           Text(

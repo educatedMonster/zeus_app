@@ -1,24 +1,65 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../viewmodel/approval_view_model.dart';
 import '../widgets/approval_high_low_button.dart';
 import '../widgets/approval_purchase_order_data_table_card.dart';
 import '../widgets/approval_purchase_request_data_table_card.dart';
 
 @RoutePage()
-class ReturnedApprovalPage extends StatelessWidget {
+class ReturnedApprovalPage extends StatefulWidget {
   const ReturnedApprovalPage({super.key});
 
   @override
+  State<ReturnedApprovalPage> createState() => _ReturnedApprovalPageState();
+}
+
+class _ReturnedApprovalPageState extends State<ReturnedApprovalPage> with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+  final List<String> _tabs = ['High', 'Low'];
+
+  void _initTabController() {
+    _tabController = TabController(length: _tabs.length, vsync: this);
+  }
+
+  @override
+  void initState() {
+    _initTabController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final parentController = context
+        .select<ApprovalViewModel, ScrollController>(
+          (vm) => vm.returnedParentController,
+    );
+    final childController = context
+        .select<ApprovalViewModel, ScrollController>(
+          (vm) => vm.childController,
+    );
+
     return SingleChildScrollView(
+      controller: parentController,
+      physics: const ClampingScrollPhysics(),
+      scrollDirection: .vertical,
       child: Column(
         children: [
-          ApprovalHighLowButton(options: ['High', 'Low']),
+          ApprovalHighLowButton(
+            tabController: _tabController,
+            options: _tabs,
+          ),
 
-          ApprovalPurchaseRequestDataTableCard(),
+          ApprovalPurchaseRequestDataTableCard(parentController: parentController, childController:  childController,),
 
-          ApprovalPurchaseOrderDataTableCard(),
+          ApprovalPurchaseOrderDataTableCard(parentController: parentController, childController:  childController),
 
           SizedBox(height: MediaQuery.of(context).size.height * 0.25),
         ],

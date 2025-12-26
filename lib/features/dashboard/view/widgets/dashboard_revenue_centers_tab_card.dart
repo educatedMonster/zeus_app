@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/extensions.dart';
 import '../../../../shared/widgets/build_header_chart.dart';
 
 class DashboardRevenueCentersTabCard extends StatefulWidget {
@@ -34,35 +35,36 @@ class _DashboardRevenueCentersTabCardState
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 16.0.r,
         children: [
           /// Title and download icon
-          BuildHeaderChart(
-            label: 'Revenue Centers',
-          ),
+          BuildHeaderChart(label: 'Revenue Centers'),
 
           /// Dropdown
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12.0).r,
             decoration: BoxDecoration(
-              color: const Color(0xFFF6F8FA),
+              color: colorScheme.onSurface.withValues(alpha: 0.10),
               borderRadius: BorderRadius.circular(8.0.r),
             ),
             child: DropdownButtonHideUnderline(
@@ -75,7 +77,10 @@ class _DashboardRevenueCentersTabCardState
                     value: item,
                     child: Text(
                       item,
-                      style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: colorScheme.onSurface,
+                      ),
                     ),
                   );
                 }).toList(),
@@ -90,26 +95,30 @@ class _DashboardRevenueCentersTabCardState
 
           /// Tab bar
           Container(
-            height: 42.0.r,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(color: const Color(0xFFE0E0E0)),
+              borderRadius: BorderRadius.circular(8.0.r),
+              border: Border.all(color: colorScheme.onSurface),
             ),
             child: TabBar(
               controller: _tabController,
-              labelColor: Colors.black87,
-              unselectedLabelColor: Colors.grey[600],
+              labelColor: colorScheme.surface,
+              unselectedLabelColor: colorScheme.onSurface.withValues(
+                alpha: 0.50,
+              ),
               indicatorSize: TabBarIndicatorSize.tab,
               // fill each tab
               indicatorPadding: EdgeInsets.zero,
               // no extra padding
-              indicatorWeight: 0,
+              // indicatorWeight: 1,
               // prevent thin default line
+              dividerColor: Colors.transparent,
               overlayColor: WidgetStateProperty.all(Colors.transparent),
+              padding: EdgeInsets.zero,
+              labelPadding: EdgeInsets.zero,
               // no splash that looks like a line
               indicator: BoxDecoration(
-                color: const Color(0xFFE9ECF2),
-                borderRadius: BorderRadius.circular(8.r),
+                color: colorScheme.onSurface,
+                borderRadius: BorderRadius.circular(8.0.r),
               ),
               labelStyle: TextStyle(
                 fontSize: 13.sp,
@@ -127,7 +136,10 @@ class _DashboardRevenueCentersTabCardState
             height: 200.0.r, // Adjust based on content
             child: TabBarView(
               controller: _tabController,
-              children: [_buildByShiftView(), _buildHourlyChart()],
+              children: [
+                _buildByShiftView(colorScheme),
+                _buildHourlyChart(colorScheme, width),
+              ],
             ),
           ),
         ],
@@ -136,44 +148,50 @@ class _DashboardRevenueCentersTabCardState
   }
 
   /// --- By Shift View ---
-  Widget _buildByShiftView() {
+  Widget _buildByShiftView(ColorScheme colorScheme) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.0.r, vertical: 4.0.r),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 16.0.r,
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Text(
                 'Day Shift',
-                style: TextStyle(fontSize: 13.sp, color: Colors.grey[700]),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: colorScheme.onSurface.withValues(alpha: 0.50),
+                ),
               ),
               Text(
                 '154,000.00',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
           ),
 
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Text(
                 'Night Shift',
-                style: TextStyle(fontSize: 13.sp, color: Colors.grey[700]),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: colorScheme.onSurface.withValues(alpha: 0.50),
+                ),
               ),
               Text(
                 '80,000.00',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -184,16 +202,16 @@ class _DashboardRevenueCentersTabCardState
   }
 
   /// --- Hourly Bar Chart View ---
-  Widget _buildHourlyChart() {
+  Widget _buildHourlyChart(ColorScheme colorScheme, double width) {
     final data = [1800.0, 1200.0, 2000.0, 1400.0, 3000.0];
     final labels = ['7 AM', '8 AM', '9 AM', '10 AM', '11 AM'];
 
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: .horizontal,
       // physics: NeverScrollableScrollPhysics(),
       child: SizedBox(
         // width: data.length * 60.w,
-        width: MediaQuery.of(context).size.width,
+        width: width,
         child: BarChart(
           BarChartData(
             gridData: FlGridData(show: true, drawVerticalLine: false),
@@ -209,7 +227,7 @@ class _DashboardRevenueCentersTabCardState
                       '${(value / 1000).toInt()}K',
                       style: TextStyle(
                         fontSize: 10.sp,
-                        color: Colors.grey[700],
+                        color: colorScheme.onSurface.withValues(alpha: 0.75),
                       ),
                     );
                   },
@@ -227,7 +245,7 @@ class _DashboardRevenueCentersTabCardState
                       labels[index],
                       style: TextStyle(
                         fontSize: 10.sp,
-                        color: Colors.grey[700],
+                        color: colorScheme.onSurface.withValues(alpha: 0.75),
                       ),
                     );
                   },
@@ -246,7 +264,7 @@ class _DashboardRevenueCentersTabCardState
                 barRods: [
                   BarChartRodData(
                     toY: data[i],
-                    color: const Color(0xFF3B4BFF),
+                    color: colorScheme.primary,
                     width: 20.0.r,
                     borderRadius: BorderRadius.circular(4.r),
                   ),

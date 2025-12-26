@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/utils/extensions.dart';
+
 class ViewReportBanquetFab extends StatelessWidget {
   final VoidCallback onPressed;
 
@@ -7,10 +9,12 @@ class ViewReportBanquetFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     return FloatingActionButton(
       onPressed: onPressed,
       tooltip: 'Increment',
-      child: const Icon(Icons.add),
+      child: Icon(Icons.add, color: colorScheme.onPrimary),
     );
   }
 }

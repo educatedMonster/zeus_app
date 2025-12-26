@@ -12,6 +12,10 @@ class DashboardViewModel extends ChangeNotifier {
 
   int get selectedDrawerIndex => _selectedDrawerIndex;
 
+  String _selectedProperty = '';
+
+  String get selectedProperty => _selectedProperty;
+
   ThemeData _themeData = lightMode;
 
   ThemeData get themeData => _themeData;
@@ -28,6 +32,11 @@ class DashboardViewModel extends ChangeNotifier {
 
   void setSelectedDrawerIndex(int index) {
     _selectedDrawerIndex = index;
+    notifyListeners();
+  }
+
+  void setSelectedProperty(String value) async {
+    _selectedProperty = value;
     notifyListeners();
   }
 

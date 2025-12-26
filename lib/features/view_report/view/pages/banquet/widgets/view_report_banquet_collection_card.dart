@@ -21,12 +21,15 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return Container(
-      width: context.contextWidth(),
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
@@ -37,7 +40,7 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 24.0.r,
         children: [
           /// Header
@@ -49,12 +52,12 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
 
           /// Legend
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: 24.0.r,
             children: [
               /// Legend
               SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: .horizontal,
                 child: Row(
                   spacing: 16.0.r,
                   children: List.generate(collectionBarDataModelList.length, (
@@ -80,7 +83,7 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
 
               /// Chart
               SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: .horizontal,
                 child: AnimatedCollectionStackBarChart(
                   keyAnimation:
                       '$parentKeyAnimation-$childKeyAnimation-dashboard_revenue_by_property_chart',

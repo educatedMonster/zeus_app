@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/utils/extensions.dart';
+
 class ViewReportRoomAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final String title;
@@ -13,25 +15,27 @@ class ViewReportRoomAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surfaceContainer,
       elevation: 0,
       scrolledUnderElevation: 0,
-      surfaceTintColor: Colors.transparent,
+      surfaceTintColor: colorScheme.onSurface,
       titleSpacing: 0,
       actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0).r,
       centerTitle: false,
       title: Text(
         title,
         style: TextStyle(
-          color: Colors.black87,
+          color: colorScheme.onSurface,
           fontWeight: FontWeight.bold,
           fontSize: 18.0.sp,
         ),
       ),
       leading: IconButton(
         icon: Icon(Icons.arrow_back_sharp, size: 20.0.r),
-        color: Colors.black87,
+        color: colorScheme.onSurface,
         onPressed: () {
           var currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus &&
@@ -45,7 +49,7 @@ class ViewReportRoomAppBar extends StatelessWidget
       actions: [
         IconButton(
           icon: Icon(Icons.close, size: 20.0.r),
-          color: Colors.black87,
+          color: colorScheme.onSurface,
           onPressed: () {
             var currentFocus = FocusScope.of(context);
             if (!currentFocus.hasPrimaryFocus &&

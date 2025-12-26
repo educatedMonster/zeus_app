@@ -1,44 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/extensions.dart';
+
 class DashboardRevenueCard extends StatelessWidget {
   const DashboardRevenueCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: context.contextWidth(),
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: .spaceBetween,
+        crossAxisAlignment: .center,
         children: [
           /// Left Section
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: .start,
+            mainAxisAlignment: .spaceBetween,
             spacing: 4.0.r,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Text(
                     'Total Revenue',
                     style: TextStyle(
                       fontSize: 13.sp,
-                      color: Colors.grey[600],
+                      color: colorScheme.onSurface.withValues(alpha: 0.5),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -47,20 +51,20 @@ class DashboardRevenueCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
               ),
 
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Text(
                     'Revenue PAR',
                     style: TextStyle(
                       fontSize: 13.sp,
-                      color: Colors.grey[600],
+                      color: colorScheme.onSurface.withValues(alpha: 0.5),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -69,7 +73,7 @@ class DashboardRevenueCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
@@ -79,18 +83,18 @@ class DashboardRevenueCard extends StatelessWidget {
 
           /// Right Section
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: .start,
+            mainAxisAlignment: .spaceBetween,
             spacing: 4.0.r,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Text(
                     'Occupancy Rate',
                     style: TextStyle(
                       fontSize: 13.sp,
-                      color: Colors.grey[600],
+                      color: colorScheme.onSurface.withValues(alpha: 0.5),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -99,18 +103,20 @@ class DashboardRevenueCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
               ),
 
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.grey.shade300),
+                      side: BorderSide(
+                        color: colorScheme.onSurface.withValues(alpha: 0.25),
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.r),
                       ),
@@ -123,7 +129,7 @@ class DashboardRevenueCard extends StatelessWidget {
                     child: Text(
                       'View Full Report',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                         fontSize: 13.sp,
                       ),

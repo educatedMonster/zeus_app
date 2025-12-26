@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/shared/widgets/build_legend_dot.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../data/sources/remote/model/progress_ chart_model.dart';
 
 class ViewReportPosSummaryGridCard extends StatelessWidget {
@@ -11,14 +12,17 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -41,11 +45,16 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: .start,
+              mainAxisAlignment: .spaceAround,
               spacing: 8.0.r,
               children: [
-                Expanded(child: BuildLegendDot(color: item.progressColor, label: item.title)),
+                Expanded(
+                  child: BuildLegendDot(
+                    color: item.progressColor,
+                    label: item.title,
+                  ),
+                ),
                 Expanded(
                   child: Text(
                     item.current,
@@ -55,7 +64,7 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
                       color: item.textColor,
                     ),
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    overflow: .ellipsis,
                   ),
                 ),
               ],

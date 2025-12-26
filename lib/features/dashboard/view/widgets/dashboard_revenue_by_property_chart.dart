@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/core/utils/extensions.dart';
 
 import '../../../../shared/widgets/animated_revenue_bar_chart.dart';
 import '../../../../shared/widgets/build_header_chart.dart';
@@ -20,16 +21,19 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
+        color: colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(16.0.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -41,13 +45,17 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
           final chartSize = constraints.maxWidth * 0.60; // 60% of card width
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: 24.0.r,
             children: [
               /// Title and download icon
               BuildHeaderChart(
                 label: 'Revenue by Property',
-                icon: Icon(Icons.download_rounded, size: 22.sp),
+                icon: Icon(
+                  Icons.download_rounded,
+                  size: 22.sp,
+                  color: colorScheme.onSurface,
+                ),
                 onIconPressed: () {
                   debugPrint('Download icon pressed');
                 },
@@ -57,9 +65,9 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
               revenueBarDataModelList.isEmpty
                   ? SizedBox(
                       height: chartSize,
-                      width: MediaQuery.of(context).size.width,
+                      width: width,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: .center,
                         spacing: 8.0.r,
                         children: [
                           Icon(Icons.bar_chart, color: Colors.grey, size: 48),
@@ -71,12 +79,12 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
                       ),
                     )
                   : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       spacing: 24.0.r,
                       children: [
                         /// Legend
                         SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: .horizontal,
                           child: Row(
                             spacing: 16.0.r,
                             children: [
@@ -99,9 +107,9 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
 
                         /// Chart
                         SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: .horizontal,
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
+                            width: width,
                             height: chartSize,
                             child: AnimatedRevenueBarChart(
                               keyAnimation:

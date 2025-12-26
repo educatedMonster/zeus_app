@@ -30,7 +30,7 @@ class _RejectDialogState extends State<RejectDialog> {
           padding: const EdgeInsets.all(20.0).r,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: 16.0.r,
             children: [
               Text(

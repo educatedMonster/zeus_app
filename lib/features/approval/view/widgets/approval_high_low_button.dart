@@ -3,25 +3,77 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:zeus_app/features/approval/viewmodel/approval_view_model.dart';
 
+import '../../../../core/utils/extensions.dart';
+
 class ApprovalHighLowButton extends StatelessWidget {
+  final TabController tabController;
   final List<String> options;
 
-  const ApprovalHighLowButton({super.key, required this.options});
+  const ApprovalHighLowButton({
+    super.key,
+    required this.tabController,
+    required this.options,
+  });
 
   @override
   Widget build(BuildContext context) {
-    int segmentedButton = context.watch<ApprovalViewModel>().segmentedButton;
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+    int segmentedButton = context.watchApprovalVM().segmentedButton;
 
     return Container(
-      height: kToolbarHeight,
-      width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.all(8.0).r,
       decoration: BoxDecoration(
-        color: Colors.indigo.shade50,
-        borderRadius: BorderRadius.circular(30.r),
+        color: colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(32.0.r),
+        border: Border.all(color: colorScheme.surfaceContainer),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.onSurface.withValues(alpha: 0.10),
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: TabBar(
+        controller: tabController,
+        labelColor: colorScheme.surfaceContainer,
+        unselectedLabelColor: colorScheme.onSurface.withValues(alpha: 0.50),
+        indicatorSize: TabBarIndicatorSize.tab,
+        // fill each tab
+        indicatorPadding: EdgeInsets.zero,
+        // no extra padding
+        // indicatorWeight: 1,
+        // prevent thin default line
+        dividerColor: Colors.transparent,
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        padding: EdgeInsets.zero,
+        labelPadding: EdgeInsets.zero,
+        // no splash that looks like a line
+        indicator: BoxDecoration(
+          color: colorScheme.onSurface,
+          borderRadius: BorderRadius.circular(32.0.r),
+        ),
+        labelStyle: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
+        tabs: options
+            .map(
+              (tab) => Tab(
+                child: Text(tab, style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+            )
+            .toList(),
+      ),
+    );
+
+    return Container(
+      // width: width,
+      margin: const EdgeInsets.all(8.0).r,
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(30.0.r),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.surface,
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),

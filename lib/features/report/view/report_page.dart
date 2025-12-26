@@ -51,7 +51,7 @@ class _ReportPageState extends State<ReportPage> with WidgetsBindingObserver {
     _counter = _reportViewModel.counter;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: _colorScheme.surface,
       key: _scaffoldKey,
       appBar: ReportAppBar(
         title: Constants.titleReports,

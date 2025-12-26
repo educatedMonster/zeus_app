@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/shared/dialogs/export_file_dialog.dart';
 
+import '../../core/utils/extensions.dart';
 import 'build_legend_dot.dart';
 
 class BuildHeaderChart extends StatelessWidget {
@@ -22,25 +23,27 @@ class BuildHeaderChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: .start,
+                crossAxisAlignment: .center,
                 spacing: 8.0.r,
                 children: [BuildLegendDot(color: color, label: label)],
               ),
               if (caption != null)
                 Text(
                   '$caption',
-                  style: TextStyle(fontSize: 10.0.sp, color: Colors.black54),
+                  style: TextStyle(fontSize: 10.0.sp, color: colorScheme.onSurface),
                   maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: .ellipsis,
                 ),
             ],
           ),

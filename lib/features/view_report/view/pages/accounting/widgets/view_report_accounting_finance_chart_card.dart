@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_finance_line_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
 import '../../../../data/sources/remote/model/finance_line_data_model.dart';
@@ -17,6 +18,8 @@ class ViewReportAccountingFinanceChartCard extends StatefulWidget {
 
 class _ViewReportAccountingFinanceChartCardState
     extends State<ViewReportAccountingFinanceChartCard> {
+  late ColorScheme _colorScheme;
+  late Size _size;
   int _selectedIndex = -1;
 
   List<LineChartBarData> financeLineBarsData = [];
@@ -82,16 +85,16 @@ class _ViewReportAccountingFinanceChartCardState
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.40,
-      width: MediaQuery.of(context).size.width,
+      height: _size.height * 0.40,
+      width: _size.width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: _colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withAlpha(30),
+            color: _colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -103,12 +106,12 @@ class _ViewReportAccountingFinanceChartCardState
           final containerWidth = constraints.maxWidth;
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: 16.0.r,
             children: [
               /// Title and download icon
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Expanded(
                     child: Text(
@@ -116,9 +119,10 @@ class _ViewReportAccountingFinanceChartCardState
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
+                        color: _colorScheme.onSurface
                       ),
                       maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: .ellipsis,
                     ),
                   ),
                   IconButton(
@@ -130,7 +134,7 @@ class _ViewReportAccountingFinanceChartCardState
 
               /// Legend
               SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: .horizontal,
                 child: Row(
                   children: legendItems.map((item) {
                     return Padding(
@@ -155,7 +159,7 @@ class _ViewReportAccountingFinanceChartCardState
                 child: AnimatedFinanceLineChart(
                   keyAnimation: 'view-report-room-revenue-chard-card',
                   progressColor: Colors.blue,
-                  containerHeight: containerHeight * 0.50,
+                  containerHeight: containerHeight,
                   containerWidth: containerWidth,
                   lineBarsData: financeLineBarsData,
                 ),
@@ -165,6 +169,13 @@ class _ViewReportAccountingFinanceChartCardState
         },
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
+    super.didChangeDependencies();
   }
 
   /// When a legend item is tapped

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 
 class ViewReportPosBestSellerCard extends StatelessWidget {
@@ -8,6 +9,9 @@ class ViewReportPosBestSellerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     final List<Map<String, dynamic>> items = [
       {'name': 'French Fries', 'amount': 3500.00},
       {'name': 'Ginger Glazed', 'amount': 2500.00},
@@ -17,33 +21,34 @@ class ViewReportPosBestSellerCard extends StatelessWidget {
     ];
 
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           /// Title and download icon
           BuildHeaderChart(
             label: 'Best Sellers',
-            icon: Icon(Icons.download_rounded, size: 22.sp),
+            icon: Icon(Icons.download_rounded, size: 22.0.sp),
             onIconPressed: () {
               debugPrint('Download icon pressed');
             },
           ),
 
-          SizedBox(height: 16),
+          SizedBox(height: 16.0.r),
+
           ...items.asMap().entries.map((entry) {
             int index = entry.key + 1;
             var item = entry.value;
@@ -54,25 +59,31 @@ class ViewReportPosBestSellerCard extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 12,
-                    backgroundColor: Color(0xFF243C84),
+                    backgroundColor: colorScheme.primary,
                     child: Text(
                       '$index',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+                        color: colorScheme.onPrimary,
+                        fontSize: 10.0.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Expanded(
-                    child: Text(item['name'], style: TextStyle(fontSize: 16)),
+                    child: Text(
+                      item['name'],
+                      style: TextStyle(
+                        fontSize: 14.0.sp,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
                   ),
                   Text(
                     item['amount'].toStringAsFixed(2),
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      color: Colors.black87,
+                      fontSize: 12.0.sp,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],

@@ -39,7 +39,7 @@ class _DashboardPageState extends State<DashboardPage>
     _counter = _dashboardViewModel.counter;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: _colorScheme.surface,
       key: _scaffoldKey,
       appBar: DashboardAppBar(
         title: 'Dashboard',

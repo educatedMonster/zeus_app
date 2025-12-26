@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/extensions.dart';
 import '../../../../shared/widgets/animated_line_progress_bar.dart';
 import '../../../view_report/data/sources/remote/model/progress_ chart_model.dart';
 
@@ -16,6 +17,9 @@ class DashboardOccupancyRateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double width = context.contextWidth();
+
     final list = [
       ProgressChartModel(
         isProgress: true,
@@ -53,22 +57,22 @@ class DashboardOccupancyRateCard extends StatelessWidget {
     ];
 
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 24.0.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: 8.0.r,
         children: [
           /// Title
@@ -77,7 +81,7 @@ class DashboardOccupancyRateCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 15.sp,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: colorScheme.onSurface,
             ),
           ),
 
@@ -85,11 +89,12 @@ class DashboardOccupancyRateCard extends StatelessWidget {
             children: List.generate(list.length, (index) {
               final item = list[index];
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   SizedBox(height: 16.0.r),
 
                   _buildProgressCard(
+                    colorScheme: colorScheme,
                     keyAnimation: '$parentKeyAnimation-$childKeyAnimation-dashboard_occupancy_rate_card-$index',
                     title: item.title,
                     progressColor: item.progressColor,
@@ -106,6 +111,7 @@ class DashboardOccupancyRateCard extends StatelessWidget {
   }
 
   Widget _buildProgressCard({
+    required ColorScheme colorScheme,
     required String keyAnimation,
     required String title,
     required Color progressColor,
@@ -113,18 +119,18 @@ class DashboardOccupancyRateCard extends StatelessWidget {
     required double value,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       spacing: 8.0.r,
       children: [
         /// Label row (name + percent)
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Text(
               title,
               style: TextStyle(
                 fontSize: 13.sp,
-                color: Colors.grey[700],
+                color: colorScheme.onSurface.withValues(alpha: 0.5),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -132,7 +138,7 @@ class DashboardOccupancyRateCard extends StatelessWidget {
               '${(value * 100).toInt()}%',
               style: TextStyle(
                 fontSize: 13.sp,
-                color: Colors.grey[700],
+                color: colorScheme.onSurface.withValues(alpha: 0.5),
                 fontWeight: FontWeight.w500,
               ),
             ),

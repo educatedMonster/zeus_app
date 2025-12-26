@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/utils/extensions.dart';
+
 class BuildLegendDot extends StatelessWidget {
   final Color? color;
   final String label;
@@ -9,6 +11,8 @@ class BuildLegendDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     return Row(
       spacing: 8.0.r,
       children: [
@@ -21,11 +25,12 @@ class BuildLegendDot extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
+            color: colorScheme.onSurface,
             fontSize: color != null ? 12.0.sp :  16.sp,
             fontWeight: color != null ? FontWeight.normal : FontWeight.bold,
           ),
           maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+          overflow: .ellipsis,
         ),
       ],
     );
