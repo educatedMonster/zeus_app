@@ -13,25 +13,27 @@ import '../../features/dashboard/viewmodel/dashboard_view_model.dart';
 import 'marquee_widget.dart';
 
 class AppDrawer extends StatelessWidget {
+  final ColorScheme colorScheme;
+  final Size size;
   final GlobalKey<ScaffoldState> scaffoldKey;
+  final List<String> properties;
 
-  const AppDrawer({super.key, required this.scaffoldKey});
+  const AppDrawer({
+    super.key,
+    required this.colorScheme,
+    required this.size,
+    required this.scaffoldKey,
+    required this.properties,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<String> properties = ["All", "Property A", "Property B", "Property C"];
-
-    String selectedProperty = properties[0];
-
     DashboardViewModel dashboardViewModel = context.watchDashboardVM();
-    ColorScheme colorScheme = context.contextColorScheme();
-    Size size = context.contextSize();
 
-    int selectedDrawerIndex = 0;
-    ThemeData themeData = lightMode;
-
-    selectedDrawerIndex = dashboardViewModel.selectedDrawerIndex;
-    themeData = dashboardViewModel.themeData;
+    final (themeData, selectedProperty, selectedDrawerIndex) = context
+        .select<DashboardViewModel, (ThemeData, String, int)>(
+          (vm) => (vm.themeData, vm.selectedProperty, vm.selectedDrawerIndex),
+        );
 
     // Define drawer items dynamically
     final drawerItems = <DrawerItem>[
@@ -124,25 +126,21 @@ class AppDrawer extends StatelessWidget {
       ),
     ];
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      dashboardViewModel.setSelectedProperty(selectedProperty);
-    });
-
-    selectedProperty = context.select<DashboardViewModel, String>(
-      (cm) => cm.selectedProperty,
-    );
-
     return SizedBox(
       width: size.width * 0.80,
       child: SafeArea(
         bottom: false, // we only want to respect bottom inside the drawer
         child: NavigationDrawer(
           backgroundColor: colorScheme.surface,
-          indicatorColor: colorScheme.primaryContainer,
+          indicatorColor: colorScheme.primary,
           selectedIndex: selectedDrawerIndex,
           onDestinationSelected: (index) async {
             dashboardViewModel.setSelectedDrawerIndex(index);
             drawerItems[index].onTap();
+
+            if (scaffoldKey.currentState!.isDrawerOpen) {
+              scaffoldKey.currentState!.closeDrawer();
+            }
           },
 
           /// HEADER
@@ -158,8 +156,9 @@ class AppDrawer extends StatelessWidget {
                     'ZEUS',
                     style: TextStyle(
                       color: colorScheme.onSurface,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0.sp,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: Fonts.fontMontserrat,
                     ),
                   ),
                 ],
@@ -175,7 +174,7 @@ class AppDrawer extends StatelessWidget {
               title: Text(
                 Constants.titleLogout,
                 style: TextStyle(
-                  fontFamily: Fonts.constFontPoppins,
+                  fontFamily: Fonts.fontPoppins,
                   fontSize: 12.0.sp,
                   color: redColor(),
                   fontWeight: FontWeight.w500,
@@ -191,14 +190,16 @@ class AppDrawer extends StatelessWidget {
           children: [
             /// Dropdown
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 12.0).r,
+              margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0).r,
               padding: EdgeInsets.symmetric(horizontal: 12.0).r,
               decoration: BoxDecoration(
-                color: colorScheme.surfaceContainer,
+                color: colorScheme.secondary,
                 borderRadius: BorderRadius.circular(8.0.r),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
+                  dropdownColor: colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(8.0.r),
                   value: selectedProperty.isNotEmpty
                       ? selectedProperty
                       : properties[0],
@@ -210,8 +211,10 @@ class AppDrawer extends StatelessWidget {
                       child: Text(
                         item,
                         style: TextStyle(
-                          fontSize: 14.sp,
+                          fontSize: 12.0.sp,
                           color: colorScheme.onSurface,
+                          fontWeight: FontWeight.w300,
+                          fontFamily: Fonts.fontPoppins,
                         ),
                       ),
                     );
@@ -231,20 +234,24 @@ class AppDrawer extends StatelessWidget {
 
             for (final item in drawerItems)
               NavigationDrawerDestination(
-                icon: Icon(item.icon, size: 20.r, color: colorScheme.onSurface),
+                icon: Icon(item.icon, size: 20.0.r, color: colorScheme.onSurface),
                 selectedIcon: Icon(
                   item.selectedIcon,
-                  size: 20.r,
-                  color: colorScheme.onSurface,
+                  size: 20.0.r,
+                  color: drawerItems.indexOf(item) == selectedDrawerIndex
+                      ? colorScheme.onPrimary
+                      : colorScheme.onSurface,
                 ),
                 label: Flexible(
                   child: MarqueeWidget(
                     child: Text(
                       item.label,
                       style: TextStyle(
-                        fontFamily: Fonts.constFontPoppins,
+                        fontFamily: Fonts.fontPoppins,
                         fontSize: 12.0.sp,
-                        color: colorScheme.onSurface,
+                        color: drawerItems.indexOf(item) == selectedDrawerIndex
+                            ? colorScheme.onPrimary
+                            : colorScheme.onSurface,
                         fontWeight: FontWeight.w300,
                       ),
                       maxLines: 1,

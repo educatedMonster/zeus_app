@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../viewmodel/view_report_view_model.dart';
@@ -13,13 +14,9 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = context.contextColorScheme();
     final double width = context.contextWidth();
-    final parentController = context
-        .select<ViewReportViewModel, ScrollController>(
-          (vm) => vm.parentController,
-        );
-    final childController = context
-        .select<ViewReportViewModel, ScrollController>(
-          (vm) => vm.childController,
+    final (parentController, childController) = context
+        .select<ViewReportViewModel, (ScrollController, ScrollController)>(
+          (vm) => (vm.parentController, vm.childController),
         );
 
     final data = [
@@ -81,14 +78,14 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
       child: Container(
         width: width,
         margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-        padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0).r,
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainer,
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(16.0).r,
           boxShadow: [
             BoxShadow(
               color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-              blurRadius: 10,
+              blurRadius: 10.0.r,
               offset: const Offset(0, 2),
             ),
           ],
@@ -104,15 +101,15 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                 /// Title and download icon
                 BuildHeaderChart(
                   label: 'Top 5 Account Owner',
-                  icon: Icon(Icons.download_rounded, size: 22.sp),
-                  onIconPressed: () {
+                  icon: iconDownload(),
+                  onIconPressed: () async {
                     debugPrint('Download icon pressed');
                   },
                 ),
 
                 /// Table
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 4.0.r),
+                  margin: const EdgeInsets.symmetric(vertical: 4.0).r,
                   height: chartSize,
                   width: width,
                   child: SingleChildScrollView(
@@ -124,13 +121,9 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                       child: DataTableTheme(
                         data: DataTableThemeData(
                           headingRowColor: WidgetStateProperty.all(
-                            colorScheme.onSurface.withValues(alpha: 0.10),
+                            colorScheme.onSurface.withValues(alpha: 0.020),
                           ),
-                          headingTextStyle: TextStyle(
-                            fontSize: 12.0.sp,
-                            fontWeight: FontWeight.w500,
-                            color: colorScheme.onSurface,
-                          ),
+                          headingTextStyle: defaultTitleTextStyle(colorScheme),
                           dataTextStyle: TextStyle(
                             fontSize: 13.0.sp,
                             color: colorScheme.onSurface,
@@ -144,39 +137,37 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                         ),
                         child: DataTable(
                           showCheckboxColumn: false,
-                          dividerThickness: 0.10.r,
-                          border: TableBorder.symmetric(
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
+                          showBottomBorder: true,
+                          dividerThickness: 0.0.r,
                           columns: [
                             DataColumn(
                               label: Text(
                                 'Name',
-                                style: TextStyle(color: colorScheme.onSurface),
+                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Banquet',
-                                style: TextStyle(color: colorScheme.onSurface),
+                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Rooms',
-                                style: TextStyle(color: colorScheme.onSurface),
+                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Others',
-                                style: TextStyle(color: colorScheme.onSurface),
+                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Total',
-                                style: TextStyle(color: colorScheme.onSurface),
+                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                           ],
@@ -197,7 +188,7 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                                 }
                                 return isEven
                                     ? colorScheme.surfaceContainer
-                                    : colorScheme.onSurface.withValues(
+                                    : colorScheme.surfaceContainer.withValues(
                                         alpha: 0.10,
                                       );
                               }),
@@ -205,41 +196,31 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                                 DataCell(
                                   Text(
                                     item['name'].toString(),
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
+                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['banquet'].toString(),
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
+                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['rooms'].toString(),
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
+                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['others'].toString(),
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
+                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['total'].toString(),
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
+                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                               ],

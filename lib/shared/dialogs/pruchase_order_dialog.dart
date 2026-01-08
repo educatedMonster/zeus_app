@@ -1,7 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/shared/dialogs/reject_dialog.dart';
 
+import '../../core/utils/extensions.dart';
+import '../widgets/purchase_dialog_action_buttons.dart';
+import '../widgets/purchase_dialog_header.dart';
+import '../widgets/purchase_dialog_info_row.dart';
 import 'show_history_dialog.dart';
 
 class PurchaseOrderDialog extends StatelessWidget {
@@ -9,15 +14,17 @@ class PurchaseOrderDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+
     return DraggableScrollableSheet(
       initialChildSize: 0.80,
       minChildSize: 0.5,
       maxChildSize: 0.95,
       expand: false,
-      builder: (context, scrollController) {
+      builder: (bc, scrollController) {
         return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
@@ -40,7 +47,7 @@ class PurchaseOrderDialog extends StatelessWidget {
                           height: 4.0.r,
                           margin: const EdgeInsets.only(bottom: 16.0).r,
                           decoration: BoxDecoration(
-                            color: Colors.black45,
+                            color: colorScheme.onSurface,
                             borderRadius: BorderRadius.circular(4.0.r),
                           ),
                         ),
@@ -50,62 +57,40 @@ class PurchaseOrderDialog extends StatelessWidget {
                         spacing: 20.0.r,
                         children: [
                           // Header
-                          Row(
-                            crossAxisAlignment: .center,
-                            mainAxisAlignment: .spaceBetween,
-                            mainAxisSize: .max,
-                            children: [
-                              Column(
-                                crossAxisAlignment: .start,
-                                mainAxisAlignment: .center,
-                                mainAxisSize: .min,
-                                children: [
-                                  Text(
-                                    'Purchase Order',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 18.0.sp,
-                                    ),
-                                  ),
-
-                                  Text(
-                                    'Created Date : Aug 17, 2025',
-                                    style: TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 11.0.sp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.edit_outlined,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () => showHistoryDialog(context),
-                              ),
-                            ],
+                          PurchaseDialogHeader(
+                            colorScheme: colorScheme,
+                            title: 'Purchase Order',
+                            date: 'Created Date : Aug 17, 2025',
+                            onHistoryTap: () => showHistoryDialog(bc, colorScheme),
                           ),
 
                           // Transaction No
-                          _infoRow(Icons.tag, 'Transaction No.', '000000001'),
-
-                          _infoRow(
-                            Icons.person_outline,
-                            'Requested By',
-                            'Servo Tech Support',
+                          PurchaseDialogInfoRow(
+                            colorScheme: colorScheme,
+                            icon: Icons.tag,
+                            label: 'Transaction No.',
+                            value: '000000001',
                           ),
 
-                          _infoRow(
-                            Icons.home_work_outlined,
-                            'Property',
-                            'Property A',
+                          PurchaseDialogInfoRow(
+                            colorScheme: colorScheme,
+                            icon: Icons.person_outline,
+                            label: 'Requested By',
+                            value: 'Servo Tech Support',
                           ),
 
-                          _infoRow(
-                            Icons.description_outlined,
-                            'Notes',
-                            '{SampleNotes}',
+                          PurchaseDialogInfoRow(
+                            colorScheme: colorScheme,
+                            icon: Icons.home_work_outlined,
+                            label: 'Property',
+                            value: 'Property A',
+                          ),
+
+                          PurchaseDialogInfoRow(
+                            colorScheme: colorScheme,
+                            icon: Icons.description_outlined,
+                            label: 'Notes',
+                            value: '{SampleNotes}',
                           ),
 
                           Row(
@@ -149,12 +134,18 @@ class PurchaseOrderDialog extends StatelessWidget {
                             ],
                           ),
 
-                          _infoRow(Icons.format_list_numbered, 'Quantity', '5'),
+                          PurchaseDialogInfoRow(
+                            colorScheme: colorScheme,
+                            icon: Icons.format_list_numbered,
+                            label: 'Quantity',
+                            value: '5',
+                          ),
 
-                          _infoRow(
-                            Icons.info_outline,
-                            'Total Amount',
-                            '5,000.00',
+                          PurchaseDialogInfoRow(
+                            colorScheme: colorScheme,
+                            icon: Icons.info_outline,
+                            label: 'Total Amount',
+                            value: '5,000.00',
                           ),
                         ],
                       ),
@@ -164,131 +155,29 @@ class PurchaseOrderDialog extends StatelessWidget {
               ),
 
               // Action Buttons
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ).copyWith(bottom: 24.0).r,
-                child: Column(
-                  spacing: 8.0.r,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      spacing: 8.0.r,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) => const RejectDialog(),
-                              ).then((reason) {
-                                if (reason != null) {
-                                  debugPrint('User reason: $reason');
-                                }
-                              });
-                            },
-                            icon: const Icon(Icons.close, color: Colors.white),
-                            label: const Text(
-                              'Reject',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(Icons.check, color: Colors.white),
-                            label: const Text(
-                              'Approve',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(Icons.undo, color: Colors.black87),
-                            label: const Text(
-                              'Return for Revision',
-                              style: TextStyle(color: Colors.black87),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  width: 1.0.r,
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              PurchaseDialogActionButtons(
+                colorScheme: colorScheme,
+                onApproveTap: () async {
+                  bc.maybePop();
+                },
+                onRejectTap: () async {
+                  showDialog(
+                    context: bc,
+                    builder: (_) => RejectDialog(colorScheme: colorScheme),
+                  ).then((reason) {
+                    if (reason != null) {
+                      debugPrint('User reason: $reason');
+                    }
+                  });
+                },
+                onReturnTap: () async {
+                  bc.maybePop();
+                },
               ),
             ],
           ),
         );
       },
-    );
-  }
-
-  Widget _infoRow(IconData icon, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      child: Row(
-        crossAxisAlignment: .center,
-        mainAxisAlignment: .center,
-        spacing: 8.0.r,
-        children: [
-          Icon(icon, color: Colors.black87, size: 22.0.r),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: .start,
-              mainAxisAlignment: .center,
-              mainAxisSize: .max,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 12.0.sp,
-                  ),
-                ),
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0.sp,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

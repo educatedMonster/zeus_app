@@ -119,16 +119,36 @@ class _AnimatedCollectionStackBarChartState
                       reservedSize: 40.0.r,
                       interval: 200000,
                       getTitlesWidget: (value, meta) {
-                        if (value == 0)
-                          return Text('0', style: axisTextStyle());
-                        if (value == 200000)
-                          return Text('200K', style: axisTextStyle());
-                        if (value == 400000)
-                          return Text('400K', style: axisTextStyle());
-                        if (value == 600000)
-                          return Text('600K', style: axisTextStyle());
-                        if (value == 800000)
-                          return Text('800K', style: axisTextStyle());
+                        if (value == 0) {
+                          return Text(
+                            '0',
+                            style: axisTextStyle(context.contextColorScheme()),
+                          );
+                        }
+                        if (value == 200000) {
+                          return Text(
+                            '200K',
+                            style: axisTextStyle(context.contextColorScheme()),
+                          );
+                        }
+                        if (value == 400000) {
+                          return Text(
+                            '400K',
+                            style: axisTextStyle(context.contextColorScheme()),
+                          );
+                        }
+                        if (value == 600000) {
+                          return Text(
+                            '600K',
+                            style: axisTextStyle(context.contextColorScheme()),
+                          );
+                        }
+                        if (value == 800000) {
+                          return Text(
+                            '800K',
+                            style: axisTextStyle(context.contextColorScheme()),
+                          );
+                        }
                         return const SizedBox.shrink();
                       },
                     ),
@@ -142,7 +162,7 @@ class _AnimatedCollectionStackBarChartState
                         if (value.toInt() < labels.length) {
                           return Text(
                             labels[value.toInt()],
-                            style: axisTextStyle(),
+                            style: axisTextStyle(context.contextColorScheme()),
                           );
                         }
                         return const SizedBox.shrink();

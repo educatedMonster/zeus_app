@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
+import 'package:zeus_app/features/dashboard/viewmodel/dashboard_view_model.dart';
 
 import '../../../core/constants/app_strings.dart';
+import '../../../core/constants/app_text_styles.dart';
 import '../../../shared/widgets/app_drawer.dart';
 import '../viewmodel/report_view_model.dart';
 import 'widgets/report_app_bar.dart';
@@ -21,19 +22,27 @@ class ReportPage extends StatefulWidget {
 
 class _ReportPageState extends State<ReportPage> with WidgetsBindingObserver {
   late ReportViewModel _reportViewModel;
+  late DashboardViewModel _dashboardViewModel;
   late GlobalKey<ScaffoldState> _scaffoldKey;
   late ColorScheme _colorScheme;
   late Size _size;
   int _counter = 0;
+  List<String> properties = ["All", "Property A", "Property B", "Property C"];
+  late final String _selectedProperty = properties[0];
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    _reportViewModel = context.readReportVM();
+    _dashboardViewModel = context.readDashboardVM();
+
     _initControllers();
 
-    _reportViewModel = context.read<ReportViewModel>();
-
     _counter = _reportViewModel.counter;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dashboardViewModel.setSelectedProperty(_selectedProperty);
+    });
     super.initState();
   }
 
@@ -46,7 +55,7 @@ class _ReportPageState extends State<ReportPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    _reportViewModel = context.watch<ReportViewModel>();
+    _reportViewModel = context.watchReportVM();
 
     _counter = _reportViewModel.counter;
 
@@ -58,22 +67,23 @@ class _ReportPageState extends State<ReportPage> with WidgetsBindingObserver {
         leadingWidget: IconButton(
           onPressed: () async {
             if (!_scaffoldKey.currentState!.isDrawerOpen) {
-              _reportViewModel.setSelectedDrawerIndex(-1);
+              // _dashboardViewModel.setSelectedDrawerIndex(-1);
               _scaffoldKey.currentState!.openDrawer();
             }
           },
           icon: Padding(
             padding: const EdgeInsets.only(left: 8.0).r,
-            child: Icon(
-              Icons.menu,
-              size: 20.0.r,
-              color: _colorScheme.onSurface,
-            ),
+            child: menuButton(),
           ),
         ),
       ),
-      drawer: AppDrawer(scaffoldKey: _scaffoldKey),
-      body: ReportBody(counter: _counter),
+      drawer: AppDrawer(
+        colorScheme: _colorScheme,
+        size: _size,
+        scaffoldKey: _scaffoldKey,
+        properties: properties,
+      ),
+      body: ReportBody(height: _size.height, counter: _counter),
       floatingActionButton: ReportFab(onPressed: _incrementCounter),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/app_text_styles.dart';
 import '../../core/utils/extensions.dart';
 
 class BuildLegendDot extends StatelessWidget {
@@ -24,11 +25,9 @@ class BuildLegendDot extends StatelessWidget {
           ),
         Text(
           label,
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: color != null ? 12.0.sp :  16.sp,
-            fontWeight: color != null ? FontWeight.normal : FontWeight.bold,
-          ),
+          style: color != null
+              ? propertyTitleTextStyle(colorScheme)
+              : cardTitleTextStyle(colorScheme),
           maxLines: 1,
           overflow: .ellipsis,
         ),

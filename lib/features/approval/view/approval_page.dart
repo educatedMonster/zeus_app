@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 import 'package:zeus_app/features/approval/view/widgets/approval_app_bar.dart';
 import 'package:zeus_app/features/approval/view/widgets/approval_fab.dart';
@@ -9,6 +8,7 @@ import 'package:zeus_app/features/approval/viewmodel/approval_view_model.dart';
 import 'package:zeus_app/shared/widgets/app_drawer.dart';
 
 import '../../../app/routes/approuter.gr.dart';
+import '../../dashboard/viewmodel/dashboard_view_model.dart';
 
 @RoutePage()
 class ApprovalPage extends StatefulWidget {
@@ -21,9 +21,13 @@ class ApprovalPage extends StatefulWidget {
 class _ApprovalPageState extends State<ApprovalPage>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   late ApprovalViewModel _approvalViewModel;
+  late DashboardViewModel _dashboardViewModel;
   late GlobalKey<ScaffoldState> _scaffoldKey;
   late ColorScheme _colorScheme;
+  late Size _size;
   int _counter = 0;
+  List<String> properties = ["All", "Property A", "Property B", "Property C"];
+  late final String _selectedProperty = properties[0];
   late final TabController _tabController;
   bool _isSynced = false;
   final List<String> _tabs = ['Pending', 'Approved', 'Returned', 'Rejected'];
@@ -32,11 +36,16 @@ class _ApprovalPageState extends State<ApprovalPage>
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     _approvalViewModel = context.readApprovalVM();
+    _dashboardViewModel = context.readDashboardVM();
 
     _initControllers();
     _initTabController();
 
     _counter = _approvalViewModel.counter;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dashboardViewModel.setSelectedProperty(_selectedProperty);
+    });
     super.initState();
   }
 
@@ -49,6 +58,7 @@ class _ApprovalPageState extends State<ApprovalPage>
   @override
   void didChangeDependencies() {
     _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
     super.didChangeDependencies();
   }
 
@@ -95,7 +105,7 @@ class _ApprovalPageState extends State<ApprovalPage>
             leadingWidget: IconButton(
               onPressed: () async {
                 if (!_scaffoldKey.currentState!.isDrawerOpen) {
-                  _approvalViewModel.setSelectedDrawerIndex(-1);
+                  // _dashboardViewModel.setSelectedDrawerIndex(-1);
                   _scaffoldKey.currentState!.openDrawer();
                 }
               },
@@ -111,7 +121,7 @@ class _ApprovalPageState extends State<ApprovalPage>
             tabController: _tabController,
             tabs: _tabs,
           ),
-          drawer: AppDrawer(scaffoldKey: _scaffoldKey),
+          drawer: AppDrawer(colorScheme: _colorScheme, size: _size, scaffoldKey: _scaffoldKey, properties: properties),
           body: child,
           floatingActionButton: ApprovalFab(onPressed: _incrementCounter),
         );

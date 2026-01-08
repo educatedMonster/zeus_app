@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../shared/widgets/animated_revenue_pie_chart.dart';
 import '../../../../shared/widgets/build_legend_dot.dart';
@@ -49,14 +50,7 @@ class DashboardRevenueBreakdownCard extends StatelessWidget {
             spacing: 16.0.r,
             children: [
               /// Title
-              Text(
-                'Revenue Breakdown',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
-              ),
+              Text('Revenue Breakdown', style: cardTitleTextStyle(colorScheme)),
 
               /// Chart and Legend
               Row(

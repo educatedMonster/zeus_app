@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/constants/app_fonts.dart';
+import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_line_progress_bar.dart';
 import '../../../../data/sources/remote/model/progress_ chart_model.dart';
@@ -67,14 +69,14 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
 
     return Container(
       width: width,
-      padding: EdgeInsets.symmetric(horizontal: 8.0.r),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0).r,
       decoration: BoxDecoration(
         // color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(16.0).r,
         boxShadow: [
           BoxShadow(
             color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-            blurRadius: 10,
+            blurRadius: 10.0.r,
             offset: const Offset(0, 2),
           ),
         ],
@@ -90,6 +92,7 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
           final item = list[index];
           return item.isProgress
               ? _buildProgressCard(
+                  colorScheme: colorScheme,
                   keyAnimation:
                       '$parentKeyAnimation-view_report_room_summary_grid_card-$index',
                   title: item.title,
@@ -102,6 +105,7 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
                   textColor: item.textColor,
                 )
               : _buildValueCard(
+                  colorScheme: colorScheme,
                   title: item.title,
                   value: item.total,
                   bgColor: item.backgroundColor,
@@ -114,6 +118,7 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
 
   /// Progress Card (Arrivals, Departures)
   Widget _buildProgressCard({
+    required ColorScheme colorScheme,
     required String keyAnimation,
     required String title,
     required Color progressColor,
@@ -128,33 +133,28 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
       padding: const EdgeInsets.all(12.0).r,
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(12.0).r,
       ),
       child: Column(
         crossAxisAlignment: .start,
         spacing: 8.0.r,
         children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 12.sp, color: textColor),
-          ),
+          Text(title, style: cardTitleTextStyle(colorScheme)),
           Row(
             mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 '${(value * 100).toInt()}%',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 18.0.sp,
                   fontWeight: FontWeight.w700,
                   color: textColor,
+                  fontFamily: Fonts.fontPoppins,
                 ),
               ),
               Text(
                 '$current/$total',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: textColor.withValues(alpha: 0.50),
-                ),
+                style: defaultTitleTextStyle(colorScheme),
               ),
             ],
           ),
@@ -173,6 +173,7 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
 
   /// Value Card (Stay-Over, Total Revenue)
   Widget _buildValueCard({
+    required ColorScheme colorScheme,
     required String title,
     required String value,
     required Color bgColor,
@@ -192,17 +193,15 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.w500,
               color: textColor.withValues(alpha: 0.8),
+              fontFamily: Fonts.fontPoppins,
             ),
           ),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w700,
-              color: textColor,
-            ),
+            style: largeTitleTextStyle(textColor)
           ),
         ],
       ),

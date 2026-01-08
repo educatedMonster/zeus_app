@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zeus_app/core/constants/app_strings.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
@@ -12,7 +11,14 @@ import 'widgets/view_report_pos_fab.dart';
 
 @RoutePage()
 class ViewReportPosPage extends StatefulWidget {
-  const ViewReportPosPage({super.key});
+  final String property;
+  final String module;
+
+  const ViewReportPosPage({
+    super.key,
+    required this.property,
+    required this.module,
+  });
 
   @override
   State<ViewReportPosPage> createState() => _ViewReportPosPageState();
@@ -54,7 +60,12 @@ class _ViewReportPosPageState extends State<ViewReportPosPage> {
     return Scaffold(
       backgroundColor: _colorScheme.surface,
       appBar: ViewReportPosAppBar(title: Constants.titleViewReport),
-      body: ViewReportPosBody(counter: _counter),
+      body: ViewReportPosBody(
+        height: _size.height,
+        property: widget.property,
+        module: widget.module,
+        counter: _counter,
+      ),
       floatingActionButton: ViewReportPosFab(onPressed: _incrementCounter),
     );
   }

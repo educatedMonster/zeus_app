@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:zeus_app/core/utils/extensions.dart';
 
 import '../../core/constants/app_text_styles.dart';
 import '../../features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
@@ -125,9 +126,9 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
                   // if (value == 200000) {
                   //   return Text('200K', style: axisTextStyle());
                   // }
-                  if (value == 0) return Text('0', style: axisTextStyle());
+                  if (value == 0) return Text('0', style: axisTextStyle(context.contextColorScheme()));
                   if (value > 0) {
-                    return Text('$value', style: axisTextStyle());
+                    return Text('$value', style: axisTextStyle(context.contextColorScheme()));
                   }
                   return const SizedBox.shrink();
                 },
@@ -163,7 +164,7 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
                 getTitlesWidget: (value, meta) {
                   final labels = _list.map((e) => e.label).toList();
                   if (value.toInt() < labels.length) {
-                    return Text(labels[value.toInt()], style: axisTextStyle());
+                    return Text(labels[value.toInt()], style: axisTextStyle(context.contextColorScheme()));
                   }
                   return const SizedBox.shrink();
                 },

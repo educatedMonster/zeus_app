@@ -18,6 +18,7 @@ class DashboardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
     double height = context.contextHeight();
 
     /// DUMMY
@@ -26,7 +27,7 @@ class DashboardBody extends StatelessWidget {
         title: 'Rooms',
         badge: '65%',
         value: 65,
-        color: Color(0xFF3B4BFF),
+        color: colorScheme.primary,
       ),
       PieChartSectionModel(
         title: 'Banquet',
@@ -62,7 +63,7 @@ class DashboardBody extends StatelessWidget {
             /// REVENUE SUMMARY CARD
             DashboardRevenueCard(),
 
-            /// REVENUE BY PROPERTY CHART
+            /// REVENUE BY PROPERTY CHART CARD
             Column(
               children: List.generate(
                 1,

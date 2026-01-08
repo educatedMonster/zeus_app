@@ -8,9 +8,18 @@ import 'view_report_room_revenue_chart_card.dart';
 import 'view_report_room_summary_grid_card.dart';
 
 class ViewReportRoomBody extends StatelessWidget {
+  final double height;
+  final String property;
+  final String module;
   final int counter;
 
-  const ViewReportRoomBody({super.key, required this.counter});
+  const ViewReportRoomBody({
+    super.key,
+    required this.height,
+    required this.property,
+    required this.module,
+    required this.counter,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +32,7 @@ class ViewReportRoomBody extends StatelessWidget {
           DatePicker(),
 
           /// BREADCRUMBS
-          BreadcrumbsProperty(property: '{Property #}', moduleName: 'Rooms'),
+          BreadcrumbsProperty(property: property, moduleName: module),
 
           /// REPORT OCCUPANCY RATE CARD
           ViewReportRoomOccupancyRateCard(),
@@ -41,7 +50,7 @@ class ViewReportRoomBody extends StatelessWidget {
           /// REPORT REVENUE CHART CARD
           ViewReportRoomRevenueChartCard(),
 
-          SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+          SizedBox(height: height * 0.25.r),
         ],
       ),
     );

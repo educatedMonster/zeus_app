@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
+import '../../../../core/constants/app_fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/animated_revenue_bar_chart.dart';
 import '../../../../shared/widgets/build_header_chart.dart';
 import '../../../../shared/widgets/build_legend_dot.dart';
@@ -51,12 +53,8 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
               /// Title and download icon
               BuildHeaderChart(
                 label: 'Revenue by Property',
-                icon: Icon(
-                  Icons.download_rounded,
-                  size: 22.sp,
-                  color: colorScheme.onSurface,
-                ),
-                onIconPressed: () {
+                icon: iconDownload(),
+                onIconPressed: () async {
                   debugPrint('Download icon pressed');
                 },
               ),
@@ -70,10 +68,14 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
                         mainAxisAlignment: .center,
                         spacing: 8.0.r,
                         children: [
-                          Icon(Icons.bar_chart, color: Colors.grey, size: 48),
-                          const Text(
+                          Icon(
+                            Icons.bar_chart,
+                            color: colorScheme.onSurface,
+                            size: 32.0.r,
+                          ),
+                          Text(
                             'No data available',
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                            style: noDataTextStyle(colorScheme),
                           ),
                         ],
                       ),

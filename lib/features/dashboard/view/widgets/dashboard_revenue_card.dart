@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/core/constants/app_text_styles.dart';
 
 import '../../../../core/utils/extensions.dart';
 
@@ -13,7 +14,7 @@ class DashboardRevenueCard extends StatelessWidget {
     return Container(
       width: context.contextWidth(),
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0).r,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
@@ -40,20 +41,9 @@ class DashboardRevenueCard extends StatelessWidget {
                 children: [
                   Text(
                     'Total Revenue',
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      color: colorScheme.onSurface.withValues(alpha: 0.5),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: defaultTitleTextStyle(colorScheme),
                   ),
-                  Text(
-                    '524,000.00',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
+                  Text('524,000.00', style: mediumTitleTextStyle(colorScheme)),
                 ],
               ),
 
@@ -62,20 +52,9 @@ class DashboardRevenueCard extends StatelessWidget {
                 children: [
                   Text(
                     'Revenue PAR',
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      color: colorScheme.onSurface.withValues(alpha: 0.5),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: defaultTitleTextStyle(colorScheme),
                   ),
-                  Text(
-                    '15,000.00',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
+                  Text('15,000.00', style: mediumTitleTextStyle(colorScheme)),
                 ],
               ),
             ],
@@ -92,20 +71,9 @@ class DashboardRevenueCard extends StatelessWidget {
                 children: [
                   Text(
                     'Occupancy Rate',
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      color: colorScheme.onSurface.withValues(alpha: 0.5),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: defaultTitleTextStyle(colorScheme),
                   ),
-                  Text(
-                    '24%',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
+                  Text('24%', style: mediumTitleTextStyle(colorScheme)),
                 ],
               ),
 
@@ -125,14 +93,10 @@ class DashboardRevenueCard extends StatelessWidget {
                       //   vertical: 8.0.r,
                       // ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {},
                     child: Text(
                       'View Full Report',
-                      style: TextStyle(
-                        color: colorScheme.onSurface,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13.sp,
-                      ),
+                      style: mediumTitleTextStyle(colorScheme),
                     ),
                   ),
                 ],

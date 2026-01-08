@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/core/constants/app_text_styles.dart';
 
 import '../../core/utils/extensions.dart';
 
@@ -30,18 +31,9 @@ class BreadcrumbsProperty extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
-                  property,
-                  style: TextStyle(color: colorScheme.onSurface, fontSize: 14.0.sp),
-                ),
-                Text(
-                  ' / ',
-                  style: TextStyle(color: colorScheme.onSurface, fontSize: 14.0.sp),
-                ),
-                Text(
-                  moduleName,
-                  style: TextStyle(color: colorScheme.onSurface, fontSize: 14.0.sp),
-                ),
+                Text(property, style: mediumTitleTextStyle(colorScheme)),
+                Text(' / ', style: mediumTitleTextStyle(colorScheme)),
+                Text(moduleName, style: mediumTitleTextStyle(colorScheme)),
               ],
             ),
           ],

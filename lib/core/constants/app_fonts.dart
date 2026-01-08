@@ -1,4 +1,4 @@
 class Fonts {
-  static const constFontMontserrat = 'Montserrat';
-  static const constFontPoppins = 'Poppins';
+  static const fontMontserrat = 'Montserrat';
+  static const fontPoppins = 'Poppins';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
+import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../shared/widgets/animated_collection_stack_bar_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
@@ -46,7 +47,7 @@ class ViewReportBanquetCollectionCard extends StatelessWidget {
           /// Header
           BuildHeaderChart(
             label: 'Total Collection per Date',
-            icon: Icon(Icons.download_rounded, size: 22.sp),
+            icon: iconDownload(),
             onIconPressed: () => debugPrint('Download pressed'),
           ),
 

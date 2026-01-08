@@ -11,7 +11,14 @@ import 'widgets/view_report_banquet_fab.dart';
 
 @RoutePage()
 class ViewReportBanquetPage extends StatefulWidget {
-  const ViewReportBanquetPage({super.key});
+  final String property;
+  final String module;
+
+  const ViewReportBanquetPage({
+    super.key,
+    required this.property,
+    required this.module,
+  });
 
   @override
   State<ViewReportBanquetPage> createState() => _ViewReportBanquetPageState();
@@ -53,7 +60,12 @@ class _ViewReportBanquetPageState extends State<ViewReportBanquetPage> {
     return Scaffold(
       backgroundColor: _colorScheme.surface,
       appBar: ViewReportBanquetAppBar(title: Constants.titleViewReport),
-      body: ViewReportBanquetBody(counter: _counter),
+      body: ViewReportBanquetBody(
+        height: _size.height,
+        property: widget.property,
+        module: widget.module,
+        counter: _counter,
+      ),
       floatingActionButton: ViewReportBanquetFab(onPressed: _incrementCounter),
     );
   }

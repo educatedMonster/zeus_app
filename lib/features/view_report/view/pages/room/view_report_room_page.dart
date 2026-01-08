@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zeus_app/core/constants/app_strings.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
@@ -12,7 +11,14 @@ import 'widgets/view_report_room_fab.dart';
 
 @RoutePage()
 class ViewReportRoomPage extends StatefulWidget {
-  const ViewReportRoomPage({super.key});
+  final String property;
+  final String module;
+
+  const ViewReportRoomPage({
+    super.key,
+    required this.property,
+    required this.module,
+  });
 
   @override
   State<ViewReportRoomPage> createState() => _ViewReportRoomPageState();
@@ -53,8 +59,16 @@ class _ViewReportRoomPageState extends State<ViewReportRoomPage> {
 
     return Scaffold(
       backgroundColor: _colorScheme.surface,
-      appBar: ViewReportRoomAppBar(title: Constants.titleViewReport),
-      body: ViewReportRoomBody(counter: _counter),
+      appBar: ViewReportRoomAppBar(
+        colorScheme: _colorScheme,
+        title: Constants.titleViewReport,
+      ),
+      body: ViewReportRoomBody(
+        height: _size.height,
+        property: widget.property,
+        module: widget.module,
+        counter: _counter,
+      ),
       floatingActionButton: ViewReportRoomFab(onPressed: _incrementCounter),
     );
   }

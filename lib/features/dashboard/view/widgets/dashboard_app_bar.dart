@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/utils/extensions.dart';
+import '../../../../core/constants/app_text_styles.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final ColorScheme colorScheme;
   final String title;
   final Widget leadingWidget;
 
   const DashboardAppBar({
     super.key,
+    required this.colorScheme,
     required this.title,
     required this.leadingWidget,
   });
@@ -18,8 +20,6 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = context.contextColorScheme();
-
     return AppBar(
       backgroundColor: colorScheme.surfaceContainer,
       elevation: 0,
@@ -30,21 +30,14 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         crossAxisAlignment: .center,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
-              fontSize: 18.0.sp,
-            ),
-          ),
+          Text(title, style: appBarTextStyle(colorScheme)),
           const Spacer(),
           Row(
             children: [
               IconButton(
                 icon: Icon(Icons.search, size: 16.0.r),
                 color: colorScheme.onSurface,
-                onPressed: () {},
+                onPressed: () async {},
               ),
               IconButton(
                 icon: Icon(Icons.notifications_none, size: 16.0.r),

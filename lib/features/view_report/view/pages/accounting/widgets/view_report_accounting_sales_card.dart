@@ -18,25 +18,26 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
     return Container(
       width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0).r,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(16.0).r,
         boxShadow: [
           BoxShadow(
             color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-            blurRadius: 10,
+            blurRadius: 10.0.r,
             offset: const Offset(0, 2),
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: .start,
+        mainAxisAlignment: .spaceBetween,
+        spacing: 4.0.r,
         children: [
-          Column(
-            crossAxisAlignment: .start,
-            mainAxisAlignment: .spaceAround,
-            spacing: 8.0.r,
+          Row(
+            crossAxisAlignment: .center,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 'Net Sales',
@@ -47,20 +48,6 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '69,600.00',
-                style: TextStyle(
-                  color: colorScheme.onSurface,
-                  fontSize: 16.0.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: .end,
-            mainAxisAlignment: .spaceAround,
-            children: [
-              Text(
                 'last week',
                 style: TextStyle(
                   color: colorScheme.onSecondary,
@@ -68,8 +55,25 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                 ),
               ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: .center,
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              Text(
+                '69,600.00',
+                style: TextStyle(
+                  color: colorScheme.onSurface,
+                  fontSize: 16.0.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0).r,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6.0,
+                  horizontal: 8.0,
+                ).r,
                 decoration: BoxDecoration(
                   color: isNegativeStatus ? Colors.red : Colors.green, // Green background for the percentage
                   borderRadius: BorderRadius.circular(100.0),

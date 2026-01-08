@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/utils/extensions.dart';
 
 class NotesDialog extends StatelessWidget {
   final String note;
@@ -8,20 +11,28 @@ class NotesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = context.contextColorScheme();
+    double screenHeight = context.contextHeight();
+    double screenWidth = context.contextWidth();
+
     return Dialog(
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
+      backgroundColor: colorScheme.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24.0).r,
+      ),
+      elevation: 0.1,
+      shadowColor: colorScheme.onSurface,
       // insetPadding: const EdgeInsets.symmetric(
       //   horizontal: 24.0,
       //   vertical: 24.0,
       // ).r,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.55,
-          maxWidth: MediaQuery.of(context).size.width,
+          maxHeight: screenHeight * 0.55,
+          maxWidth: screenWidth,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0).r,
+          padding: const EdgeInsets.all(24.0).r,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: .start,
@@ -29,14 +40,17 @@ class NotesDialog extends StatelessWidget {
             children: [
               Text(
                 'Notes',
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18.0.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(16.0).r,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF7F9FB),
-                    borderRadius: BorderRadius.circular(16.r),
+                    color: colorScheme.surfaceContainer,
+                    borderRadius: BorderRadius.circular(16.0).r,
                   ),
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -46,7 +60,7 @@ class NotesDialog extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 4.0).r,
-                        child: Text('• ${note}'),
+                        child: Text('${index + 1} • ${note}'),
                       );
                     },
                   ),
@@ -61,16 +75,16 @@ class NotesDialog extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0.r),
                     ),
-                    side: BorderSide(color: Colors.grey.shade300),
+                    side: BorderSide(color: colorScheme.onSurface),
                     padding: const EdgeInsets.all(8.0).r,
                   ),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => context.maybePop(),
                   child: Text(
                     'Close',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 12.sp,
-                      color: Colors.black87,
+                      fontSize: 12.0.sp,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ),

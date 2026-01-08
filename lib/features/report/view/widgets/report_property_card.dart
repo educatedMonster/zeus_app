@@ -4,12 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/app/routes/approuter.gr.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/extensions.dart';
 
 class ReportPropertyCard extends StatelessWidget {
-  final String title;
+  final String property;
 
-  const ReportPropertyCard({super.key, required this.title});
+  const ReportPropertyCard({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +28,14 @@ class ReportPropertyCard extends StatelessWidget {
     return Container(
       width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).copyWith(top: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0).r,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(16.0).r,
         boxShadow: [
           BoxShadow(
-            color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-            blurRadius: 10,
+            color: colorScheme.surfaceContainer.withValues(alpha: 0.10),
+            blurRadius: 10.0.r,
             offset: const Offset(0, 2),
           ),
         ],
@@ -48,24 +49,20 @@ class ReportPropertyCard extends StatelessWidget {
             spacing: 8.0.r,
             children: [
               Container(
-                padding: const EdgeInsets.all(8.0).r,
+                padding: const EdgeInsets.all(4.0).r,
                 decoration: BoxDecoration(
-                  color: colorScheme.onSurface.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(8.r),
+                  color: colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(8.0).r,
                 ),
                 child: Icon(
                   Icons.apartment_rounded,
-                  color: colorScheme.onSurface,
+                  color: colorScheme.onSurface.withValues(alpha: 0.50),
                   size: 20.0.r,
                 ),
               ),
               Text(
-                title,
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
+                property,
+                style: cardTitleTextStyle(colorScheme),
               ),
             ],
           ),
@@ -78,29 +75,29 @@ class ReportPropertyCard extends StatelessWidget {
                 children: [
                   /// Left side (name + optional trend)
                   Expanded(
-                    child: Row(
-                      spacing: 8.0.r,
+                    child: Column(
+                      crossAxisAlignment: .start,
+                      mainAxisAlignment: .center,
                       children: [
                         Text(
                           report['name'],
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: colorScheme.onSurface,
-                          ),
+                          style: mediumTitleTextStyle(colorScheme),
                         ),
+
                         if (report['value'] != null) ...[
-                          Icon(
-                            Icons.trending_up_rounded,
-                            color: Colors.green,
-                            size: 14.sp,
-                          ),
-                          Text(
-                            report['value'],
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.green,
-                            ),
+                          Row(
+                            spacing: 4.0.r,
+                            children: [
+                              Icon(
+                                Icons.trending_up_rounded,
+                                color: Colors.green,
+                                size: 16.0.r,
+                              ),
+                              Text(
+                                report['value'],
+                                style: captionReportTextStyle(colorScheme),
+                              ),
+                            ],
                           ),
                         ],
                       ],
@@ -110,26 +107,26 @@ class ReportPropertyCard extends StatelessWidget {
                   /// Right side (button)
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side:  BorderSide(color: colorScheme.onSurface),
-                      backgroundColor: colorScheme.onSurface,
+                      side:  BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.10)),
+                      backgroundColor: colorScheme.surfaceContainer,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(8.0).r,
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0).r,
                     ),
                     onPressed: () {
                       if (report.values.contains('Rooms')) {
                         // context.router.pushPath('/view-report-room');
-                        context.router.navigate(ViewReportRoomRoute());
+                        context.router.navigate(ViewReportRoomRoute(property: property, module: report['name']));
                       } else if (report.values.contains('Banquet')) {
                         // context.router.pushPath('/view-report-banquet');
-                        context.router.navigate(ViewReportBanquetRoute());
+                        context.router.navigate(ViewReportBanquetRoute(property: property, module: report['name']));
                       } else if (report.values.contains('POS')) {
                         // context.router.pushPath('/view-report-pos');
-                        context.router.navigate(ViewReportPosRoute());
+                        context.router.navigate(ViewReportPosRoute(property: property, module: report['name']));
                       } else if (report.values.contains('Accounting')) {
                         // context.router.pushPath('/view-report-accounting');
-                        context.router.navigate(ViewReportAccountingRoute());
+                        context.router.navigate(ViewReportAccountingRoute(property: property, module: report['name']));
                       } else if (report.values.contains('Timekeeping')) {
                         // context.router.pushPath('/view-report-timekeeping');
                         context.router.navigate(ViewReportTimekeepingRoute());
@@ -137,11 +134,7 @@ class ReportPropertyCard extends StatelessWidget {
                     },
                     child: Text(
                       Constants.titleViewReport,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
-                        color: colorScheme.surface,
-                      ),
+                      style: viewReportTextStyle(colorScheme),
                     ),
                   ),
                 ],

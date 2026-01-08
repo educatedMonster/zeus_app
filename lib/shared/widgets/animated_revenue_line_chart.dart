@@ -99,7 +99,7 @@ class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
                               return const SizedBox.shrink();
                           }
                         },
-                        reservedSize: 60,
+                        reservedSize: widget.containerWidth * 0.20,
                       ),
                     ),
                     bottomTitles: AxisTitles(
@@ -152,20 +152,6 @@ class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
                       return e;
                     }
                   }).toList(),
-                  // lineBarsData: [
-                  //   LineChartBarData(
-                  //     isCurved: true,
-                  //     dashArray: [1,2,4],
-                  //     curveSmoothness: 0.35,
-                  //     preventCurveOverShooting: true,
-                  //     color: widget.progressColor,
-                  //     barWidth: 2,
-                  //     gradientArea: LineChartGradientArea.rectAroundTheLine,
-                  //     dotData: FlDotData(show: true),
-                  //     belowBarData: BarAreaData(show: false),
-                  //     spots: widget.lineBarsData.map((e) => getAnimatedSpots(e.spots, _lineAnimation.value)).toList()[0],
-                  //   ),
-                  // ],
                 ),
               );
             },

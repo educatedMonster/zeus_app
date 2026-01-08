@@ -19,11 +19,11 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
       width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(16.0).r,
         boxShadow: [
           BoxShadow(
             color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-            blurRadius: 10,
+            blurRadius: 10.0.r,
             offset: const Offset(0, 2),
           ),
         ],
@@ -35,19 +35,19 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         crossAxisSpacing: 8.0.r,
         mainAxisSpacing: 8.0.r,
-        childAspectRatio: 1.75,
+        childAspectRatio: 16/7,
         children: List.generate(list.length, (index) {
           final item = list[index];
           return Container(
-            padding: const EdgeInsets.all(12.0).r,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0).r,
             decoration: BoxDecoration(
               color: item.backgroundColor,
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(12.0).r,
             ),
             child: Column(
               crossAxisAlignment: .start,
               mainAxisAlignment: .spaceAround,
-              spacing: 8.0.r,
+              // spacing: 2.0.r,
               children: [
                 Expanded(
                   child: BuildLegendDot(

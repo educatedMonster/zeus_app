@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_finance_line_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
@@ -126,8 +127,8 @@ class _ViewReportAccountingFinanceChartCardState
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.download_rounded, size: 22.sp),
+                    onPressed: () async {},
+                    icon: iconDownload(),
                   ),
                 ],
               ),

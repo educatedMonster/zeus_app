@@ -1,13 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeus_app/core/utils/extensions.dart';
 
 import 'notes_dialog.dart';
 
-void showHistoryDialog(BuildContext context) {
+void showHistoryDialog(BuildContext context, ColorScheme colorScheme) {
   showDialog(
     context: context,
     barrierDismissible: true,
-    builder: (context) {
+    builder: (bc) {
       final historyData = [
         {
           'name': 'Juan Dela Cruz',
@@ -116,11 +118,11 @@ void showHistoryDialog(BuildContext context) {
         },
       ];
 
-      final screenHeight = MediaQuery.of(context).size.height;
-      final screenWidth = MediaQuery.of(context).size.width;
+      double screenHeight = bc.contextHeight();
+      double screenWidth = bc.contextWidth();
 
       return Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: colorScheme.tertiary,
         insetPadding: const EdgeInsets.symmetric(
           horizontal: 8.0,
           vertical: 32.0,
@@ -150,7 +152,7 @@ void showHistoryDialog(BuildContext context) {
                     style: TextStyle(
                       fontSize: 18.0.sp,
                       fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ),
@@ -165,26 +167,27 @@ void showHistoryDialog(BuildContext context) {
                           scrollDirection: .horizontal,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: colorScheme.tertiary,
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: DataTableTheme(
                               data: DataTableThemeData(
                                 headingRowColor: WidgetStateProperty.all(
-                                  Colors.grey.shade100,
+                                  colorScheme.secondary,
                                 ),
                                 headingTextStyle: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 10.sp,
-                                  color: Colors.grey.shade700,
+                                  color: colorScheme.onSecondary,
                                 ),
                                 dataTextStyle: TextStyle(
                                   fontSize: 10.0.sp,
-                                  color: Colors.black87,
+                                  color: colorScheme.onSecondary,
                                 ),
-                                columnSpacing: 16.0.r,
+                                columnSpacing: 8.0.r,
                               ),
                               child: DataTable(
+                                headingRowHeight: kTextTabBarHeight,
                                 showCheckboxColumn: false,
                                 border: TableBorder.symmetric(
                                   borderRadius: BorderRadius.circular(16.r),
@@ -316,16 +319,16 @@ void showHistoryDialog(BuildContext context) {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0.r),
                       ),
-                      side: BorderSide(color: Colors.grey.shade300),
+                      side: BorderSide(color: colorScheme.onSurface),
                       padding: const EdgeInsets.all(8.0).r,
                     ),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => bc.maybePop(),
                     child: Text(
                       'Close',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 12.sp,
-                        color: Colors.black87,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ),

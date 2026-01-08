@@ -10,9 +10,18 @@ import 'view_report_pos_sales_card.dart';
 import 'view_report_pos_summary_grid_card.dart';
 
 class ViewReportPosBody extends StatelessWidget {
+  final double height;
+  final String property;
+  final String module;
   final int counter;
 
-  const ViewReportPosBody({super.key, required this.counter});
+  const ViewReportPosBody({
+    super.key,
+    required this.height,
+    required this.property,
+    required this.module,
+    required this.counter,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +131,7 @@ class ViewReportPosBody extends StatelessWidget {
           DatePicker(),
 
           /// BREADCRUMBS
-          BreadcrumbsProperty(property: '{Property #}', moduleName: 'POS'),
+          BreadcrumbsProperty(property: property, moduleName: module),
 
           /// REPORT SALES CARD
           ViewReportPosSalesCard(type: 'Sales', isPositive: true),
@@ -130,16 +139,20 @@ class ViewReportPosBody extends StatelessWidget {
           /// REPORT SUMMARY GRID CARD
           ViewReportPosSummaryGridCard(list: list1),
 
+          SizedBox(height: 0.50.r),
+
           /// REPORT SALES CARD
           ViewReportPosSalesCard(type: 'Collections', isPositive: false),
 
           /// REPORT SUMMARY GRID CARD
           ViewReportPosSummaryGridCard(list: list2),
 
+          SizedBox(height: 0.50.r),
+
           /// REPORT SALES CARD
           ViewReportPosBestSellerCard(),
 
-          SizedBox(height: height * 0.25),
+          SizedBox(height: height * 0.25.r),
         ],
       ),
     );

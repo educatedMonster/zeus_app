@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../core/constants/app_fonts.dart';
 import '../../core/constants/app_text_styles.dart';
+import '../../core/utils/extensions.dart';
+import '../../core/utils/number_formatter.dart';
 import '../../features/view_report/data/sources/remote/model/revenue_data_model.dart';
 import '../components/get_animated_bar_group.dart';
 import '../components/make_3_group_data.dart';
@@ -120,16 +123,35 @@ class _AnimatedRevenueBarChartState extends State<AnimatedRevenueBarChart>
                 reservedSize: 40.0.r,
                 interval: 100000,
                 getTitlesWidget: (value, meta) {
-                  // if (value == 0) return Text('0', style: axisTextStyle());
+                  // if (value == 0) {
+                  //   return Text(
+                  //     '0',
+                  //     style: axisTextStyle(context.contextColorScheme()),
+                  //   );
+                  // }
                   // if (value == 100000) {
-                  //   return Text('100K', style: axisTextStyle());
+                  //   return Text(
+                  //     '100K',
+                  //     style: axisTextStyle(context.contextColorScheme()),
+                  //   );
                   // }
                   // if (value == 200000) {
-                  //   return Text('200K', style: axisTextStyle());
+                  //   return Text(
+                  //     '200K',
+                  //     style: axisTextStyle(context.contextColorScheme()),
+                  //   );
                   // }
-                  if (value == 0) return Text('0', style: axisTextStyle());
+                  if (value == 0) {
+                    return Text(
+                      '0',
+                      style: axisTextStyle(context.contextColorScheme()),
+                    );
+                  }
                   if (value > 0) {
-                    return Text('$value', style: axisTextStyle());
+                    return Text(
+                      formatNumber(value),
+                      style: axisTextStyle(context.contextColorScheme()),
+                    );
                   }
                   return const SizedBox.shrink();
                 },
@@ -165,7 +187,10 @@ class _AnimatedRevenueBarChartState extends State<AnimatedRevenueBarChart>
                 getTitlesWidget: (value, meta) {
                   final labels = _list.map((e) => e.label).toList();
                   if (value.toInt() < labels.length) {
-                    return Text(labels[value.toInt()], style: axisTextStyle());
+                    return Text(
+                      labels[value.toInt()],
+                      style: axisTextStyle(context.contextColorScheme()),
+                    );
                   }
                   return const SizedBox.shrink();
                 },
@@ -177,20 +202,21 @@ class _AnimatedRevenueBarChartState extends State<AnimatedRevenueBarChart>
             enabled: true,
             touchTooltipData: BarTouchTooltipData(
               tooltipMargin: 8.0.r,
-              getTooltipColor: (group) => Colors.white,
+              getTooltipColor: (BarChartGroupData group) => context.contextColorScheme().surface,
               tooltipBorderRadius: BorderRadius.circular(8.r),
               tooltipPadding: EdgeInsets.all(8.0.r),
               fitInsideHorizontally: true,
               fitInsideVertically: true,
-              direction: TooltipDirection.auto,
-              tooltipHorizontalAlignment: FLHorizontalAlignment.center,
+              direction: .auto,
+              tooltipHorizontalAlignment: .center,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
                 return BarTooltipItem(
                   '${rod.toY.toStringAsFixed(0)}.00',
                   TextStyle(
-                    color: Colors.black87,
+                    color: context.contextColorScheme().onSurface,
                     fontWeight: FontWeight.w600,
-                    fontSize: 13.sp,
+                    fontSize: 8.0.sp,
+                    fontFamily: Fonts.fontPoppins,
                   ),
                 );
               },

@@ -15,9 +15,18 @@ import 'view_report_accounting_income_expense_chart.dart';
 import 'view_report_accounting_sales_card.dart';
 
 class ViewReportAccountingBody extends StatelessWidget {
+  final double height;
+  final String property;
+  final String module;
   final int counter;
 
-  const ViewReportAccountingBody({super.key, required this.counter});
+  const ViewReportAccountingBody({
+    super.key,
+    required this.height,
+    required this.property,
+    required this.module,
+    required this.counter,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +84,7 @@ class ViewReportAccountingBody extends StatelessWidget {
             DatePicker(),
 
             /// BREADCRUMBS
-            BreadcrumbsProperty(
-              property: '{Property #}',
-              moduleName: 'Accounting',
-            ),
+            BreadcrumbsProperty(property: property, moduleName: module),
 
             /// REPORT SALES CARD
             ViewReportAccountingSalesCard(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../viewmodel/view_report_view_model.dart';
@@ -85,8 +86,8 @@ class ViewReportTimekeepingLateCard extends StatelessWidget {
                   label: 'Lates',
                   color: Colors.orange,
                   caption: '15 were located late on this period',
-                  icon: Icon(Icons.download_rounded, size: 22.sp),
-                  onIconPressed: () {
+                  icon: iconDownload(),
+                  onIconPressed: () async {
                     debugPrint('Download icon pressed');
                   },
                 ),

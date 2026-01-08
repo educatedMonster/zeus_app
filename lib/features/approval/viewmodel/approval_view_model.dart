@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/themes/theme_dark.dart';
-import '../../../app/themes/theme_light.dart';
-
 class ApprovalViewModel extends ChangeNotifier {
   // -------------------------
   // Scroll controllers
@@ -32,13 +29,12 @@ class ApprovalViewModel extends ChangeNotifier {
   }
 
   int _counter = 0;
+
   int get counter => _counter;
 
-  int _segmentedButton = 0;
-  int get segmentedButton => _segmentedButton;
+  String _calendarView = 'High';
 
-  int _drawerIndex = -1;
-  int get drawerIndex => _drawerIndex;
+  String get calendarView => _calendarView;
 
   void incrementCounter() async {
     _counter++;
@@ -50,13 +46,8 @@ class ApprovalViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectedSegmentedButton(int index) async{
-    _segmentedButton = index;
-    notifyListeners();
-  }
-
-  void setSelectedDrawerIndex(int index) async{
-    _drawerIndex = index;
+  void selectedCalendarView(String selected) async {
+    _calendarView = selected;
     notifyListeners();
   }
 }

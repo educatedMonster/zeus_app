@@ -66,7 +66,7 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 16.0).r,
           child: CircleAvatar(
             radius: 12.0.r,
-            backgroundColor: const Color(0xFFB0B8C1),
+            backgroundColor: colorScheme.onSurface.withValues(alpha: 0.50),
             child: Text(
               'A',
               style: TextStyle(
@@ -81,14 +81,15 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
         controller: tabController,
         labelColor: colorScheme.onSurface,
         unselectedLabelColor: colorScheme.onSurface.withValues(alpha: 0.50),
-        indicatorSize: TabBarIndicatorSize.label,
+        indicatorSize: TabBarIndicatorSize.tab,
         // fill each tab
         indicatorPadding: EdgeInsets.zero,
         indicatorColor: colorScheme.primary,
         // no extra padding
-        // indicatorWeight: 1,
+        indicatorWeight: 2.0.r,
         // prevent thin default line
-        dividerColor: Colors.transparent,
+        dividerColor: colorScheme.onSurface.withValues(alpha: 0.10),
+        dividerHeight: 1.0.r,
         overlayColor: WidgetStateProperty.all(Colors.transparent),
         padding: EdgeInsets.zero,
         labelPadding: EdgeInsets.zero,
@@ -97,11 +98,18 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
               (tab) => Tab(
                 child: Badge(
                   isLabelVisible: true,
-                  offset: Offset(16, -8),
-                  label: Text('1'),
+                  alignment: AlignmentDirectional.centerEnd,
+                  offset: Offset(18, -8),
+                  label: Text(
+                    '1',
+                    style: TextStyle(color: colorScheme.onPrimary),
+                  ),
                   child: Text(
                     tab,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

@@ -17,17 +17,18 @@ class PendingApprovalPage extends StatefulWidget {
 }
 
 class _PendingApprovalPageState extends State<PendingApprovalPage> with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
   final List<String> _tabs = ['High', 'Low'];
+  late final String _calendarView = _tabs[0];
   late Size _size;
-
-  void _initTabController() {
-    _tabController = TabController(length: _tabs.length, vsync: this);
-  }
+  late ApprovalViewModel _approvalVM;
 
   @override
   void initState() {
-    _initTabController();
+    _approvalVM = context.readApprovalVM();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _approvalVM.selectedCalendarView(_calendarView);
+    });
     super.initState();
   }
 
@@ -48,10 +49,7 @@ class _PendingApprovalPageState extends State<PendingApprovalPage> with SingleTi
       scrollDirection: .vertical,
       child: Column(
         children: [
-          ApprovalHighLowButton(
-            tabController: _tabController,
-            options: _tabs,
-          ),
+          ApprovalHighLowButton(options: _tabs),
 
           ApprovalPurchaseRequestDataTableCard(parentController: parentController, childController:  childController),
 
@@ -71,7 +69,6 @@ class _PendingApprovalPageState extends State<PendingApprovalPage> with SingleTi
 
   @override
   void dispose() {
-    _tabController.dispose();
     super.dispose();
   }
 }

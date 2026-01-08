@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/shared/widgets/pie_chart_badge.dart';
 
+import '../../core/constants/app_fonts.dart';
 import '../../features/dashboard/data/sources/remote/model/pie_chart_section_model.dart';
 
 /// Animate drawing each section around the circle
@@ -46,7 +47,7 @@ List<PieChartSectionData> buildAnimatedPieChartSections(
                 fontSize: fontSize,
               ),
               badgeWidget: PieBadge(
-                value: '${section.value}',
+                value: section.badge,
                 size: widgetSize,
                 borderColor: Colors.black87,
               ),
@@ -62,6 +63,7 @@ List<PieChartSectionData> buildAnimatedPieChartSections(
                 color: section.color,
                 fontWeight: FontWeight.bold,
                 fontSize: fontSize,
+                fontFamily: Fonts.fontPoppins,
               ),
               radius: radius,
             ),

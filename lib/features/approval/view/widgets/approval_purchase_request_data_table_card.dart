@@ -92,6 +92,20 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
       },
     ];
 
+    void onTap(dynamic item) {
+      debugPrint(
+        'Long pressed row 1 with value: ${item['trans_no']} ${item['property']} ${item['date']} ${item['requester']} ${item['total']}',
+      );
+      // You can navigate, show dialog, etc.
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) =>
+        const PurchaseRequestDialog(),
+      );
+    }
+
     // NOTE:
     // This manually forwards overscroll from child to parent.
     // Flutter does NOT support vertical scroll handoff natively.
@@ -286,7 +300,7 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                                                 : 1.0,
                                             // hides widget
                                             child: CircleAvatar(
-                                              radius: 8.0.r,
+                                              radius: 6.0.r,
                                               backgroundColor: Colors.red,
                                               child: Text(
                                                 '!',
@@ -346,27 +360,11 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                                   onSelectChanged: (selected) {
                                     if (selected == true) {
                                       // You can navigate, show dialog, etc.
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        builder: (context) =>
-                                            const PurchaseRequestDialog(),
-                                      );
+                                      onTap(item);
                                     }
                                   },
                                   onLongPress: () {
-                                    debugPrint(
-                                      'Long pressed row 1 with value: ${item['trans_no']} ${item['property']} ${item['date']} ${item['requester']} ${item['total']}',
-                                    );
-                                    // You can navigate, show dialog, etc.
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      builder: (context) =>
-                                          const PurchaseRequestDialog(),
-                                    );
+                                    onTap(item);
                                   },
                                 );
                               }).toList(),

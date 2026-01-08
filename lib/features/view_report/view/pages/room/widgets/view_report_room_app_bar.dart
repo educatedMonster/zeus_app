@@ -2,21 +2,24 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../core/utils/extensions.dart';
+import '../../../../../../core/constants/app_text_styles.dart';
 
 class ViewReportRoomAppBar extends StatelessWidget
     implements PreferredSizeWidget {
+  final ColorScheme colorScheme;
   final String title;
 
-  const ViewReportRoomAppBar({super.key, required this.title});
+  const ViewReportRoomAppBar({
+    super.key,
+    required this.colorScheme,
+    required this.title,
+  });
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = context.contextColorScheme();
-
     return AppBar(
       backgroundColor: colorScheme.surfaceContainer,
       elevation: 0,
@@ -25,16 +28,9 @@ class ViewReportRoomAppBar extends StatelessWidget
       titleSpacing: 0,
       actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0).r,
       centerTitle: false,
-      title: Text(
-        title,
-        style: TextStyle(
-          color: colorScheme.onSurface,
-          fontWeight: FontWeight.bold,
-          fontSize: 18.0.sp,
-        ),
-      ),
+      title: Text(title, style: appBarTextStyle(colorScheme)),
       leading: IconButton(
-        icon: Icon(Icons.arrow_back_sharp, size: 20.0.r),
+        icon: backButton(),
         color: colorScheme.onSurface,
         onPressed: () {
           var currentFocus = FocusScope.of(context);
@@ -48,7 +44,7 @@ class ViewReportRoomAppBar extends StatelessWidget
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.close, size: 20.0.r),
+          icon: closeButton(),
           color: colorScheme.onSurface,
           onPressed: () {
             var currentFocus = FocusScope.of(context);

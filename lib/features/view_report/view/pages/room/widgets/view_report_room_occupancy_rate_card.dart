@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../../../../core/constants/app_fonts.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../../../shared/widgets/build_legend_dot.dart';
@@ -19,14 +20,14 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
       height: height * 0.35,
       width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0).r,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(16.0).r,
         boxShadow: [
           BoxShadow(
             color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-            blurRadius: 10,
+            blurRadius: 10.0.r,
             offset: const Offset(0, 2),
           ),
         ],
@@ -34,7 +35,7 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final containerHeight = constraints.maxHeight;
-          final circleRadius = containerHeight * 0.25;
+          final circleRadius = containerHeight * 0.30;
           final lineWidth = containerHeight * 0.05;
 
           return Column(
@@ -60,17 +61,26 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
                   center: Column(
                     mainAxisAlignment: .center,
                     children: [
-                      Icon(
-                        Icons.person_outline,
-                        color: colorScheme.onSurface,
-                        size: containerHeight * 0.08,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0).r,
+                        child: CircleAvatar(
+                          radius: 16.0.r,
+                          backgroundColor: colorScheme.surface.withValues(alpha: 1.0),
+                          child: Icon(
+                            Icons.person_outline,
+                            color: colorScheme.primary,
+                            size: containerHeight * 0.090,
+                          ),
+                        ),
                       ),
+
                       Text(
                         '80%',
                         style: TextStyle(
-                          fontSize: containerHeight * 0.075,
-                          fontWeight: FontWeight.bold,
+                          fontSize: containerHeight * 0.10,
+                          fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
+                          fontFamily: Fonts.fontMontserrat,
                         ),
                       ),
                     ],
@@ -87,7 +97,7 @@ class ViewReportRoomOccupancyRateCard extends StatelessWidget {
                     label: 'Actual 20/26',
                   ),
                   BuildLegendDot(
-                    color: colorScheme.onSurface,
+                    color: colorScheme.tertiary,
                     label: 'Projected 24/26',
                   ),
                 ],

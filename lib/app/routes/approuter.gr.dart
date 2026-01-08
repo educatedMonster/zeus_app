@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i16;
+import 'package:flutter/material.dart' as _i17;
 import 'package:zeus_app/features/approval/view/approval_page.dart' as _i1;
 import 'package:zeus_app/features/approval/view/pages/approved_approval_page.dart'
     as _i2;
@@ -183,66 +184,260 @@ class SampleRoute extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.ViewReportAccountingPage]
-class ViewReportAccountingRoute extends _i16.PageRouteInfo<void> {
-  const ViewReportAccountingRoute({List<_i16.PageRouteInfo>? children})
-    : super(ViewReportAccountingRoute.name, initialChildren: children);
+class ViewReportAccountingRoute
+    extends _i16.PageRouteInfo<ViewReportAccountingRouteArgs> {
+  ViewReportAccountingRoute({
+    _i17.Key? key,
+    required String property,
+    required String module,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
+         ViewReportAccountingRoute.name,
+         args: ViewReportAccountingRouteArgs(
+           key: key,
+           property: property,
+           module: module,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ViewReportAccountingRoute';
 
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i10.ViewReportAccountingPage();
+      final args = data.argsAs<ViewReportAccountingRouteArgs>();
+      return _i10.ViewReportAccountingPage(
+        key: args.key,
+        property: args.property,
+        module: args.module,
+      );
     },
   );
 }
 
+class ViewReportAccountingRouteArgs {
+  const ViewReportAccountingRouteArgs({
+    this.key,
+    required this.property,
+    required this.module,
+  });
+
+  final _i17.Key? key;
+
+  final String property;
+
+  final String module;
+
+  @override
+  String toString() {
+    return 'ViewReportAccountingRouteArgs{key: $key, property: $property, module: $module}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ViewReportAccountingRouteArgs) return false;
+    return key == other.key &&
+        property == other.property &&
+        module == other.module;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ property.hashCode ^ module.hashCode;
+}
+
 /// generated route for
 /// [_i11.ViewReportBanquetPage]
-class ViewReportBanquetRoute extends _i16.PageRouteInfo<void> {
-  const ViewReportBanquetRoute({List<_i16.PageRouteInfo>? children})
-    : super(ViewReportBanquetRoute.name, initialChildren: children);
+class ViewReportBanquetRoute
+    extends _i16.PageRouteInfo<ViewReportBanquetRouteArgs> {
+  ViewReportBanquetRoute({
+    _i17.Key? key,
+    required String property,
+    required String module,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
+         ViewReportBanquetRoute.name,
+         args: ViewReportBanquetRouteArgs(
+           key: key,
+           property: property,
+           module: module,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ViewReportBanquetRoute';
 
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i11.ViewReportBanquetPage();
+      final args = data.argsAs<ViewReportBanquetRouteArgs>();
+      return _i11.ViewReportBanquetPage(
+        key: args.key,
+        property: args.property,
+        module: args.module,
+      );
     },
   );
 }
 
+class ViewReportBanquetRouteArgs {
+  const ViewReportBanquetRouteArgs({
+    this.key,
+    required this.property,
+    required this.module,
+  });
+
+  final _i17.Key? key;
+
+  final String property;
+
+  final String module;
+
+  @override
+  String toString() {
+    return 'ViewReportBanquetRouteArgs{key: $key, property: $property, module: $module}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ViewReportBanquetRouteArgs) return false;
+    return key == other.key &&
+        property == other.property &&
+        module == other.module;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ property.hashCode ^ module.hashCode;
+}
+
 /// generated route for
 /// [_i12.ViewReportPosPage]
-class ViewReportPosRoute extends _i16.PageRouteInfo<void> {
-  const ViewReportPosRoute({List<_i16.PageRouteInfo>? children})
-    : super(ViewReportPosRoute.name, initialChildren: children);
+class ViewReportPosRoute extends _i16.PageRouteInfo<ViewReportPosRouteArgs> {
+  ViewReportPosRoute({
+    _i17.Key? key,
+    required String property,
+    required String module,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
+         ViewReportPosRoute.name,
+         args: ViewReportPosRouteArgs(
+           key: key,
+           property: property,
+           module: module,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ViewReportPosRoute';
 
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i12.ViewReportPosPage();
+      final args = data.argsAs<ViewReportPosRouteArgs>();
+      return _i12.ViewReportPosPage(
+        key: args.key,
+        property: args.property,
+        module: args.module,
+      );
     },
   );
 }
 
+class ViewReportPosRouteArgs {
+  const ViewReportPosRouteArgs({
+    this.key,
+    required this.property,
+    required this.module,
+  });
+
+  final _i17.Key? key;
+
+  final String property;
+
+  final String module;
+
+  @override
+  String toString() {
+    return 'ViewReportPosRouteArgs{key: $key, property: $property, module: $module}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ViewReportPosRouteArgs) return false;
+    return key == other.key &&
+        property == other.property &&
+        module == other.module;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ property.hashCode ^ module.hashCode;
+}
+
 /// generated route for
 /// [_i13.ViewReportRoomPage]
-class ViewReportRoomRoute extends _i16.PageRouteInfo<void> {
-  const ViewReportRoomRoute({List<_i16.PageRouteInfo>? children})
-    : super(ViewReportRoomRoute.name, initialChildren: children);
+class ViewReportRoomRoute extends _i16.PageRouteInfo<ViewReportRoomRouteArgs> {
+  ViewReportRoomRoute({
+    _i17.Key? key,
+    required String property,
+    required String module,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
+         ViewReportRoomRoute.name,
+         args: ViewReportRoomRouteArgs(
+           key: key,
+           property: property,
+           module: module,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ViewReportRoomRoute';
 
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i13.ViewReportRoomPage();
+      final args = data.argsAs<ViewReportRoomRouteArgs>();
+      return _i13.ViewReportRoomPage(
+        key: args.key,
+        property: args.property,
+        module: args.module,
+      );
     },
   );
+}
+
+class ViewReportRoomRouteArgs {
+  const ViewReportRoomRouteArgs({
+    this.key,
+    required this.property,
+    required this.module,
+  });
+
+  final _i17.Key? key;
+
+  final String property;
+
+  final String module;
+
+  @override
+  String toString() {
+    return 'ViewReportRoomRouteArgs{key: $key, property: $property, module: $module}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ViewReportRoomRouteArgs) return false;
+    return key == other.key &&
+        property == other.property &&
+        module == other.module;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ property.hashCode ^ module.hashCode;
 }
 
 /// generated route for

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
+import '../../../core/constants/app_text_styles.dart';
 import '../../../shared/widgets/app_drawer.dart';
 import '../viewmodel/dashboard_view_model.dart';
 import 'widgets/dashboard_app_bar.dart';
@@ -24,11 +25,19 @@ class _DashboardPageState extends State<DashboardPage>
   late ColorScheme _colorScheme;
   late Size _size;
   int _counter = 0;
+  List<String> properties = ["All", "Property A", "Property B", "Property C"];
+  late final String _selectedProperty = properties[0];
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    _dashboardViewModel = context.readDashboardVM();
+
     _initControllers();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dashboardViewModel.setSelectedProperty(_selectedProperty);
+    });
     super.initState();
   }
 
@@ -42,25 +51,27 @@ class _DashboardPageState extends State<DashboardPage>
       backgroundColor: _colorScheme.surface,
       key: _scaffoldKey,
       appBar: DashboardAppBar(
+        colorScheme: _colorScheme,
         title: 'Dashboard',
         leadingWidget: IconButton(
           onPressed: () async {
             if (!_scaffoldKey.currentState!.isDrawerOpen) {
-              _dashboardViewModel.setSelectedDrawerIndex(-1);
+              // _dashboardViewModel.setSelectedDrawerIndex(-1);
               _scaffoldKey.currentState!.openDrawer();
             }
           },
           icon: Padding(
             padding: const EdgeInsets.only(left: 8.0).r,
-            child: Icon(
-              Icons.menu,
-              size: 20.0.r,
-              color: _colorScheme.onSurface,
-            ),
+            child: menuButton(),
           ),
         ),
       ),
-      drawer: AppDrawer(scaffoldKey: _scaffoldKey),
+      drawer: AppDrawer(
+        colorScheme: _colorScheme,
+        size: _size,
+        scaffoldKey: _scaffoldKey,
+        properties: properties,
+      ),
       body: DashboardBody(counter: _counter),
       floatingActionButton: DashboardFab(onPressed: _incrementCounter),
     );

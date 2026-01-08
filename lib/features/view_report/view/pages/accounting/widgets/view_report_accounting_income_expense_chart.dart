@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_income_expense_bar_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
@@ -51,8 +52,8 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
               /// Title and download icon
               BuildHeaderChart(
                 label: 'Income and Expense',
-                icon: Icon(Icons.download_rounded, size: 22.sp),
-                onIconPressed: () {
+                icon: iconDownload(),
+                onIconPressed: () async {
                   debugPrint('Download icon pressed');
                 },
               ),

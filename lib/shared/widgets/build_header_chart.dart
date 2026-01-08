@@ -41,7 +41,10 @@ class BuildHeaderChart extends StatelessWidget {
               if (caption != null)
                 Text(
                   '$caption',
-                  style: TextStyle(fontSize: 10.0.sp, color: colorScheme.onSurface),
+                  style: TextStyle(
+                    fontSize: 10.0.sp,
+                    color: colorScheme.onSurface,
+                  ),
                   maxLines: 1,
                   overflow: .ellipsis,
                 ),

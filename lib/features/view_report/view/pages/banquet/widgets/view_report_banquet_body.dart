@@ -14,9 +14,18 @@ import 'view_report_banquet_market_segment_card.dart';
 import 'view_report_banquet_top_account_owner_data_table_card.dart';
 
 class ViewReportBanquetBody extends StatelessWidget {
+  final double height;
+  final String property;
+  final String module;
   final int counter;
 
-  const ViewReportBanquetBody({super.key, required this.counter});
+  const ViewReportBanquetBody({
+    super.key,
+    required this.height,
+    required this.property,
+    required this.module,
+    required this.counter,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +127,7 @@ class ViewReportBanquetBody extends StatelessWidget {
           DatePicker(),
 
           /// BREADCRUMBS
-          BreadcrumbsProperty(property: '{Property #}', moduleName: 'Banquet'),
+          BreadcrumbsProperty(property: property, moduleName: module),
 
           /// REPORT MARKET SEGMENT CARD
           Column(
@@ -159,7 +168,7 @@ class ViewReportBanquetBody extends StatelessWidget {
           /// TOP ACCOUNT OWNER DATA TABLE CARD
           ViewReportBanquetTopAccountOwnerDataTableCard(),
 
-          SizedBox(height: height * 0.25),
+          SizedBox(height: height * 0.25.r),
         ],
       ),
     );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:zeus_app/core/constants/app_text_styles.dart';
 
+import '../../core/constants/app_fonts.dart';
 import '../../core/utils/date_formatter.dart';
 import '../../core/utils/extensions.dart';
 import '../viewmodels/date_picker_view_model.dart';
@@ -31,14 +33,10 @@ class DatePicker extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              colorScheme: ColorScheme.light(
-                primary: Colors.teal, // header background color
-                onPrimary: Colors.white, // header text color
-                onSurface: Colors.black, // body text color
-              ),
+              colorScheme: colorScheme,
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  foregroundColor: Colors.teal, // button text color
+                  foregroundColor: colorScheme.onSurface, // button text color
                 ),
               ),
             ),
@@ -50,7 +48,7 @@ class DatePicker extends StatelessWidget {
       if (picked != null) {
         print('Selected date: $picked');
         print('Formatted date: ${formattedDate(picked)}');
-        context.read<DatePickerViewModel>().setDate(
+        context.readDatePickerVM().setDate(
           date.copyWith(formatedDate: formattedDate(picked), date: picked),
         );
       }
@@ -75,7 +73,7 @@ class DatePicker extends StatelessWidget {
                 ),
                 Text(
                   date.formatedDate,
-                  style: TextStyle(color: colorScheme.onSurface, fontSize: 14.0.sp),
+                  style: mediumTitleTextStyle(colorScheme),
                 ),
               ],
             ),
@@ -91,7 +89,7 @@ class DatePicker extends StatelessWidget {
                       const Duration(days: 1),
                     );
 
-                    context.read<DatePickerViewModel>().setDate(
+                    context.readDatePickerVM().setDate(
                       date.copyWith(
                         formatedDate: formattedDate(oneDayLater),
                         date: oneDayLater,
@@ -108,7 +106,7 @@ class DatePicker extends StatelessWidget {
                       const Duration(days: 1),
                     );
 
-                    context.read<DatePickerViewModel>().setDate(
+                    context.readDatePickerVM().setDate(
                       date.copyWith(
                         formatedDate: formattedDate(oneDayAfter),
                         date: oneDayAfter,

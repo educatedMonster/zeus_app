@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
 
+import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../../../shared/widgets/animated_cash_in_out_bar_chart.dart';
 import '../../../../../../shared/widgets/build_header_chart.dart';
@@ -51,7 +52,7 @@ class ViewReportAccountingCashInOutChart extends StatelessWidget {
               /// Title and download icon
               BuildHeaderChart(
                 label: 'Total cash in and out',
-                icon: Icon(Icons.download_rounded, size: 22.0.sp),
+                icon: iconDownload(),
                 onIconPressed: () {
                   debugPrint('Download icon pressed');
                 },

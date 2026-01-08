@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/app_fonts.dart';
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../shared/widgets/animated_line_progress_bar.dart';
 import '../../../view_report/data/sources/remote/model/progress_ chart_model.dart';
@@ -59,14 +61,14 @@ class DashboardOccupancyRateCard extends StatelessWidget {
     return Container(
       width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 24.0.r),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0).r,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(16.0).r,
         boxShadow: [
           BoxShadow(
             color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-            blurRadius: 10,
+            blurRadius: 10.0.r,
             offset: const Offset(0, 2),
           ),
         ],
@@ -76,14 +78,7 @@ class DashboardOccupancyRateCard extends StatelessWidget {
         spacing: 8.0.r,
         children: [
           /// Title
-          Text(
-            'Occupancy Rate',
-            style: TextStyle(
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w600,
-              color: colorScheme.onSurface,
-            ),
-          ),
+          Text('Occupancy Rate', style: cardTitleTextStyle(colorScheme)),
 
           Column(
             children: List.generate(list.length, (index) {
@@ -95,7 +90,8 @@ class DashboardOccupancyRateCard extends StatelessWidget {
 
                   _buildProgressCard(
                     colorScheme: colorScheme,
-                    keyAnimation: '$parentKeyAnimation-$childKeyAnimation-dashboard_occupancy_rate_card-$index',
+                    keyAnimation:
+                        '$parentKeyAnimation-$childKeyAnimation-dashboard_occupancy_rate_card-$index',
                     title: item.title,
                     progressColor: item.progressColor,
                     backgroundColor: item.progressBGColor,
@@ -129,17 +125,19 @@ class DashboardOccupancyRateCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                fontSize: 13.sp,
+                fontSize: 12.0.sp,
                 color: colorScheme.onSurface.withValues(alpha: 0.5),
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w300,
+                fontFamily: Fonts.fontPoppins,
               ),
             ),
             Text(
               '${(value * 100).toInt()}%',
               style: TextStyle(
-                fontSize: 13.sp,
+                fontSize: 12.0.sp,
                 color: colorScheme.onSurface.withValues(alpha: 0.5),
                 fontWeight: FontWeight.w500,
+                fontFamily: Fonts.fontPoppins,
               ),
             ),
           ],
