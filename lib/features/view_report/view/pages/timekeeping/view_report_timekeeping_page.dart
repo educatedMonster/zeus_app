@@ -11,7 +11,14 @@ import 'widgets/view_report_timekeeping_fab.dart';
 
 @RoutePage()
 class ViewReportTimekeepingPage extends StatefulWidget {
-  const ViewReportTimekeepingPage({super.key});
+  final String property;
+  final String module;
+
+  const ViewReportTimekeepingPage({
+    super.key,
+    required this.property,
+    required this.module,
+  });
 
   @override
   State<ViewReportTimekeepingPage> createState() =>
@@ -31,6 +38,13 @@ class _ViewReportTimekeepingPageState extends State<ViewReportTimekeepingPage> {
 
   void _resetDate() {
     _datePickerViewModel.resetDate();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
+    super.didChangeDependencies();
   }
 
   @override
@@ -54,18 +68,16 @@ class _ViewReportTimekeepingPageState extends State<ViewReportTimekeepingPage> {
     return Scaffold(
       backgroundColor: _colorScheme.surface,
       appBar: ViewReportTimekeepingAppBar(title: Constants.titleViewReport),
-      body: ViewReportTimekeepingBody(counter: _counter),
+      body: ViewReportTimekeepingBody(
+        height: _size.height,
+        property: widget.property,
+        module: widget.module,
+        counter: _counter,
+      ),
       floatingActionButton: ViewReportTimekeepingFab(
         onPressed: _incrementCounter,
       ),
     );
-  }
-
-  @override
-  void didChangeDependencies() {
-    _colorScheme = context.contextColorScheme();
-    _size = context.contextSize();
-    super.didChangeDependencies();
   }
 
   @override

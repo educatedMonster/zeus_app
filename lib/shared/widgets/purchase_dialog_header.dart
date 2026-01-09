@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/constants/app_text_styles.dart';
 
 class PurchaseDialogHeader extends StatelessWidget {
   final ColorScheme colorScheme;
@@ -27,24 +28,11 @@ class PurchaseDialogHeader extends StatelessWidget {
           mainAxisAlignment: .center,
           mainAxisSize: .min,
           children: [
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0.sp),
-            ),
-
-            Text(
-              date,
-              style: TextStyle(
-                color: colorScheme.onTertiary,
-                fontSize: 11.0.sp,
-              ),
-            ),
+            Text(title, style: xlargeTitleTextStyle(colorScheme.onSurface)),
+            Text(date, style: defaultCaptionTextStyle(colorScheme)),
           ],
         ),
-        IconButton(
-          icon: Icon(Icons.edit_outlined, color: colorScheme.onSecondary),
-          onPressed: onHistoryTap,
-        ),
+        IconButton(icon: editButton(colorScheme), onPressed: onHistoryTap),
       ],
     );
   }

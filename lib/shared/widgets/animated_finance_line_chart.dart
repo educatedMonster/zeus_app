@@ -1,8 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
+import '../../core/constants/app_text_styles.dart';
+import '../../core/utils/number_formatter.dart';
 import '../components/get_animated_spots.dart';
 
 class AnimatedFinanceLineChart extends StatefulWidget {
@@ -22,7 +25,8 @@ class AnimatedFinanceLineChart extends StatefulWidget {
   });
 
   @override
-  State<AnimatedFinanceLineChart> createState() => _AnimatedFinanceLineChartState();
+  State<AnimatedFinanceLineChart> createState() =>
+      _AnimatedFinanceLineChartState();
 }
 
 class _AnimatedFinanceLineChartState extends State<AnimatedFinanceLineChart>
@@ -69,9 +73,10 @@ class _AnimatedFinanceLineChartState extends State<AnimatedFinanceLineChart>
       child: SingleChildScrollView(
         scrollDirection: .horizontal,
         physics: ScrollPhysics(),
-        child: SizedBox(
+        child: Container(
           height: widget.containerHeight,
           // width: widget.containerWidth,
+          padding: const EdgeInsets.symmetric(horizontal: 2.0).copyWith(top: 24.0,  bottom: 8.0).r,
           width: context.contextWidth(),
           child: AnimatedBuilder(
             animation: _lineAnimation,
@@ -84,22 +89,25 @@ class _AnimatedFinanceLineChartState extends State<AnimatedFinanceLineChart>
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
-                        reservedSize: 40,
+                        reservedSize: 32.0.r,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            formatNumber(value),
+                            style: axisTextStyle(context.contextColorScheme()),
+                          );
+                        },
                       ),
                     ),
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
-                          const months = [
-                            'Apr',
-                            'May',
-                            'Jun',
-                            'Jul',
-                            'Aug',
-                          ];
+                          const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug'];
                           if (value >= 0 && value < months.length) {
-                            return Text(months[value.toInt()]);
+                            return Text(
+                              months[value.toInt()],
+                              style: axisTextStyle(context.contextColorScheme()),
+                            );
                           }
                           return const SizedBox();
                         },

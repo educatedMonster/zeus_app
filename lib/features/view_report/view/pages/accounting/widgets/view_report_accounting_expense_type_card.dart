@@ -23,12 +23,12 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = context.contextColorScheme();
-    double width = context.contextWidth();
+    Size size = context.contextSize();
 
     return Container(
-      width: width,
+      width: size.width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 4.0.r),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
@@ -43,7 +43,7 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           // Dynamically size the chart based on card width
-          final chartSize = constraints.maxWidth * 0.45; // 45% of card width
+          final chartSize = constraints.maxWidth * 0.50;
 
           return Column(
             crossAxisAlignment: .start,
@@ -56,10 +56,7 @@ class ViewReportAccountingExpenseTypeCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Expense Type / Account',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: cardTitleTextStyle(colorScheme),
                       maxLines: 1,
                       overflow: .ellipsis,
                     ),

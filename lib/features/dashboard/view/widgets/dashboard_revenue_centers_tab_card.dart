@@ -127,15 +127,8 @@ class _DashboardRevenueCentersTabCardState
               ),
               labelStyle: tabBarTextStyle(_colorScheme),
               tabs: [
-                Tab(
-                  child: Text('By Shift', style: tabBarTextStyle(_colorScheme)),
-                ),
-                Tab(
-                  child: Text(
-                    'Hourly View',
-                    style: tabBarTextStyle(_colorScheme),
-                  ),
-                ),
+                Tab(child: Text('By Shift')),
+                Tab(child: Text('Hourly View')),
               ],
             ),
           ),

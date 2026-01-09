@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/app_text_styles.dart';
+
 class PurchaseDialogActionButtons extends StatelessWidget {
   final ColorScheme colorScheme;
   final VoidCallback onApproveTap;
@@ -25,24 +27,17 @@ class PurchaseDialogActionButtons extends StatelessWidget {
         spacing: 8.0.r,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             spacing: 8.0.r,
             children: [
               /// REJECT
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: onRejectTap,
-                  icon: Icon(
-                    Icons.close,
-                    size: 16.0.r,
-                    color: colorScheme.onPrimary,
-                  ),
+                  icon: rejectButton(colorScheme.onPrimary),
                   label: Text(
                     'Reject',
-                    style: TextStyle(
-                      fontSize: 12.0.sp,
-                      color: colorScheme.onPrimary,
-                    ),
+                    style: defaultOnPrimaryTextStyle(colorScheme.onPrimary),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
@@ -58,17 +53,10 @@ class PurchaseDialogActionButtons extends StatelessWidget {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: onApproveTap,
-                  icon: Icon(
-                    Icons.check,
-                    size: 16.0.r,
-                    color: colorScheme.onPrimary,
-                  ),
+                  icon: approveButton(colorScheme.onPrimary),
                   label: Text(
                     'Approve',
-                    style: TextStyle(
-                      fontSize: 12.0.sp,
-                      color: colorScheme.onPrimary,
-                    ),
+                    style: defaultOnPrimaryTextStyle(colorScheme.onPrimary),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
@@ -88,17 +76,12 @@ class PurchaseDialogActionButtons extends StatelessWidget {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: onReturnTap,
-                  icon: Icon(
-                    Icons.undo,
-                    size: 16.0.r,
-                    color: colorScheme.onSecondary,
+                  icon: undoButton(
+                    colorScheme.onSurface.withValues(alpha: 0.50),
                   ),
                   label: Text(
                     'Return for Revision',
-                    style: TextStyle(
-                      fontSize: 12.0.sp,
-                      color: colorScheme.onSecondary,
-                    ),
+                    style: defaultTitleTextStyle(colorScheme),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colorScheme.surface,
@@ -106,7 +89,7 @@ class PurchaseDialogActionButtons extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 0.25.r,
-                        color: colorScheme.onTertiary,
+                        color: colorScheme.onSurface.withValues(alpha: 0.50),
                       ),
                       borderRadius: BorderRadius.circular(8.0).r,
                     ),

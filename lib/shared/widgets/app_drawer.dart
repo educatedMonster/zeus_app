@@ -28,8 +28,6 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DashboardViewModel dashboardViewModel = context.watchDashboardVM();
-
     final (themeData, selectedProperty, selectedDrawerIndex) = context
         .select<DashboardViewModel, (ThemeData, String, int)>(
           (vm) => (vm.themeData, vm.selectedProperty, vm.selectedDrawerIndex),
@@ -121,7 +119,7 @@ class AppDrawer extends StatelessWidget {
             ? Constants.titleLightMode
             : Constants.titleDarkMode,
         onTap: () async {
-          dashboardViewModel.toggleTheme();
+          context.readDashboardVM().toggleTheme();
         },
       ),
     ];
@@ -135,7 +133,7 @@ class AppDrawer extends StatelessWidget {
           indicatorColor: colorScheme.primary,
           selectedIndex: selectedDrawerIndex,
           onDestinationSelected: (index) async {
-            dashboardViewModel.setSelectedDrawerIndex(index);
+            context.readDashboardVM().setSelectedDrawerIndex(index);
             drawerItems[index].onTap();
 
             if (scaffoldKey.currentState!.isDrawerOpen) {
@@ -221,7 +219,7 @@ class AppDrawer extends StatelessWidget {
                   }).toList(),
                   onChanged: (value) {
                     if (value != null) {
-                      dashboardViewModel.setSelectedProperty(value);
+                      context.readDashboardVM().setSelectedProperty(value);
 
                       if (scaffoldKey.currentState!.isDrawerOpen) {
                         scaffoldKey.currentState!.closeDrawer();

@@ -52,7 +52,14 @@ TextStyle mediumTitleTextStyle(ColorScheme colorScheme) => TextStyle(
   fontFamily: Fonts.fontPoppins,
 );
 
-TextStyle largeTitleTextStyle(Color textColor) => TextStyle(
+TextStyle largeTitleTextStyle(ColorScheme colorScheme) => TextStyle(
+  fontSize: 16.0.sp,
+  fontWeight: FontWeight.w500,
+  color: colorScheme.onSurface,
+  fontFamily: Fonts.fontPoppins,
+);
+
+TextStyle xlargeTitleTextStyle(Color textColor) => TextStyle(
   fontSize: 18.0.sp,
   fontWeight: FontWeight.w700,
   color: textColor,
@@ -103,15 +110,8 @@ TextStyle cardTitleTextStyle(ColorScheme colorScheme) => TextStyle(
 
 TextStyle propertyTitleTextStyle(ColorScheme colorScheme) => TextStyle(
   fontSize: 10.0.sp,
-  fontWeight: FontWeight.w300,
+  fontWeight: FontWeight.w600,
   color: colorScheme.onSurface.withValues(alpha: 0.50),
-  fontFamily: Fonts.fontPoppins,
-);
-
-TextStyle noDataTextStyle(ColorScheme colorScheme) => TextStyle(
-  fontSize: 16.0.sp,
-  fontWeight: FontWeight.w700,
-  color: colorScheme.onSurface,
   fontFamily: Fonts.fontPoppins,
 );
 
@@ -125,13 +125,53 @@ TextStyle dropdownTextStyle(ColorScheme colorScheme) => TextStyle(
 TextStyle tabBarTextStyle(ColorScheme colorScheme) => TextStyle(
   fontSize: 12.0.sp,
   color: colorScheme.onSurface,
+  fontWeight: FontWeight.w700,
+  fontFamily: Fonts.fontPoppins,
+);
+
+TextStyle buttonTextStyle(Color textColor) => TextStyle(
+  fontSize: 12.0.sp,
+  color: textColor,
+  fontWeight: FontWeight.w600,
+  fontFamily: Fonts.fontPoppins,
+);
+
+TextStyle statusTextStyle(Color textColor) => TextStyle(
+  fontSize: 16.0.sp,
   fontWeight: FontWeight.w500,
+  color: textColor,
+  fontFamily: Fonts.fontPoppins,
+);
+
+TextStyle defaultOnPrimaryTextStyle(Color textColor) => TextStyle(
+  fontSize: 12.0.sp,
+  fontWeight: FontWeight.w300,
+  color: textColor,
   fontFamily: Fonts.fontPoppins,
 );
 
 Icon iconDownload() => Icon(Icons.download, size: 22.0.r);
+
 Icon backButton() => Icon(Icons.arrow_back_sharp, size: 22.0.r);
+
 Icon closeButton() => Icon(Icons.close, size: 22.0.r);
+
+Icon rejectButton(Color textColor) =>
+    Icon(Icons.close, size: 16.0.r, color: textColor);
+
+Icon approveButton(Color textColor) =>
+    Icon(Icons.check, size: 16.0.r, color: textColor);
+
+Icon undoButton(Color textColor) =>
+    Icon(Icons.undo, size: 16.0.r, color: textColor);
+
+Icon moreButton(Color textColor) =>
+    Icon(Icons.chevron_right, size: 24.0.r, color: textColor);
+
 Icon menuButton() => Icon(Icons.menu, size: 22.0.r);
 
+Icon editButton(ColorScheme colorScheme) =>
+    Icon(Icons.edit_outlined, color: colorScheme.onSecondary);
 
+Icon sortArrowButton(ColorScheme colorScheme) =>
+    Icon(Icons.arrow_drop_down, size: 16.0.r, color: colorScheme.onSurface);

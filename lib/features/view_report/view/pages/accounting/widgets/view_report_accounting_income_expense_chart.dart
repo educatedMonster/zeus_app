@@ -23,12 +23,12 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = context.contextColorScheme();
-    double width = context.contextWidth();
+    Size size = context.contextSize();
 
     return Container(
-      width: width,
+      width: size.width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 4.0.r),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
@@ -47,7 +47,6 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
 
           return Column(
             crossAxisAlignment: .start,
-            spacing: 16.0.r,
             children: [
               /// Title and download icon
               BuildHeaderChart(
@@ -61,23 +60,24 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
               /// Chart
               financeBarDataModelList.isEmpty
                   ? SizedBox(
-                    height: chartSize,
-                    width: width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 8.0.r,
-                      children: [
-                        Icon(Icons.bar_chart, color: colorScheme.onSurface, size: 32.0.r),
-                        Text(
-                          'No data available',
-                          style: TextStyle(
+                      height: chartSize,
+                      width: size.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8.0.r,
+                        children: [
+                          Icon(
+                            Icons.bar_chart,
                             color: colorScheme.onSurface,
-                            fontSize: 12.0.sp,
+                            size: 32.0.r,
                           ),
-                        ),
-                      ],
-                    ),
-                  )
+                          Text(
+                            'No data available',
+                            style: largeTitleTextStyle(colorScheme),
+                          ),
+                        ],
+                      ),
+                    )
                   : Column(
                       crossAxisAlignment: .start,
                       children: [
@@ -109,87 +109,12 @@ class ViewReportAccountingIncomeExpenseChart extends StatelessWidget {
                               vertical: 16.0.r,
                             ),
                             height: chartSize,
-                            width: width,
+                            width: size.width,
                             child: AnimatedIncomeExpenseBarChart(
                               keyAnimation:
                                   '$parentKeyAnimation-$childKeyAnimation-view_report_accounting_income_expense_chart',
                               list: financeBarDataModelList,
                             ),
-                            // child: BarChart(
-                            //   duration: const Duration(milliseconds: 500),
-                            //   curve: Curves.easeInOut,
-                            //   BarChartData(
-                            //     gridData: FlGridData(
-                            //       show: true,
-                            //       drawVerticalLine: false,
-                            //       getDrawingHorizontalLine: (value) => FlLine(
-                            //         color: Colors.grey.withValues(alpha: 0.2),
-                            //         strokeWidth: 1,
-                            //       ),
-                            //     ),
-                            //     borderData: FlBorderData(show: false),
-                            //     titlesData: FlTitlesData(
-                            //       leftTitles: AxisTitles(
-                            //         sideTitles: SideTitles(
-                            //           showTitles: true,
-                            //           reservedSize: 40.0.r,
-                            //           interval: 200000,
-                            //           getTitlesWidget: (value, meta) {
-                            //             if (value == 0)
-                            //               return Text('0', style: axisTextStyle());
-                            //             if (value == 200000)
-                            //               return Text('200K', style: axisTextStyle());
-                            //             if (value == 400000)
-                            //               return Text('400K', style: axisTextStyle());
-                            //             return const SizedBox.shrink();
-                            //           },
-                            //         ),
-                            //       ),
-                            //       rightTitles: const AxisTitles(
-                            //         sideTitles: SideTitles(showTitles: false),
-                            //       ),
-                            //       topTitles: const AxisTitles(
-                            //         sideTitles: SideTitles(showTitles: false),
-                            //       ),
-                            //       bottomTitles: AxisTitles(
-                            //         sideTitles: SideTitles(
-                            //           showTitles: true,
-                            //           interval: 1,
-                            //           getTitlesWidget: (value, meta) {
-                            //             final labels = ['14', '15', '16', '17'];
-                            //             if (value.toInt() < labels.length) {
-                            //               return Text(
-                            //                 labels[value.toInt()],
-                            //                 style: axisTextStyle(),
-                            //               );
-                            //             }
-                            //             return const SizedBox.shrink();
-                            //           },
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     barGroups: barGroups,
-                            //     barTouchData: BarTouchData(
-                            //       enabled: true,
-                            //       touchTooltipData: BarTouchTooltipData(
-                            //         tooltipMargin: 8.0.r,
-                            //         getTooltipColor: (group) => Colors.white,
-                            //         tooltipBorderRadius: BorderRadius.circular(8.r),
-                            //         tooltipPadding: EdgeInsets.all(8.0.r),
-                            //         getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                            //           return BarTooltipItem(
-                            //             '${rod.toY.toStringAsFixed(0)}.00',
-                            //             TextStyle(
-                            //               color: Colors.black87,
-                            //               fontWeight: FontWeight.w600,
-                            //               fontSize: 13.sp,
-                            //             ),
-                            //           );
-                            //         },
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ),
                         ),
                       ],

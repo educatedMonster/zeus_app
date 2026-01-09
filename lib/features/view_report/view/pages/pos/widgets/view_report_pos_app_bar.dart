@@ -21,7 +21,7 @@ class ViewReportPosAppBar extends StatelessWidget
     return AppBar(
       backgroundColor: colorScheme.surfaceContainer,
       elevation: 0,
-      scrolledUnderElevation: 0,
+      scrolledUnderElevation: 1,
       surfaceTintColor: colorScheme.onSurface,
       titleSpacing: 0,
       actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0).r,

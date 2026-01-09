@@ -8,6 +8,7 @@ import 'package:zeus_app/features/approval/viewmodel/approval_view_model.dart';
 import 'package:zeus_app/shared/widgets/app_drawer.dart';
 
 import '../../../app/routes/approuter.gr.dart';
+import '../../../core/constants/app_text_styles.dart';
 import '../../dashboard/viewmodel/dashboard_view_model.dart';
 
 @RoutePage()
@@ -26,8 +27,8 @@ class _ApprovalPageState extends State<ApprovalPage>
   late ColorScheme _colorScheme;
   late Size _size;
   int _counter = 0;
-  List<String> properties = ["All", "Property A", "Property B", "Property C"];
-  late final String _selectedProperty = properties[0];
+  final List<String> _properties = ["All", "Property A", "Property B", "Property C"];
+  late final String _selectedProperty = _properties[0];
   late final TabController _tabController;
   bool _isSynced = false;
   final List<String> _tabs = ['Pending', 'Approved', 'Returned', 'Rejected'];
@@ -37,14 +38,13 @@ class _ApprovalPageState extends State<ApprovalPage>
     WidgetsBinding.instance.addObserver(this);
     _approvalViewModel = context.readApprovalVM();
     _dashboardViewModel = context.readDashboardVM();
-
     _initControllers();
     _initTabController();
 
     _counter = _approvalViewModel.counter;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _dashboardViewModel.setSelectedProperty(_selectedProperty);
+      _onPropertyTap(_selectedProperty);
     });
     super.initState();
   }
@@ -101,6 +101,7 @@ class _ApprovalPageState extends State<ApprovalPage>
           backgroundColor: _colorScheme.surface,
           key: _scaffoldKey,
           appBar: ApprovalAppBar(
+            colorScheme: _colorScheme,
             title: 'Approvals',
             leadingWidget: IconButton(
               onPressed: () async {
@@ -111,17 +112,18 @@ class _ApprovalPageState extends State<ApprovalPage>
               },
               icon: Padding(
                 padding: const EdgeInsets.only(left: 8.0).r,
-                child: Icon(
-                  Icons.menu,
-                  size: 20.0.r,
-                  color: _colorScheme.onSurface,
-                ),
+                child: menuButton(),
               ),
             ),
             tabController: _tabController,
             tabs: _tabs,
           ),
-          drawer: AppDrawer(colorScheme: _colorScheme, size: _size, scaffoldKey: _scaffoldKey, properties: properties),
+          drawer: AppDrawer(
+            colorScheme: _colorScheme,
+            size: _size,
+            scaffoldKey: _scaffoldKey,
+            properties: _properties,
+          ),
           body: child,
           floatingActionButton: ApprovalFab(onPressed: _incrementCounter),
         );
@@ -131,6 +133,10 @@ class _ApprovalPageState extends State<ApprovalPage>
 
   void _incrementCounter() async {
     _approvalViewModel.incrementCounter();
+  }
+
+  void _onPropertyTap(String property) {
+    _dashboardViewModel.setSelectedProperty(property);
   }
 
   void _initControllers() {

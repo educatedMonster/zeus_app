@@ -89,7 +89,7 @@ class _ViewReportAccountingFinanceChartCardState
       height: _size.height * 0.40,
       width: _size.width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 4.0.r),
       decoration: BoxDecoration(
         color: _colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
@@ -108,7 +108,6 @@ class _ViewReportAccountingFinanceChartCardState
 
           return Column(
             crossAxisAlignment: .start,
-            spacing: 16.0.r,
             children: [
               /// Title and download icon
               Row(
@@ -117,19 +116,12 @@ class _ViewReportAccountingFinanceChartCardState
                   Expanded(
                     child: Text(
                       'Actual vs Budgeted vs Forecasted',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: _colorScheme.onSurface
-                      ),
+                      style: cardTitleTextStyle(_colorScheme),
                       maxLines: 1,
                       overflow: .ellipsis,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () async {},
-                    icon: iconDownload(),
-                  ),
+                  IconButton(onPressed: () async {}, icon: iconDownload()),
                 ],
               ),
 
@@ -137,19 +129,17 @@ class _ViewReportAccountingFinanceChartCardState
               SingleChildScrollView(
                 scrollDirection: .horizontal,
                 child: Row(
+                  spacing: 16.0.r,
                   children: legendItems.map((item) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: 16.0.r),
-                      child: InkWell(
-                        onTap: () => _onLegendTap(item.index),
-                        child: BuildLegendDot(
-                          color: _selectedIndex == -1
-                              ? item.color
-                              : _selectedIndex == item.index
-                              ? item.color
-                              : Colors.grey,
-                          label: item.label,
-                        ),
+                    return InkWell(
+                      onTap: () => _onLegendTap(item.index),
+                      child: BuildLegendDot(
+                        color: _selectedIndex == -1
+                            ? item.color
+                            : _selectedIndex == item.index
+                            ? item.color
+                            : Colors.grey,
+                        label: item.label,
                       ),
                     );
                   }).toList(),

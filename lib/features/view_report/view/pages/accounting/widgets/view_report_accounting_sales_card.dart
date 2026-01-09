@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
-class ViewReportAccountingSalesCard extends StatelessWidget {
-  final bool isNegativeStatus;
+import '../../../../../../core/constants/app_text_styles.dart';
 
-  const ViewReportAccountingSalesCard({
-    super.key,
-    this.isNegativeStatus = false,
-  });
+class ViewReportAccountingSalesCard extends StatelessWidget {
+  final bool isPositive;
+
+  const ViewReportAccountingSalesCard({super.key, this.isPositive = true});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
     return Container(
       width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0).r,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0).r,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.0).r,
@@ -39,22 +38,8 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
             crossAxisAlignment: .center,
             mainAxisAlignment: .spaceBetween,
             children: [
-              Text(
-                'Net Sales',
-                style: TextStyle(
-                  color: colorScheme.onSurface,
-                  fontSize: 14.0.sp,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              Text(
-                'last week',
-                style: TextStyle(
-                  color: colorScheme.onSecondary,
-                  fontSize: 10.0.sp,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
+              Text('Net Sales', style: defaultTitleTextStyle(colorScheme)),
+              Text('last week', style: defaultCaptionTextStyle(colorScheme)),
             ],
           ),
           Row(
@@ -63,36 +48,29 @@ class ViewReportAccountingSalesCard extends StatelessWidget {
             children: [
               Text(
                 '69,600.00',
-                style: TextStyle(
-                  color: colorScheme.onSurface,
-                  fontSize: 16.0.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: salesPOSTextStyle(colorScheme.onSurface),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 6.0,
-                  horizontal: 8.0,
+                  vertical: 2.0,
+                  horizontal: 6.0,
                 ).r,
                 decoration: BoxDecoration(
-                  color: isNegativeStatus ? Colors.red : Colors.green, // Green background for the percentage
+                  color: isPositive ? Colors.green : Colors.red,
+                  // Green background for the percentage
                   borderRadius: BorderRadius.circular(100.0),
                 ),
                 child: Row(
                   spacing: 4.0.r,
                   children: [
                     Icon(
-                      isNegativeStatus ? Icons.trending_down : Icons.trending_up,
-                      color: colorScheme.surface,
+                      isPositive ? Icons.trending_up : Icons.trending_down,
+                      color: colorScheme.onPrimary,
                       size: 16.0.r,
                     ),
                     Text(
-                      isNegativeStatus ? '-8.2%' : '+8.2%',
-                      style: TextStyle(
-                        color: colorScheme.surface,
-                        fontSize: 12.0.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
+                      isPositive ? '+8.2%' : '-8.2%',
+                      style: percentPOSTextStyle(colorScheme.onPrimary),
                     ),
                   ],
                 ),

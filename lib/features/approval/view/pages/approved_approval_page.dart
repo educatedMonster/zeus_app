@@ -28,7 +28,7 @@ class _ApprovedApprovalPageState extends State<ApprovedApprovalPage> with Single
     _approvalVM = context.readApprovalVM();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _approvalVM.selectedCalendarView(_calendarView);
+      _approvalVM.selectedSegmentedButton(_calendarView);
     });
     super.initState();
   }

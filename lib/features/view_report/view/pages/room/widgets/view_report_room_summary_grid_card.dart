@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../core/constants/app_fonts.dart';
-import '../../../../../../core/constants/app_text_styles.dart';
 import '../../../../../../core/utils/extensions.dart';
-import '../../../../../../shared/widgets/animated_line_progress_bar.dart';
+import '../../../../../../shared/widgets/line_progress_card.dart';
+import '../../../../../../shared/widgets/value_card.dart';
 import '../../../../data/sources/remote/model/progress_ chart_model.dart';
 
 class ViewReportRoomSummaryGridCard extends StatelessWidget {
@@ -91,7 +90,7 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
         children: List.generate(list.length, (index) {
           final item = list[index];
           return item.isProgress
-              ? _buildProgressCard(
+              ? LineProgressCard(
                   colorScheme: colorScheme,
                   keyAnimation:
                       '$parentKeyAnimation-view_report_room_summary_grid_card-$index',
@@ -104,106 +103,13 @@ class ViewReportRoomSummaryGridCard extends StatelessWidget {
                   bgColor: item.backgroundColor,
                   textColor: item.textColor,
                 )
-              : _buildValueCard(
-                  colorScheme: colorScheme,
+              : ValueCard(
                   title: item.title,
                   value: item.total,
                   bgColor: item.backgroundColor,
                   textColor: item.textColor,
                 );
         }),
-      ),
-    );
-  }
-
-  /// Progress Card (Arrivals, Departures)
-  Widget _buildProgressCard({
-    required ColorScheme colorScheme,
-    required String keyAnimation,
-    required String title,
-    required Color progressColor,
-    required Color progressBGColor,
-    required double value,
-    required String current,
-    required String total,
-    required Color bgColor,
-    required Color textColor,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12.0).r,
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(12.0).r,
-      ),
-      child: Column(
-        crossAxisAlignment: .start,
-        spacing: 8.0.r,
-        children: [
-          Text(title, style: cardTitleTextStyle(colorScheme)),
-          Row(
-            mainAxisAlignment: .spaceBetween,
-            children: [
-              Text(
-                '${(value * 100).toInt()}%',
-                style: TextStyle(
-                  fontSize: 18.0.sp,
-                  fontWeight: FontWeight.w700,
-                  color: textColor,
-                  fontFamily: Fonts.fontPoppins,
-                ),
-              ),
-              Text(
-                '$current/$total',
-                style: defaultTitleTextStyle(colorScheme),
-              ),
-            ],
-          ),
-
-          /// Progress bar
-          AnimatedLineProgressBar(
-            value: value,
-            backgroundColor: progressBGColor,
-            progressColor: progressColor,
-            keyAnimation: keyAnimation,
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Value Card (Stay-Over, Total Revenue)
-  Widget _buildValueCard({
-    required ColorScheme colorScheme,
-    required String title,
-    required String value,
-    required Color bgColor,
-    required Color textColor,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12.0).r,
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Column(
-        crossAxisAlignment: .start,
-        mainAxisAlignment: .center,
-        spacing: 8.0.r,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14.0.sp,
-              fontWeight: FontWeight.w500,
-              color: textColor.withValues(alpha: 0.8),
-              fontFamily: Fonts.fontPoppins,
-            ),
-          ),
-          Text(
-            value,
-            style: largeTitleTextStyle(textColor)
-          ),
-        ],
       ),
     );
   }

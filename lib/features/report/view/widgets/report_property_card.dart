@@ -129,7 +129,7 @@ class ReportPropertyCard extends StatelessWidget {
                         context.router.navigate(ViewReportAccountingRoute(property: property, module: report['name']));
                       } else if (report.values.contains('Timekeeping')) {
                         // context.router.pushPath('/view-report-timekeeping');
-                        context.router.navigate(ViewReportTimekeepingRoute());
+                        context.router.navigate(ViewReportTimekeepingRoute(property: property, module: report['name']));
                       }
                     },
                     child: Text(

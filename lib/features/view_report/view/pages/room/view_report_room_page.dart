@@ -40,6 +40,13 @@ class _ViewReportRoomPageState extends State<ViewReportRoomPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
+    super.didChangeDependencies();
+  }
+
+  @override
   void initState() {
     _viewReportViewModel = context.readViewReportVM();
     _datePickerViewModel = context.readDatePickerVM();
@@ -71,12 +78,5 @@ class _ViewReportRoomPageState extends State<ViewReportRoomPage> {
       ),
       floatingActionButton: ViewReportRoomFab(onPressed: _incrementCounter),
     );
-  }
-
-  @override
-  void didChangeDependencies() {
-    _colorScheme = context.contextColorScheme();
-    _size = context.contextSize();
-    super.didChangeDependencies();
   }
 }

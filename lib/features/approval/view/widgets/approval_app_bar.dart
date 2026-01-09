@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/utils/extensions.dart';
+import '../../../../core/constants/app_text_styles.dart';
 
 class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final ColorScheme colorScheme;
   final String title;
   final Widget leadingWidget;
   final TabController tabController;
@@ -11,6 +12,7 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const ApprovalAppBar({
     super.key,
+    required this.colorScheme,
     required this.title,
     required this.leadingWidget,
     required this.tabController,
@@ -23,8 +25,6 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = context.contextColorScheme();
-
     return AppBar(
       backgroundColor: colorScheme.surface,
       elevation: 0,
@@ -35,25 +35,22 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0).r,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: .center,
+          mainAxisAlignment: .spaceEvenly,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: colorScheme.onSurface,
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0.sp,
-              ),
-            ),
+            Text(title, style: appBarTextStyle(colorScheme)),
             const Spacer(),
             Row(
-              spacing: 12.0.r,
               children: [
-                Icon(Icons.search, size: 20.0.r, color: colorScheme.onSurface),
-                Icon(
-                  Icons.notifications_none,
-                  size: 20.0.r,
+                IconButton(
+                  icon: Icon(Icons.search, size: 16.0.r),
                   color: colorScheme.onSurface,
+                  onPressed: () async {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.notifications_none, size: 16.0.r),
+                  color: colorScheme.onSurface,
+                  onPressed: () async {},
                 ),
               ],
             ),
@@ -65,15 +62,9 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 16.0).r,
           child: CircleAvatar(
-            radius: 12.0.r,
-            backgroundColor: colorScheme.onSurface.withValues(alpha: 0.50),
-            child: Text(
-              'A',
-              style: TextStyle(
-                color: colorScheme.surfaceContainer,
-                fontSize: 14.sp,
-              ),
-            ),
+            radius: 16.0.r,
+            backgroundColor: const Color(0xFFB0B8C1),
+            child: Text('A', style: buttonTextStyle(colorScheme.onPrimary)),
           ),
         ),
       ],
@@ -98,7 +89,7 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
               (tab) => Tab(
                 child: Badge(
                   isLabelVisible: true,
-                  alignment: AlignmentDirectional.centerEnd,
+                  // alignment: AlignmentDirectional.centerEnd,
                   offset: Offset(18, -8),
                   label: Text(
                     '1',
@@ -106,10 +97,10 @@ class ApprovalAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   child: Text(
                     tab,
-                    style: TextStyle(
-                      color: colorScheme.onSurface,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: tabBarTextStyle(colorScheme),
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                    // textAlign: TextAlign.center,
                   ),
                 ),
               ),

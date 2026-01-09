@@ -5,24 +5,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 BarChartGroupData make2GroupData(int x, double a, double b) {
   return BarChartGroupData(
     x: x,
-    barsSpace: 1, // space between rods in this group
+    barsSpace: 2, // Space between rods in the same group
     barRods: [
       BarChartRodData(
         toY: a,
         color: Colors.indigo,
-        width: 15, // width of each rod
+        width: 20, // width of each rod
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(4.r),
-          topRight: Radius.circular(4.r),
+          topLeft: Radius.circular(4.0).r,
+          topRight: Radius.circular(4.0).r,
         ),
       ),
       BarChartRodData(
         toY: b,
         color: Colors.orange,
-        width: 15, // width of each rod
+        width: 20, // width of each rod
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(4.r),
-          topRight: Radius.circular(4.r),
+          topLeft: Radius.circular(4.0).r,
+          topRight: Radius.circular(4.0).r,
         ),
       ),
     ],

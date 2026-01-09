@@ -5,6 +5,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
 import '../../core/constants/app_text_styles.dart';
+import '../../core/utils/number_formatter.dart';
 import '../../features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
 import '../components/get_animated_bar_group.dart';
 import '../components/make_2_group_data.dart';
@@ -34,8 +35,6 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
   final double width = 16.0.r;
   int touchedGroupIndex = -1;
   double _maxValue = 0.0;
-  double _step = 0.0;
-  List<double> _averages = [];
 
   @override
   void initState() {
@@ -43,7 +42,9 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
 
     _list = widget.list;
 
-    _rawBarGroups = _list.map((e) => make2GroupData(e.order, e.a, e.b)).toList();
+    _rawBarGroups = _list
+        .map((e) => make2GroupData(e.order, e.a, e.b))
+        .toList();
 
     // Extract all toY values from bar rods in all groups
     List<double> allToYValues = _rawBarGroups
@@ -53,9 +54,6 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
 
     // Find max
     _maxValue = allToYValues.reduce((curr, next) => curr > next ? curr : next);
-
-    _step = _maxValue / 3;
-    _averages = [0, _step, 2 * _step, _maxValue];
 
     // Setup animation controller for 1 second
     _barController = AnimationController(
@@ -100,7 +98,8 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
         BarChartData(
-          groupsSpace: 30,
+          groupsSpace: 24,
+          // Space between each group
           // space between each BarChartGroupData
           gridData: FlGridData(
             show: true,
@@ -116,41 +115,16 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                reservedSize: 60.0.r,
+                reservedSize: 32.0.r,
                 interval: 100000,
-                getTitlesWidget: (value, meta) {
-                  // if (value == 0) return Text('0', style: axisTextStyle());
-                  // if (value == 100000) {
-                  //   return Text('100K', style: axisTextStyle());
-                  // }
-                  // if (value == 200000) {
-                  //   return Text('200K', style: axisTextStyle());
-                  // }
-                  if (value == 0) return Text('0', style: axisTextStyle(context.contextColorScheme()));
-                  if (value > 0) {
-                    return Text('$value', style: axisTextStyle(context.contextColorScheme()));
-                  }
-                  return const SizedBox.shrink();
+                getTitlesWidget: (double value, TitleMeta meta) {
+                  return Text(
+                    meta.formattedValue,
+                    style: axisTextStyle(context.contextColorScheme()),
+                  );
                 },
               ),
             ),
-            // leftTitles: AxisTitles(
-            //   sideTitles: SideTitles(
-            //     showTitles: true,
-            //     reservedSize: 40.0.r,
-            //     interval: 200000,
-            //     getTitlesWidget: (value, meta) {
-            //       final labels = _averages.map((e) => e).toList();
-            //       if (value < labels.length) {
-            //         return Text(
-            //           '${labels[value.toInt()]}',
-            //           style: axisTextStyle(),
-            //         );
-            //       }
-            //       return const SizedBox.shrink();
-            //     },
-            //   ),
-            // ),
             rightTitles: const AxisTitles(
               sideTitles: SideTitles(showTitles: false),
             ),
@@ -161,10 +135,13 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
               sideTitles: SideTitles(
                 showTitles: true,
                 interval: 1,
-                getTitlesWidget: (value, meta) {
+                getTitlesWidget: (double value, TitleMeta meta) {
                   final labels = _list.map((e) => e.label).toList();
                   if (value.toInt() < labels.length) {
-                    return Text(labels[value.toInt()], style: axisTextStyle(context.contextColorScheme()));
+                    return Text(
+                      labels[value.toInt()],
+                      style: axisTextStyle(context.contextColorScheme()),
+                    );
                   }
                   return const SizedBox.shrink();
                 },
@@ -175,22 +152,22 @@ class _AnimatedCashInOutBarChartState extends State<AnimatedCashInOutBarChart>
           barTouchData: BarTouchData(
             enabled: true,
             touchTooltipData: BarTouchTooltipData(
-              tooltipMargin: 1.0.r,
-              getTooltipColor: (group) => Colors.black12,
+              tooltipMargin: 8.0.r,
+              getTooltipColor: (BarChartGroupData group) =>
+                  context.contextColorScheme().surfaceContainer,
+              tooltipBorder: BorderSide(
+                color: context.contextColorScheme().surface,
+              ),
               tooltipBorderRadius: BorderRadius.circular(8.r),
               tooltipPadding: EdgeInsets.all(8.0.r),
               fitInsideHorizontally: true,
               fitInsideVertically: true,
-              direction: TooltipDirection.auto,
-              tooltipHorizontalAlignment: FLHorizontalAlignment.center,
+              direction: .auto,
+              tooltipHorizontalAlignment: .center,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
                 return BarTooltipItem(
-                  '${rod.toY.toStringAsFixed(0)}.00',
-                  TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13.sp,
-                  ),
+                  formatNumber(rod.toY),
+                  axisTextStyle(context.contextColorScheme()),
                 );
               },
             ),

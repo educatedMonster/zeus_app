@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/app_text_styles.dart';
 import '../../core/utils/extensions.dart';
 
 class RejectDialog extends StatefulWidget {
@@ -52,7 +53,7 @@ class _RejectDialogState extends State<RejectDialog> {
             children: [
               Text(
                 'What went wrong?',
-                style: TextStyle(fontSize: 18.0.sp, fontWeight: FontWeight.bold),
+                style: xlargeTitleTextStyle(widget.colorScheme.onSurface),
               ),
 
               Expanded(
@@ -70,25 +71,17 @@ class _RejectDialogState extends State<RejectDialog> {
                       hintText: "What's your reason?",
                       counterText: '',
                       border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontSize: 12.0.sp,
-                        color: widget.colorScheme.onSecondary,
-                        fontWeight: FontWeight.w300,
+                      hintStyle: titlePOSTextStyle(
+                        widget.colorScheme.onSecondary,
                       ),
-                      helperStyle: TextStyle(
-                        fontSize: 12.0.sp,
-                        color: widget.colorScheme.onSecondary,
-                        fontWeight: FontWeight.w300,
+                      helperStyle: titlePOSTextStyle(
+                        widget.colorScheme.onSecondary,
                       ),
-                      labelStyle: TextStyle(
-                        fontSize: 12.0.sp,
-                        color: widget.colorScheme.onSurface,
-                        fontWeight: FontWeight.w300,
+                      labelStyle: titlePOSTextStyle(
+                        widget.colorScheme.onSurface,
                       ),
-                      counterStyle: TextStyle(
-                        fontSize: 12.0.sp,
-                        color: widget.colorScheme.onSurface,
-                        fontWeight: FontWeight.w300,
+                      counterStyle: titlePOSTextStyle(
+                        widget.colorScheme.onSurface,
                       ),
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -111,9 +104,9 @@ class _RejectDialogState extends State<RejectDialog> {
 
               // Close button
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: .center,
+                mainAxisAlignment: .end,
+                mainAxisSize: .max,
                 spacing: 8.0.r,
                 children: [
                   OutlinedButton(
@@ -130,11 +123,7 @@ class _RejectDialogState extends State<RejectDialog> {
                     onPressed: () => Navigator.pop(context),
                     child: Text(
                       'Cancel',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12.0.sp,
-                        color: widget.colorScheme.onSurface,
-                      ),
+                      style: buttonTextStyle(widget.colorScheme.onSurface),
                     ),
                   ),
                   OutlinedButton(
@@ -157,11 +146,7 @@ class _RejectDialogState extends State<RejectDialog> {
                     },
                     child: Text(
                       'Confirm',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12.0.sp,
-                        color: widget.colorScheme.onPrimary,
-                      ),
+                      style: buttonTextStyle(widget.colorScheme.onPrimary),
                     ),
                   ),
                 ],

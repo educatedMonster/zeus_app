@@ -29,6 +29,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Row(
         crossAxisAlignment: .center,
+        mainAxisAlignment: .spaceEvenly,
         children: [
           Text(title, style: appBarTextStyle(colorScheme)),
           const Spacer(),
@@ -42,7 +43,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                 icon: Icon(Icons.notifications_none, size: 16.0.r),
                 color: colorScheme.onSurface,
-                onPressed: () {},
+                onPressed: () async {},
               ),
             ],
           ),
@@ -55,10 +56,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: CircleAvatar(
             radius: 16.0.r,
             backgroundColor: const Color(0xFFB0B8C1),
-            child: Text(
-              'A',
-              style: TextStyle(color: Colors.white, fontSize: 14.sp),
-            ),
+            child: Text('A', style: buttonTextStyle(colorScheme.onPrimary)),
           ),
         ),
       ],

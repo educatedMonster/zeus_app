@@ -442,18 +442,67 @@ class ViewReportRoomRouteArgs {
 
 /// generated route for
 /// [_i14.ViewReportTimekeepingPage]
-class ViewReportTimekeepingRoute extends _i16.PageRouteInfo<void> {
-  const ViewReportTimekeepingRoute({List<_i16.PageRouteInfo>? children})
-    : super(ViewReportTimekeepingRoute.name, initialChildren: children);
+class ViewReportTimekeepingRoute
+    extends _i16.PageRouteInfo<ViewReportTimekeepingRouteArgs> {
+  ViewReportTimekeepingRoute({
+    _i17.Key? key,
+    required String property,
+    required String module,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
+         ViewReportTimekeepingRoute.name,
+         args: ViewReportTimekeepingRouteArgs(
+           key: key,
+           property: property,
+           module: module,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ViewReportTimekeepingRoute';
 
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i14.ViewReportTimekeepingPage();
+      final args = data.argsAs<ViewReportTimekeepingRouteArgs>();
+      return _i14.ViewReportTimekeepingPage(
+        key: args.key,
+        property: args.property,
+        module: args.module,
+      );
     },
   );
+}
+
+class ViewReportTimekeepingRouteArgs {
+  const ViewReportTimekeepingRouteArgs({
+    this.key,
+    required this.property,
+    required this.module,
+  });
+
+  final _i17.Key? key;
+
+  final String property;
+
+  final String module;
+
+  @override
+  String toString() {
+    return 'ViewReportTimekeepingRouteArgs{key: $key, property: $property, module: $module}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ViewReportTimekeepingRouteArgs) return false;
+    return key == other.key &&
+        property == other.property &&
+        module == other.module;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ property.hashCode ^ module.hashCode;
 }
 
 /// generated route for

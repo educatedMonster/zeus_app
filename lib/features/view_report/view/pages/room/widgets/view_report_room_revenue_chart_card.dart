@@ -122,7 +122,7 @@ class ViewReportRoomRevenueChartCard extends StatelessWidget {
       crossAxisAlignment: .start,
       children: [
         Text(title, style: defaultCaptionTextStyle(colorScheme)),
-        Text(value, style: largeTitleTextStyle(colorScheme.onSurface)),
+        Text(value, style: xlargeTitleTextStyle(colorScheme.onSurface)),
       ],
     );
   }

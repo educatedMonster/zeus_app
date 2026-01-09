@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/app_text_styles.dart';
+
 class PurchaseDialogInfoRow extends StatelessWidget {
   final ColorScheme colorScheme;
   final IconData icon;
@@ -24,7 +26,7 @@ class PurchaseDialogInfoRow extends StatelessWidget {
         mainAxisAlignment: .center,
         spacing: 8.0.r,
         children: [
-          Icon(icon, color: colorScheme.onTertiary, size: 22.0.r),
+          Icon(icon, color: colorScheme.onTertiary, size: 16.0.r),
           Expanded(
             child: Column(
               crossAxisAlignment: .start,
@@ -33,17 +35,11 @@ class PurchaseDialogInfoRow extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
-                    color: colorScheme.onTertiary,
-                    fontSize: 12.0.sp,
-                  ),
+                  style: defaultCaptionTextStyle(colorScheme),
                 ),
                 Text(
                   value,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0.sp,
-                  ),
+                  style: mediumTitleTextStyle(colorScheme),
                 ),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeus_app/core/constants/app_strings.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
@@ -41,6 +42,13 @@ class _ViewReportAccountingPageState extends State<ViewReportAccountingPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
+    super.didChangeDependencies();
+  }
+
+  @override
   void initState() {
     _viewReportViewModel = context.readViewReportVM();
     _datePickerViewModel = context.readDatePickerVM();
@@ -56,12 +64,13 @@ class _ViewReportAccountingPageState extends State<ViewReportAccountingPage> {
     _viewReportViewModel = context.watchViewReportVM();
     _datePickerViewModel = context.watchDatePickerVM();
 
-    _counter = _viewReportViewModel.counter;
+    _counter = context.select<ViewReportViewModel, int>((vm) => vm.counter);
 
     return Scaffold(
       backgroundColor: _colorScheme.surface,
       appBar: ViewReportAccountingAppBar(title: Constants.titleViewReport),
       body: ViewReportAccountingBody(
+        colorScheme: _colorScheme,
         height: _size.height,
         property: widget.property,
         module: widget.module,
@@ -71,12 +80,5 @@ class _ViewReportAccountingPageState extends State<ViewReportAccountingPage> {
         onPressed: _incrementCounter,
       ),
     );
-  }
-
-  @override
-  void didChangeDependencies() {
-    _colorScheme = context.contextColorScheme();
-    _size = context.contextSize();
-    super.didChangeDependencies();
   }
 }

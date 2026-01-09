@@ -75,7 +75,7 @@ class DashboardRevenueByPropertyChart extends StatelessWidget {
                           ),
                           Text(
                             'No data available',
-                            style: noDataTextStyle(colorScheme),
+                            style: largeTitleTextStyle(colorScheme),
                           ),
                         ],
                       ),

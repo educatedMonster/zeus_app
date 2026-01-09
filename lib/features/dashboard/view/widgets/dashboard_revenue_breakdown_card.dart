@@ -28,14 +28,14 @@ class DashboardRevenueBreakdownCard extends StatelessWidget {
     return Container(
       width: width,
       margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0).r,
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-            blurRadius: 10,
+            blurRadius: 10.0.r,
             offset: const Offset(0, 2),
           ),
         ],

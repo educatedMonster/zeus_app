@@ -139,15 +139,11 @@ class ViewReportPosBody extends StatelessWidget {
           /// REPORT SUMMARY GRID CARD
           ViewReportPosSummaryGridCard(list: list1),
 
-          SizedBox(height: 0.50.r),
-
           /// REPORT SALES CARD
           ViewReportPosSalesCard(type: 'Collections', isPositive: false),
 
           /// REPORT SUMMARY GRID CARD
           ViewReportPosSummaryGridCard(list: list2),
-
-          SizedBox(height: 0.50.r),
 
           /// REPORT SALES CARD
           ViewReportPosBestSellerCard(),

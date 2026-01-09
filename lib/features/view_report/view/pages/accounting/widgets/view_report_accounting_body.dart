@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zeus_app/core/utils/extensions.dart';
 import 'package:zeus_app/features/view_report/data/sources/remote/model/cash_in_out_bar_data_model.dart';
 
 import '../../../../../../shared/widgets/breadcrumbs_property.dart';
 import '../../../../../../shared/widgets/date_picker.dart';
+import '../../../../../../shared/widgets/status_card.dart';
 import '../../../../../dashboard/data/sources/remote/model/pie_chart_section_model.dart';
 import '../../../../data/sources/remote/model/finance_bar_data_model.dart';
-import 'view_report_accounting_card.dart';
 import 'view_report_accounting_cash_in_out_chart.dart';
 import 'view_report_accounting_expense_type_card.dart';
 import 'view_report_accounting_finance_chart_card.dart';
@@ -15,6 +14,7 @@ import 'view_report_accounting_income_expense_chart.dart';
 import 'view_report_accounting_sales_card.dart';
 
 class ViewReportAccountingBody extends StatelessWidget {
+  final ColorScheme colorScheme;
   final double height;
   final String property;
   final String module;
@@ -22,6 +22,7 @@ class ViewReportAccountingBody extends StatelessWidget {
 
   const ViewReportAccountingBody({
     super.key,
+    required this.colorScheme,
     required this.height,
     required this.property,
     required this.module,
@@ -30,17 +31,15 @@ class ViewReportAccountingBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = context.contextHeight();
-
     /// DUMMY
     List<FinanceBarDataModel> list1 = [
       FinanceBarDataModel(label: '1', order: 0, a: 5, b: 2),
       FinanceBarDataModel(label: '2', order: 1, a: 16, b: 12),
       FinanceBarDataModel(label: '3', order: 2, a: 18, b: 5),
       FinanceBarDataModel(label: '4', order: 4, a: 17, b: 6),
-      FinanceBarDataModel(label: '5', order: 5, a: 19, b: 1.5),
-      FinanceBarDataModel(label: '6', order: 6, a: 10, b: 1.5),
-      FinanceBarDataModel(label: '7', order: 7, a: 30, b: 1.5),
+      FinanceBarDataModel(label: '5', order: 5, a: 19, b: 15),
+      FinanceBarDataModel(label: '6', order: 6, a: 10, b: 15),
+      FinanceBarDataModel(label: '7', order: 7, a: 30, b: 15),
     ];
 
     /// DUMMY
@@ -86,22 +85,41 @@ class ViewReportAccountingBody extends StatelessWidget {
             /// BREADCRUMBS
             BreadcrumbsProperty(property: property, moduleName: module),
 
-            /// REPORT SALES CARD
-            ViewReportAccountingSalesCard(),
-
-            ViewReportAccountingSalesCard(),
-
-            ViewReportAccountingSalesCard(isNegativeStatus: true),
-
-            ViewReportAccountingSalesCard(),
-
-            Row(
+            Column(
+              spacing: 6.0.r,
               children: [
-                Expanded(child: ViewReportAccountingCard()),
-                Expanded(child: ViewReportAccountingCard()),
+                /// REPORT SALES CARD
+                ViewReportAccountingSalesCard(),
+                ViewReportAccountingSalesCard(),
+                ViewReportAccountingSalesCard(isPositive: false),
+                ViewReportAccountingSalesCard(),
               ],
             ),
 
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0).r,
+              child: Row(
+                spacing: 8.0.r,
+                children: [
+                  Expanded(
+                    child: StatusCard(
+                      statusColor: colorScheme.onSurface,
+                      label: 'Current Ratio',
+                      value: '1.8',
+                    ),
+                  ),
+                  Expanded(
+                    child: StatusCard(
+                      statusColor: colorScheme.onSurface,
+                      label: 'Debt > Equity Ratio',
+                      value: '0.6',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            /// ACTUAL VS BUDGETED VS FORECASTED
             ViewReportAccountingFinanceChartCard(),
 
             /// EXPENSE TYPE / ACCOUNT CHART

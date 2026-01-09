@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/shared/widgets/build_legend_dot.dart';
 
+import '../../../../../../core/constants/app_fonts.dart';
 import '../../../../../../core/utils/extensions.dart';
 import '../../../../data/sources/remote/model/progress_ chart_model.dart';
 
@@ -35,7 +36,7 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         crossAxisSpacing: 8.0.r,
         mainAxisSpacing: 8.0.r,
-        childAspectRatio: 16/7,
+        childAspectRatio: 16 / 7,
         children: List.generate(list.length, (index) {
           final item = list[index];
           return Container(
@@ -47,7 +48,6 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: .start,
               mainAxisAlignment: .spaceAround,
-              // spacing: 2.0.r,
               children: [
                 Expanded(
                   child: BuildLegendDot(
@@ -62,6 +62,7 @@ class ViewReportPosSummaryGridCard extends StatelessWidget {
                       fontSize: 16.0.sp,
                       fontWeight: FontWeight.normal,
                       color: item.textColor,
+                      fontFamily: Fonts.fontPoppins,
                     ),
                     maxLines: 1,
                     overflow: .ellipsis,

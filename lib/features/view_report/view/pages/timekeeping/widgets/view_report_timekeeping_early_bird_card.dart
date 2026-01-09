@@ -8,27 +8,16 @@ import '../../../../../../shared/widgets/build_header_chart.dart';
 import '../../../../viewmodel/view_report_view_model.dart';
 
 class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
-  // final ScrollController parentController;
-
-  const ViewReportTimekeepingEarlyBirdCard({
-    super.key,
-    // required this.parentController,
-  });
+  const ViewReportTimekeepingEarlyBirdCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final ScrollController childController = ScrollController();
-    final parentController = context
-        .select<ViewReportViewModel, ScrollController>(
-          (vm) => vm.parentController,
-    );
-    final childController = context
-        .select<ViewReportViewModel, ScrollController>(
-          (vm) => vm.childController,
-    );
-
     final ColorScheme colorScheme = context.contextColorScheme();
     final double width = context.contextWidth();
+    final (parentController, childController) = context
+        .select<ViewReportViewModel, (ScrollController, ScrollController)>(
+          (vm) => (vm.parentController, vm.childController),
+        );
 
     final data = [
       {"name": "Juan Dela Cruz", "days": 2, "mins": 137},
@@ -64,14 +53,14 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
       child: Container(
         width: width,
         margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-        padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0).r,
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainer,
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(16.0).r,
           boxShadow: [
             BoxShadow(
               color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-              blurRadius: 10,
+              blurRadius: 10.0.r,
               offset: const Offset(0, 2),
             ),
           ],
@@ -82,7 +71,6 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
 
             return Column(
               crossAxisAlignment: .start,
-              spacing: 16.0.r,
               children: [
                 /// Title and download icon
                 BuildHeaderChart(
@@ -96,7 +84,8 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
                 ),
 
                 /// Data Table
-                SizedBox(
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 4.0).r,
                   height: chartSize,
                   width: width,
                   child: SingleChildScrollView(
@@ -108,17 +97,10 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
                       child: DataTableTheme(
                         data: DataTableThemeData(
                           headingRowColor: WidgetStateProperty.all(
-                            colorScheme.onSurface.withValues(alpha: 0.10),
+                            colorScheme.surface,
                           ),
-                          headingTextStyle: TextStyle(
-                            fontSize: 12.0.sp,
-                            fontWeight: FontWeight.w500,
-                            color: colorScheme.onSurface,
-                          ),
-                          dataTextStyle: TextStyle(
-                            fontSize: 13.0.sp,
-                            color: colorScheme.onSurface,
-                          ),
+                          headingTextStyle: defaultTitleTextStyle(colorScheme),
+                          dataTextStyle: dataCellTextStyle(colorScheme),
                           // columnSpacing: 16.0.r,
                           // headingRowHeight: 40.0.r,
                           // dataRowMaxHeight: 48.0.r,
@@ -130,49 +112,42 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
                           showCheckboxColumn: false,
                           dividerThickness: 0.10.r,
                           border: TableBorder.symmetric(
-                            borderRadius: BorderRadius.circular(16.r),
+                            borderRadius: BorderRadius.circular(16.0).r,
                           ),
                           columns: [
                             DataColumn(
                               headingRowAlignment: MainAxisAlignment.start,
-                              label: Text(
-                                'Name',
-                                style: TextStyle(color: colorScheme.onSurface),
-                              ),
-                            ),
-                            DataColumn(
-                              headingRowAlignment: MainAxisAlignment.center,
+                              onSort: (int columnIndex, bool ascending) {
+                                debugPrint('Sort column $columnIndex');
+                              },
                               label: Row(
                                 children: [
-                                  Text(
-                                    'Days',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 16.0.r,
-                                    color: colorScheme.onSurface,
-                                  ),
+                                  Text('Name'),
+                                  sortArrowButton(colorScheme),
                                 ],
                               ),
                             ),
                             DataColumn(
                               headingRowAlignment: MainAxisAlignment.center,
+                              onSort: (int columnIndex, bool ascending) {
+                                debugPrint('Sort column $columnIndex');
+                              },
                               label: Row(
                                 children: [
-                                  Text(
-                                    'Total Mins',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 16.0.r,
-                                    color: colorScheme.onSurface,
-                                  ),
+                                  Text('Days'),
+                                  sortArrowButton(colorScheme),
+                                ],
+                              ),
+                            ),
+                            DataColumn(
+                              headingRowAlignment: MainAxisAlignment.center,
+                              onSort: (int columnIndex, bool ascending) {
+                                debugPrint('Sort column $columnIndex');
+                              },
+                              label: Row(
+                                children: [
+                                  Text('Total Mins'),
+                                  sortArrowButton(colorScheme),
                                 ],
                               ),
                             ),
@@ -194,38 +169,17 @@ class ViewReportTimekeepingEarlyBirdCard extends StatelessWidget {
                                 }
                                 return isEven
                                     ? colorScheme.surfaceContainer
-                                    : colorScheme.onSurface.withValues(
+                                    : colorScheme.surfaceContainer.withValues(
                                         alpha: 0.10,
                                       );
                               }),
                               cells: [
+                                DataCell(Text(item['name'].toString())),
                                 DataCell(
-                                  Text(
-                                    item['name'].toString(),
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
+                                  Center(child: Text(item['days'].toString())),
                                 ),
                                 DataCell(
-                                  Center(
-                                    child: Text(
-                                      item['days'].toString(),
-                                      style: TextStyle(
-                                        color: colorScheme.onSurface,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                DataCell(
-                                  Center(
-                                    child: Text(
-                                      item['mins'].toString(),
-                                      style: TextStyle(
-                                        color: colorScheme.onSurface,
-                                      ),
-                                    ),
-                                  ),
+                                  Center(child: Text(item['mins'].toString())),
                                 ),
                               ],
                             );

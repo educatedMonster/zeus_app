@@ -40,6 +40,13 @@ class _ViewReportPosPageState extends State<ViewReportPosPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    _colorScheme = context.contextColorScheme();
+    _size = context.contextSize();
+    super.didChangeDependencies();
+  }
+
+  @override
   void initState() {
     _viewReportViewModel = context.readViewReportVM();
     _datePickerViewModel = context.readDatePickerVM();
@@ -71,9 +78,7 @@ class _ViewReportPosPageState extends State<ViewReportPosPage> {
   }
 
   @override
-  void didChangeDependencies() {
-    _colorScheme = context.contextColorScheme();
-    _size = context.contextSize();
-    super.didChangeDependencies();
+  void dispose() {
+    super.dispose();
   }
 }

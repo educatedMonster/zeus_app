@@ -48,7 +48,7 @@ class ViewReportPosSalesCard extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.storage,
-                    color: colorScheme.surface,
+                    color: colorScheme.onPrimary,
                     size: 16.0.r,
                   ),
                   Text(
@@ -75,7 +75,7 @@ class ViewReportPosSalesCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 6.0,
-                  horizontal: 8.0,
+                  horizontal: 6.0,
                 ).r,
                 decoration: BoxDecoration(
                   color: isPositive ? Colors.green : Colors.red,
@@ -87,7 +87,7 @@ class ViewReportPosSalesCard extends StatelessWidget {
                   children: [
                     Icon(
                       isPositive ? Icons.trending_up : Icons.trending_down,
-                      color: colorScheme.surface,
+                      color: colorScheme.onPrimary,
                       size: 16.0.r,
                     ),
                     Text(

@@ -32,9 +32,9 @@ class ApprovalViewModel extends ChangeNotifier {
 
   int get counter => _counter;
 
-  String _calendarView = 'High';
+  String _segmentedButton = 'High';
 
-  String get calendarView => _calendarView;
+  String get segmentedButton => _segmentedButton;
 
   void incrementCounter() async {
     _counter++;
@@ -46,8 +46,8 @@ class ApprovalViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectedCalendarView(String selected) async {
-    _calendarView = selected;
+  void selectedSegmentedButton(String selected) async {
+    _segmentedButton = selected;
     notifyListeners();
   }
 }

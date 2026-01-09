@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
+import '../../core/constants/app_text_styles.dart';
 import 'notes_dialog.dart';
 
 void showHistoryDialog(BuildContext context, ColorScheme colorScheme) {
@@ -122,7 +123,9 @@ void showHistoryDialog(BuildContext context, ColorScheme colorScheme) {
       double screenWidth = bc.contextWidth();
 
       return Dialog(
-        backgroundColor: colorScheme.tertiary,
+        backgroundColor: colorScheme.surfaceContainer,
+        elevation: 0.1,
+        shadowColor: colorScheme.onSurface,
         insetPadding: const EdgeInsets.symmetric(
           horizontal: 8.0,
           vertical: 32.0,
@@ -149,11 +152,7 @@ void showHistoryDialog(BuildContext context, ColorScheme colorScheme) {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'History of Approval',
-                    style: TextStyle(
-                      fontSize: 18.0.sp,
-                      fontWeight: FontWeight.w700,
-                      color: colorScheme.onSurface,
-                    ),
+                    style: xlargeTitleTextStyle(colorScheme.onSurface),
                   ),
                 ),
 
@@ -167,23 +166,18 @@ void showHistoryDialog(BuildContext context, ColorScheme colorScheme) {
                           scrollDirection: .horizontal,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: colorScheme.tertiary,
+                              color: colorScheme.surfaceContainer,
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: DataTableTheme(
                               data: DataTableThemeData(
                                 headingRowColor: WidgetStateProperty.all(
-                                  colorScheme.secondary,
+                                  colorScheme.surface,
                                 ),
-                                headingTextStyle: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 10.sp,
-                                  color: colorScheme.onSecondary,
+                                headingTextStyle: defaultTitleTextStyle(
+                                  colorScheme,
                                 ),
-                                dataTextStyle: TextStyle(
-                                  fontSize: 10.0.sp,
-                                  color: colorScheme.onSecondary,
-                                ),
+                                dataTextStyle: dataCellTextStyle(colorScheme),
                                 columnSpacing: 8.0.r,
                               ),
                               child: DataTable(
@@ -224,7 +218,28 @@ void showHistoryDialog(BuildContext context, ColorScheme colorScheme) {
                                       item['action'] == 'Rejected';
                                   final isReturned =
                                       item['action'] == 'Returned';
+
+                                  int index = historyData.indexWhere(
+                                    (d) => d['name'] == item['name'],
+                                  );
+                                  final isEven = index.isEven;
+
                                   return DataRow(
+                                    // alternate background color
+                                    color:
+                                        WidgetStateProperty.resolveWith<Color?>(
+                                          (Set<WidgetState> states) {
+                                            if (states.contains(
+                                              WidgetState.selected,
+                                            )) {
+                                              return colorScheme.primary;
+                                            }
+                                            return isEven
+                                                ? colorScheme.surfaceContainer
+                                                : colorScheme.surfaceContainer
+                                                      .withValues(alpha: 0.10);
+                                          },
+                                        ),
                                     cells: [
                                       DataCell(Text(item['name']!)),
                                       DataCell(
@@ -325,11 +340,7 @@ void showHistoryDialog(BuildContext context, ColorScheme colorScheme) {
                     onPressed: () => bc.maybePop(),
                     child: Text(
                       'Close',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12.sp,
-                        color: colorScheme.onSurface,
-                      ),
+                      style: buttonTextStyle(colorScheme.onSurface),
                     ),
                   ),
                 ),

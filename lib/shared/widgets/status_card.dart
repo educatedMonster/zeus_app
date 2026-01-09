@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
-class ViewReportTimekeeping2Card extends StatelessWidget {
+import '../../core/constants/app_text_styles.dart';
+
+class StatusCard extends StatelessWidget {
   final Color statusColor;
   final String label;
+  final String value;
 
-  const ViewReportTimekeeping2Card({
+  const StatusCard({
     super.key,
     required this.statusColor,
     required this.label,
+    required this.value,
   });
 
   @override
@@ -19,8 +23,7 @@ class ViewReportTimekeeping2Card extends StatelessWidget {
 
     return Container(
       width: width,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0).r,
-      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 16.0.r),
+      padding: EdgeInsets.symmetric(horizontal: 16.0.r, vertical: 12.0.r),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
@@ -34,25 +37,11 @@ class ViewReportTimekeeping2Card extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: .start,
-        mainAxisAlignment: .spaceAround,
-        spacing: 8.0.r,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        spacing: 4.0.r,
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              color: colorScheme.onSurface,
-              fontSize: 14.0.sp,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-          Text(
-            '15',
-            style: TextStyle(
-              color: statusColor,
-              fontSize: 16.0.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text(label, style: defaultTitleTextStyle(colorScheme)),
+          Text(value, style: statusTextStyle(statusColor)),
         ],
       ),
     );

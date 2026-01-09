@@ -121,13 +121,10 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                       child: DataTableTheme(
                         data: DataTableThemeData(
                           headingRowColor: WidgetStateProperty.all(
-                            colorScheme.onSurface.withValues(alpha: 0.020),
+                            colorScheme.surface,
                           ),
                           headingTextStyle: defaultTitleTextStyle(colorScheme),
-                          dataTextStyle: TextStyle(
-                            fontSize: 13.0.sp,
-                            color: colorScheme.onSurface,
-                          ),
+                          dataTextStyle: dataCellTextStyle(colorScheme),
                           // columnSpacing: 16.0.r,
                           // headingRowHeight: 40.0.r,
                           // dataRowMaxHeight: 48.0.r,
@@ -137,37 +134,34 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                         ),
                         child: DataTable(
                           showCheckboxColumn: false,
-                          showBottomBorder: true,
-                          dividerThickness: 0.0.r,
+                          dividerThickness: 0.10.r,
+                          border: TableBorder.symmetric(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
                           columns: [
                             DataColumn(
                               label: Text(
                                 'Name',
-                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Banquet',
-                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Rooms',
-                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Others',
-                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                             DataColumn(
                               label: Text(
                                 'Total',
-                                style: defaultTitleTextStyle(colorScheme),
                               ),
                             ),
                           ],
@@ -196,31 +190,26 @@ class ViewReportBanquetTopAccountOwnerDataTableCard extends StatelessWidget {
                                 DataCell(
                                   Text(
                                     item['name'].toString(),
-                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['banquet'].toString(),
-                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['rooms'].toString(),
-                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['others'].toString(),
-                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                                 DataCell(
                                   Text(
                                     item['total'].toString(),
-                                    style: dataCellTextStyle(colorScheme),
                                   ),
                                 ),
                               ],

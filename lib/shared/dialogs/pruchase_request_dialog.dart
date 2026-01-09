@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/app_text_styles.dart';
 import '../../core/utils/extensions.dart';
 import '../widgets/purchase_dialog_action_buttons.dart';
 import '../widgets/purchase_dialog_header.dart';
@@ -54,14 +55,15 @@ class PurchaseRequestDialog extends StatelessWidget {
                       ),
 
                       Column(
-                        spacing: 20.0.r,
+                        spacing: 16.0.r,
                         children: [
                           // Header
                           PurchaseDialogHeader(
                             colorScheme: colorScheme,
                             title: 'Purchase Request',
                             date: 'Created Date : Aug 17, 2025',
-                            onHistoryTap: () => showHistoryDialog(bc, colorScheme),
+                            onHistoryTap: () =>
+                                showHistoryDialog(bc, colorScheme),
                           ),
 
                           // Transaction No
@@ -99,10 +101,11 @@ class PurchaseRequestDialog extends StatelessWidget {
                                 angle: 45 * 3 / 180,
                                 // convert degrees to radians
                                 child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async {},
                                   icon: Icon(
                                     Icons.attach_file_rounded,
-                                    size: 22.0.r,
+                                    size: 16.0.r,
+                                    color: colorScheme.onTertiary,
                                   ),
                                 ),
                               ),
@@ -112,22 +115,12 @@ class PurchaseRequestDialog extends StatelessWidget {
                                 children: [
                                   Text(
                                     'quote.pdf',
-                                    style: TextStyle(
-                                      fontSize: 13.0.sp,
-                                      color: Colors.indigo,
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: buttonTextStyle(colorScheme.primary),
                                   ),
 
                                   Text(
                                     'invoice.jpg',
-                                    style: TextStyle(
-                                      fontSize: 13.0.sp,
-                                      color: Colors.indigo,
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: buttonTextStyle(colorScheme.primary),
                                   ),
                                 ],
                               ),

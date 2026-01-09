@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../shared/dialogs/pruchase_request_dialog.dart';
 
@@ -101,8 +102,7 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (context) =>
-        const PurchaseRequestDialog(),
+        builder: (context) => const PurchaseRequestDialog(),
       );
     }
 
@@ -129,14 +129,14 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
           horizontal: 8.0,
         ).copyWith(bottom: 8.0).r,
-        padding: EdgeInsets.symmetric(vertical: 24.0.r),
+        padding: const EdgeInsets.symmetric(vertical: 24.0).r,
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(16.0.r),
           boxShadow: [
             BoxShadow(
               color: colorScheme.surfaceContainer.withValues(alpha: 0.1),
-              blurRadius: 10,
+              blurRadius: 10.0.r,
               offset: const Offset(0, 2),
             ),
           ],
@@ -146,7 +146,8 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
             final chartSize = constraints.maxWidth * 0.80;
 
             return Column(
-              crossAxisAlignment: .start,
+              crossAxisAlignment: .center,
+              mainAxisAlignment: .spaceBetween,
               spacing: 4.0.r,
               children: [
                 /// Title and download icon
@@ -156,7 +157,7 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                   children: [
                     /// Title and download icon
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0.r),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0).r,
                       child: Row(
                         spacing: 8.0.r,
                         children: [
@@ -168,11 +169,7 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
 
                           Text(
                             'Purchase Requests',
-                            style: TextStyle(
-                              color: colorScheme.onSurface,
-                              fontSize: 16.0.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: largeTitleTextStyle(colorScheme),
                             maxLines: 1,
                             overflow: .ellipsis,
                           ),
@@ -182,7 +179,7 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
 
                     /// Table
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 4.0.r),
+                      margin: const EdgeInsets.symmetric(vertical: 4.0).r,
                       height: chartSize,
                       width: width,
                       child: SingleChildScrollView(
@@ -194,17 +191,12 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                           child: DataTableTheme(
                             data: DataTableThemeData(
                               headingRowColor: WidgetStateProperty.all(
-                                colorScheme.onSurface.withValues(alpha: 0.10),
+                                colorScheme.surface,
                               ),
-                              headingTextStyle: TextStyle(
-                                fontSize: 12.0.sp,
-                                fontWeight: FontWeight.w500,
-                                color: colorScheme.onSurface,
+                              headingTextStyle: defaultTitleTextStyle(
+                                colorScheme,
                               ),
-                              dataTextStyle: TextStyle(
-                                fontSize: 13.0.sp,
-                                color: colorScheme.onSurface,
-                              ),
+                              dataTextStyle: dataCellTextStyle(colorScheme),
                               // columnSpacing: 16.0.r,
                               // headingRowHeight: 40.0.r,
                               // dataRowMaxHeight: 48.0.r,
@@ -216,60 +208,25 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                               showCheckboxColumn: false,
                               dividerThickness: 0.10.r,
                               border: TableBorder.symmetric(
-                                borderRadius: BorderRadius.circular(16.r),
+                                borderRadius: BorderRadius.circular(16.0).r,
                               ),
                               columns: [
-                                DataColumn(
-                                  label: Text(
-                                    'Trans No.',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Property',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Date',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Requester',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurface,
-                                    ),
-                                  ),
-                                ),
+                                DataColumn(label: Text('Trans No.')),
+                                DataColumn(label: Text('Property')),
+                                DataColumn(label: Text('Date')),
+                                DataColumn(label: Text('Requester')),
                                 DataColumn(
                                   label: Align(
                                     alignment: Alignment.centerRight,
-                                    child: Text(
-                                      'Total',
-                                      style: TextStyle(
-                                        color: colorScheme.onSurface,
-                                      ),
-                                    ),
+                                    child: Text('Total'),
                                   ),
                                 ),
                               ],
-                              rows: data.map((i) {
+                              rows: data.map((item) {
                                 int index = data.indexWhere(
-                                  (d) => d['name'] == i['name'],
+                                  (d) => d['name'] == item['name'],
                                 );
-                                final item = data[index];
-                                // final isEven = index.isEven;
-                                final isEven = data.indexOf(i).isEven;
+                                final isEven = index.isEven;
 
                                 return DataRow(
                                   // alternate background color
@@ -284,9 +241,8 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                                         }
                                         return isEven
                                             ? colorScheme.surfaceContainer
-                                            : colorScheme.onSurface.withValues(
-                                                alpha: 0.10,
-                                              );
+                                            : colorScheme.surfaceContainer
+                                                  .withValues(alpha: 0.10);
                                       }),
                                   cells: [
                                     DataCell(
@@ -295,7 +251,7 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                                         spacing: 4.0.r,
                                         children: [
                                           Opacity(
-                                            opacity: data.indexOf(i).isEven
+                                            opacity: data.indexOf(item).isEven
                                                 ? 0.0
                                                 : 1.0,
                                             // hides widget
@@ -311,48 +267,17 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Text(
-                                            item['trans_no']!,
-                                            style: TextStyle(
-                                              color: colorScheme.onSurface,
-                                            ),
-                                          ),
+                                          Text(item['trans_no']!),
                                         ],
                                       ),
                                     ),
-                                    DataCell(
-                                      Text(
-                                        item['property']!,
-                                        style: TextStyle(
-                                          color: colorScheme.onSurface,
-                                        ),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      Text(
-                                        item['date']!,
-                                        style: TextStyle(
-                                          color: colorScheme.onSurface,
-                                        ),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      Text(
-                                        item['requester']!,
-                                        style: TextStyle(
-                                          color: colorScheme.onSurface,
-                                        ),
-                                      ),
-                                    ),
+                                    DataCell(Text(item['property']!)),
+                                    DataCell(Text(item['date']!)),
+                                    DataCell(Text(item['requester']!)),
                                     DataCell(
                                       Align(
                                         alignment: Alignment.centerRight,
-                                        child: Text(
-                                          item['total']!,
-                                          style: TextStyle(
-                                            color: colorScheme.onSurface,
-                                          ),
-                                        ),
+                                        child: Text(item['total']!),
                                       ),
                                     ),
                                   ],
@@ -386,17 +311,9 @@ class ApprovalPurchaseRequestDataTableCard extends StatelessWidget {
                       children: [
                         Text(
                           'Load More',
-                          style: TextStyle(
-                            fontSize: 12.0.sp,
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onSurface,
-                          ),
+                          style: buttonTextStyle(colorScheme.onSurface),
                         ),
-                        Icon(
-                          Icons.chevron_right,
-                          size: 24.0.r,
-                          color: colorScheme.onSurface,
-                        ),
+                        moreButton(colorScheme.onSurface),
                       ],
                     ),
                   ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:zeus_app/core/constants/app_text_styles.dart';
 
 import '../../../../core/utils/extensions.dart';
+import '../../viewmodel/approval_view_model.dart';
 
 class ApprovalHighLowButton extends StatelessWidget {
   final List<String> options;
@@ -12,7 +15,10 @@ class ApprovalHighLowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = context.contextColorScheme();
     double width = context.contextWidth();
-    String calendarView = context.watchApprovalVM().calendarView;
+
+    final segmentedButton = context.select<ApprovalViewModel, String>(
+      (vm) => vm.segmentedButton,
+    );
 
     return SizedBox(
       width: width,
@@ -23,18 +29,15 @@ class ApprovalHighLowButton extends StatelessWidget {
               (tab) => ButtonSegment<String>(
                 value: tab,
                 // icon: Icon(Icons.calendar_view_day),
-                label: Text(
-                  tab,
-                  style: TextStyle(color: colorScheme.onSurface),
-                ),
+                label: Text(tab, style: mediumTitleTextStyle(colorScheme)),
                 tooltip: tab,
                 enabled: true,
               ),
             )
             .toList(),
-        selected: <String>{calendarView},
+        selected: <String>{segmentedButton},
         onSelectionChanged: (Set<String> newSelection) {
-          context.readApprovalVM().selectedCalendarView(newSelection.first);
+          context.readApprovalVM().selectedSegmentedButton(newSelection.first);
         },
       ),
     );
