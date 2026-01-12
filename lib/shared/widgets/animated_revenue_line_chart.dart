@@ -1,8 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:zeus_app/core/utils/extensions.dart';
 
+import '../../core/constants/app_text_styles.dart';
 import '../components/get_animated_spots.dart';
 
 class AnimatedRevenueLineChart extends StatefulWidget {
@@ -22,7 +24,8 @@ class AnimatedRevenueLineChart extends StatefulWidget {
   });
 
   @override
-  State<AnimatedRevenueLineChart> createState() => _AnimatedRevenueLineChartState();
+  State<AnimatedRevenueLineChart> createState() =>
+      _AnimatedRevenueLineChartState();
 }
 
 class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
@@ -69,9 +72,12 @@ class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
       child: SingleChildScrollView(
         scrollDirection: .horizontal,
         physics: ScrollPhysics(),
-        child: SizedBox(
+        child: Container(
           height: widget.containerHeight,
           // width: widget.containerWidth,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 2.0,
+          ).copyWith(top: 24.0, bottom: 8.0).r,
           width: context.contextWidth(),
           child: AnimatedBuilder(
             animation: _lineAnimation,
@@ -85,19 +91,11 @@ class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: 500000,
-                        getTitlesWidget: (value, _) {
-                          switch (value.toInt()) {
-                            case 0:
-                              return const Text('0');
-                            case 500000:
-                              return const Text('0.5M');
-                            case 1000000:
-                              return const Text('1M');
-                            case 1500000:
-                              return const Text('1.5M');
-                            default:
-                              return const SizedBox.shrink();
-                          }
+                        getTitlesWidget: (double value, TitleMeta meta) {
+                          return Text(
+                            meta.formattedValue,
+                            style: axisTextStyle(context.contextColorScheme()),
+                          );
                         },
                         reservedSize: widget.containerWidth * 0.20,
                       ),
@@ -105,34 +103,19 @@ class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
-                        getTitlesWidget: (value, _) {
-                          switch (value) {
-                            case 0:
-                              return const Text('Apr');
-                            case 1:
-                              return const Text('May');
-                            case 2:
-                              return const Text('Jun');
-                            case 3:
-                              return const Text('Jul');
-                            case 4:
-                              return const Text('Aug');
-                            default:
-                              return const SizedBox.shrink();
-                          }
+                        getTitlesWidget: (value, meta) {
+                          const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug'];
 
-                          /// BACKUP
-                          // const months = [
-                          //   'Apr',
-                          //   'May',
-                          //   'Jun',
-                          //   'Jul',
-                          //   'Aug',
-                          // ];
-                          // if (value >= 0 && value < months.length) {
-                          //   return Text(months[value.toInt()]);
-                          // }
-                          // return const SizedBox();
+                          if (value.toInt() >= 0 &&
+                              value.toInt() < months.length) {
+                            return Text(
+                              months[value.toInt()],
+                              style: axisTextStyle(
+                                context.contextColorScheme(),
+                              ),
+                            );
+                          }
+                          return const SizedBox();
                         },
                       ),
                     ),
@@ -153,6 +136,8 @@ class _AnimatedRevenueLineChartState extends State<AnimatedRevenueLineChart>
                     }
                   }).toList(),
                 ),
+                duration: Duration(milliseconds: 800), // <--- Add this
+                curve: Curves.easeInOut, // <--- Optional
               );
             },
           ),

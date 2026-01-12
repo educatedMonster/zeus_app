@@ -76,7 +76,9 @@ class _AnimatedFinanceLineChartState extends State<AnimatedFinanceLineChart>
         child: Container(
           height: widget.containerHeight,
           // width: widget.containerWidth,
-          padding: const EdgeInsets.symmetric(horizontal: 2.0).copyWith(top: 24.0,  bottom: 8.0).r,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 2.0,
+          ).copyWith(top: 24.0, bottom: 8.0).r,
           width: context.contextWidth(),
           child: AnimatedBuilder(
             animation: _lineAnimation,
@@ -103,10 +105,14 @@ class _AnimatedFinanceLineChartState extends State<AnimatedFinanceLineChart>
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
                           const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug'];
-                          if (value >= 0 && value < months.length) {
+
+                          if (value.toInt() >= 0 &&
+                              value.toInt() < months.length) {
                             return Text(
                               months[value.toInt()],
-                              style: axisTextStyle(context.contextColorScheme()),
+                              style: axisTextStyle(
+                                context.contextColorScheme(),
+                              ),
                             );
                           }
                           return const SizedBox();

@@ -6,6 +6,7 @@ import '../../features/dashboard/viewmodel/dashboard_view_model.dart';
 import '../../features/purchase_requests/viewmodel/purchase_request_view_model.dart';
 import '../../features/report/viewmodel/report_view_model.dart';
 import '../../features/sample/viewmodel/sample_view_model.dart';
+import '../../features/search_window/viewmodel/search_view_model.dart';
 import '../../features/view_report/viewmodel/view_report_view_model.dart';
 import '../../features/web_socket_and_printer/viewmodel/web_socket_and_printer_view_model.dart';
 import '../../shared/viewmodels/date_picker_view_model.dart';
@@ -47,6 +48,10 @@ extension ContextExtensions on BuildContext {
   // Purchase Request ViewModel
   PurchaseRequestViewModel readPurchaseRequestsVM() => read<PurchaseRequestViewModel>();
   PurchaseRequestViewModel watchPurchaseRequestsVM() => watch<PurchaseRequestViewModel>();
+
+  // Search ViewModel
+  SearchViewModel readSearchVM() => read<SearchViewModel>();
+  SearchViewModel watchSearchVM() => watch<SearchViewModel>();
 
   // Sample ViewModel
   DatePickerViewModel readDatePickerVM() => read<DatePickerViewModel>();

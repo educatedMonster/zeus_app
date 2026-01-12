@@ -8,6 +8,7 @@ import 'package:zeus_app/features/web_socket_and_printer/viewmodel/web_socket_an
 
 import '../features/dashboard/viewmodel/dashboard_view_model.dart';
 import '../features/purchase_requests/viewmodel/purchase_request_view_model.dart';
+import '../features/search_window/viewmodel/search_view_model.dart';
 import '../features/view_report/viewmodel/view_report_view_model.dart';
 import '../shared/viewmodels/date_picker_view_model.dart';
 import '../shared/viewmodels/file_format_dropdown_view_model.dart';
@@ -26,6 +27,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => FileFormatDropdownViewModel()),
     ChangeNotifierProvider(create: (_) => PurchaseRequestViewModel()),
     ChangeNotifierProvider(create: (_) => WebSocketAndPrinterViewModel()),
+    ChangeNotifierProvider(create: (_) => SearchViewModel()),
   ]; //
 
   runApp(MultiProvider(providers: registerProviders, child: MyApp()));
